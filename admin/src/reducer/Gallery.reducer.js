@@ -1,11 +1,14 @@
-import { CREATE_FILE_FAIL, CREATE_FILE_REQUEST, CREATE_FILE_SUCCESS, GET_FILE_FAIL, GET_FILE_REQUEST, GET_FILE_SUCCESS } from "../constant/gallery.constant"
+import { CREATE_FILE_FAIL, CREATE_FILE_REQUEST, CREATE_FILE_SUCCESS, DELETE_FILE_FAIL, DELETE_FILE_REQUEST, DELETE_FILE_SUCCESS, GET_FILE_FAIL, GET_FILE_REQUEST, GET_FILE_SUCCESS } from "../constant/gallery.constant"
 
 const initialstate={
     isLoading:false,
     error:'',
     newData:null,//post request
-    getData:[]
+    getData:[], //get Request
+    delData:null, //delete Request
+    message:''
 }
+
 export const GalleryReducer=(state=initialstate,action)=>{
     switch(action.type){
         case CREATE_FILE_REQUEST:
@@ -19,7 +22,8 @@ export const GalleryReducer=(state=initialstate,action)=>{
             return{
                 ...state,
                 isLoading:false,
-                newData:action.payload
+                newData:action.payload,
+                message:'File Uploaded SuccessFully...'
             }
         case CREATE_FILE_FAIL:
             return{
@@ -45,6 +49,26 @@ export const GalleryReducer=(state=initialstate,action)=>{
                 isLoading:false,
                 error:action.error
             }
+        case DELETE_FILE_REQUEST:
+            return{
+                ...state,
+                isLoading:true,
+                error:''
+            }
+        case DELETE_FILE_SUCCESS:
+            return{
+                ...state,
+                isLoading:false,
+                delData:action.payload,
+                message:'File Successfully Deleted'
+            }
+        case DELETE_FILE_FAIL:
+            return{
+                ...state,
+                isLoading:false,
+                error:action.error
+            }
+        
         default:
             return state
     }
