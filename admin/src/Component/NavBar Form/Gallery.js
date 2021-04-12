@@ -69,7 +69,6 @@ function Gallery(props) {
                     setdisplay(true)
                     const { fileName, filePath } = response.data
                     setupload({ fileName, filePath })
-                    console.log(filePath)
 
                     setshow(true)
                     MessageTime()
