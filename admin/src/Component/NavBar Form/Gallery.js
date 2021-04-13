@@ -28,6 +28,7 @@ function Gallery(props) {
 
     const HandleSubmit = async (e) => {
         e.preventDefault()   
+        
         const formData = new FormData();
         formData.append('file', data);
         if (data.name == null) {

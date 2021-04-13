@@ -20,6 +20,7 @@ export const createService = (Data) => {
     }
 
     return async (dispatch) => {
+        console.log(Data)
         dispatch(createDataRequest())
         try {
             const response = await axios.post('http://localhost:3001/services', Data)

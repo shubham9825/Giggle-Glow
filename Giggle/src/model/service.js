@@ -22,10 +22,12 @@ const serviceSchema=new mongoose.Schema({
         type:String,
         required:true,
         trim:true 
+    },
+    image:{
+        type:Object,
+        required:true,
+        trim:true
     }
-    // image:{
-
-    // }
 },{
     timestamps:true
 })

@@ -44,7 +44,8 @@ function Service(props) {
         service_name: '',
         short_discription:'',
         tagline:'',
-        long_question:''
+        long_question:'',
+        image:''
     }
     const [data, setdata] = useState(initialState)
 
@@ -112,7 +113,14 @@ function Service(props) {
 
         setdata({
             ...data,
-            [name]: value
+            [name]:value
+        })
+    }
+
+    const HandleImage=(e)=>{
+        setdata({
+            ...data,
+            image:e.target.files[0]
         })
     }
 
@@ -124,14 +132,15 @@ function Service(props) {
         )
         return valid
     }
-
+    
     const HandleSubmit = (e) => {
         e.preventDefault()
-        
+        console.log(data)
         if (validateForm(services.errors)) {
             alert("Form Submitted")
             if(data._id===0){
                 delete data._id
+                console.log(data)
                 props.createNewService(data)
                 setShow(true)
                 MessageTime()
@@ -192,7 +201,7 @@ function Service(props) {
                         <div style={{ color: '#f50000' }}>{services.errors.long_question}</div>
                     </Form.Group>
                     <Form.Group>
-                        <Form.File label="Enter Image"></Form.File>
+                        <Form.File name="UploadImg" onChange={HandleImage} alt="Image Not Uploaded" label="Enter Image"></Form.File>
                     </Form.Group>
                     <Button variant="primary" type="submit" >Submit</Button>
                 </fieldset>

@@ -72,7 +72,8 @@ function ChildRegister(props) {
         email: '',
         doctornm: '',
         drphonenum: '',
-        allergies: ''
+        allergies: '',
+        password:''
     }
 
     const [data, setdata] = useState(initialState)
@@ -271,7 +272,8 @@ function ChildRegister(props) {
             ...data,
             [name]: value
         })
-    }
+    }   
+     
 
     const validationForm = (errors) => {
         let valid = true
@@ -367,8 +369,10 @@ function ChildRegister(props) {
                     </Form.Row>
                     <Form.Group >
                         <Form.Label>Male or Female?</Form.Label>
-                        <Form.Check label="Male" type="radio" name="gender" required onChange={HandleChange} value={data.gender} />
-                        <Form.Check label="FeMale" type="radio" name="gender" onChange={HandleChange} value={data.gender} />
+                        <div onChange={HandleChange}>
+                            <Form.Check label="Male" type="radio" name="gender" required  value="Male" />
+                            <Form.Check label="FeMale" type="radio" name="gender"  value="Female" />
+                        </div>
                         <div style={{ color: '#f50000' }} >{Register.errors.gender}</div>
                     </Form.Group><br />
 

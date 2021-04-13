@@ -106,14 +106,14 @@ const handleChange = (e) => {
    }
   
    const AlertBox=setTimeout(() => {
-    <Alert className='pb-0' variant="danger" onClose={() => setShow(false)} dismissible>
-                    <p>{props.createLogin.error}</p>
-             </Alert>  
+    
    }, 1000)
 
   return (
     <>
-    {show && AlertBox}
+    {show && <Alert className='pb-0' variant="danger" onClose={() => setShow(false)} dismissible>
+                    <p>{props.createLogin.error}</p>
+             </Alert>  }
       <div className="auth-wrapper" >
         <div className="auth-inner" >
           <Form onSubmit={HandleSubmit}>
