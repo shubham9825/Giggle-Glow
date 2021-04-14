@@ -12,12 +12,10 @@ router.post('/upload',(req,res)=>{
             console.log(err)
             res.status(500).send(err)
         }
-        
+
         console.log(file.name)
         const gallary = new Gallary({fileName : file.name})
         await gallary.save()
-         
-
         res.status(200).send({fileName:file.name,filePath:`uploads/${file.name}`})
     })
 })

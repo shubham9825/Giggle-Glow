@@ -1,14 +1,37 @@
+const { json } = require('body-parser')
 const express=require('express')
 const service=require('../model/service')
 
 const router=new express.Router()
 
+// router.post('/services',async(req,res)=>{
+//     console.log(req.body)
+//     try{
+//         const services=new service(req.body)
+//         await services.save()
+//         res.status(201).send(services)
+//     }catch(error){
+//         res.status(400).send(error)
+//     }
+// })
+
 router.post('/services',async(req,res)=>{
     console.log(req.body)
+    const file=req.files.file
     try{
-        const services=new service(req.body)
+        // res.status(201).send(formups)
+        // console.log(file)
+        file.mv(`${__dirname}/../service/${file.name}`,async err=>{
+            if(err){
+                console.log(err)
+                res.status(500).send(err)
+            }
+            console.log(file.name)
+            res.status(200).send({fileName:file.name,filePath:`service/${file.name}`})
+        })
+        const services = new service(JSON.parse(req.body.data))
         await services.save()
-        res.status(201).send(services)
+
     }catch(error){
         res.status(400).send(error)
     }

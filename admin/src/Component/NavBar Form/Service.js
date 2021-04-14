@@ -1,8 +1,9 @@
 /* eslint-disable */
+import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Form, Button, Table, ButtonGroup, Alert } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import {createService, DelService, GetService, UpdateService} from '../../actions/Service.action'
+import { createService, DelService, GetService, UpdateService } from '../../actions/Service.action'
 
 function Service(props) {
     const [services, setservices] = useState({
@@ -12,26 +13,26 @@ function Service(props) {
         long_question: null,
         errors: {
             service_name: '*Required',
-            short_discription:'*Required',
-            tagline:'*Required',
-            long_question:'*Required'
+            short_discription: '*Required',
+            tagline: '*Required',
+            long_question: '*Required'
         }
     })
 
     //getdata
-    useEffect(()=>{
+    useEffect(() => {
         props.GetAllService()
-    },[])
+    }, [])
 
     //editdata
-    const editUser =(tempUser)=>{
+    const editUser = (tempUser) => {
         console.log(tempUser)
         setdata(tempUser)
-        services.errors={}
+        services.errors = {}
     }
 
     //deletedata
-    const deleteData =(theService)=>{
+    const deleteData = (theService) => {
         console.log(theService)
         props.delServiceData(theService)
         setShow(true)
@@ -40,13 +41,14 @@ function Service(props) {
 
     //api call
     const initialState = {
-        _id:0,
+        // _id: 0,
         service_name: '',
-        short_discription:'',
-        tagline:'',
-        long_question:'',
-        image:''
+        short_discription: '',
+        tagline: '',
+        long_question: '',
+        image: ''
     }
+
     const [data, setdata] = useState(initialState)
 
     const HandleChange = (e) => {
@@ -113,16 +115,10 @@ function Service(props) {
 
         setdata({
             ...data,
-            [name]:value
+            [name]: value
         })
     }
 
-    const HandleImage=(e)=>{
-        setdata({
-            ...data,
-            image:e.target.files[0]
-        })
-    }
 
     const validateForm = (errors) => {
         let valid = true;
@@ -132,65 +128,81 @@ function Service(props) {
         )
         return valid
     }
-    
-    const HandleSubmit = (e) => {
+
+
+    //for image state
+    const [dummy, setdummy] = useState('')
+
+    const HandleImage = (e) => {
+        setdummy(e.target.files[0])
+        // delete data._id
+        setdata({
+            ...data,
+            image: e.target.files[0].name
+        })
+
+    }
+
+    const HandleSubmit = async (e) => {
         e.preventDefault()
-         
         
-
-
-
-
-
-
-
-
-
-
-
-
-
         if (validateForm(services.errors)) {
             alert("Form Submitted")
-            if(data._id===0){
-                delete data._id
-                console.log(data)
-                props.createNewService(data)
+            const formdata = new FormData()
+            formdata.append('file', dummy)
+            
+            const dummydata=JSON.stringify(data)
+            formdata.append('data',dummydata)
+
+            const response = await axios.post('http://localhost:3001/services', formdata, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+
+            props.createNewService(data)
                 setShow(true)
                 MessageTime()
-            }else{
-                let tempUser={}
-                tempUser._id=data._id
-                tempUser.service_name =data.service_name
-                tempUser.short_discription =data.short_discription
-                tempUser.tagline=data.tagline
-                tempUser.long_question = data.long_question
-                props.updateSerivce(tempUser)
-                setShow(true)
-                MessageTime()
-            }
-            setdata(initialState)
+            
+                console.log(response.data)
+            // if (data._id === 0) {
+            //     delete data._id         
+            //     props.createNewService(data)
+            //     setShow(true)
+            //     MessageTime()
+            // } else {
+            //     let tempUser = {}
+            //     tempUser._id = data._id
+            //     tempUser.service_name = data.service_name
+            //     tempUser.short_discription = data.short_discription
+            //     tempUser.tagline = data.tagline
+            //     tempUser.long_question = data.long_question
+            //     // props.updateSerivce(tempUser)
+            //     setShow(true)
+            //     MessageTime()
+            // }
+            // setdata(initialState)
         } else {
             alert("Form Not Submitted")
         }
     }
 
     //Message State
-    const [show, setShow] = useState(false) 
-    
+    const [show, setShow] = useState(false)
+
     //Alert Message timing 
-    const MessageTime=()=>{
-            setTimeout(() => {
-                setShow(false)
-              }, 4000)
+    const MessageTime = () => {
+        setTimeout(() => {
+            setShow(false)
+        }, 4000)
     }
     return (
         <>
-          {show && <Alert className='pb-0' variant="danger" onClose={() => setShow(false)} dismissible>
-                        <p>{props.createService.msg}{props.createService.error}</p>
-                    </Alert>
+            {show && <Alert className='pb-0' variant="danger" onClose={() => setShow(false)} dismissible>
+                <p>{props.createService.msg}{props.createService.error}</p>
+            </Alert>
             }
-            
+
             <Form className='container mt-5' onSubmit={HandleSubmit}>
                 <fieldset>
                     <legend>Service</legend>
@@ -206,7 +218,7 @@ function Service(props) {
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>TagLine</Form.Label>
-                        <Form.Control type="text" name="tagline" onChange={HandleChange} placeholder="Enter TagLine"  value={data.tagline}/>
+                        <Form.Control type="text" name="tagline" onChange={HandleChange} placeholder="Enter TagLine" value={data.tagline} />
                         <div style={{ color: '#f50000' }}>{services.errors.tagline}</div>
                     </Form.Group>
                     <Form.Group>
@@ -219,9 +231,9 @@ function Service(props) {
                     </Form.Group>
                     <Button variant="primary" type="submit" >Submit</Button>
                 </fieldset>
-            </Form><br/><br/>
-             {/* Get Table Data */}
-             {props.createService.getData.length > 0 &&
+            </Form><br /><br />
+            {/* Get Table Data */}
+            {props.createService.getData.length > 0 &&
                 <Table striped hover className='container'>
                     <thead>
                         <tr>
@@ -229,7 +241,8 @@ function Service(props) {
                             <th>Service Discription</th>
                             <th>Service Tagline</th>
                             <th>Service Question</th>
-                            <th>Edit | Delete </th>                            
+                            <th>Image</th>
+                            <th>Edit | Delete </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -239,6 +252,10 @@ function Service(props) {
                                 <td>{theData.short_discription}</td>
                                 <td>{theData.tagline}</td>
                                 <td>{theData.long_question}</td>
+                                {console.log(theData.image)}
+                                <td>
+                                    <img style={{ width: '150px', height:'150px'}} src={`http://localhost:3001/${theData.image}`} alt='Image Not Found' />
+                                </td>
                                 <td>
                                     <ButtonGroup>
                                         <Button onClick={() => editUser(theData)}>Edit</Button>&nbsp;&nbsp;
@@ -263,10 +280,10 @@ const mapStateToProps = (store) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         createNewService: (data) => dispatch(createService(data)),
-        GetAllService:()=>dispatch(GetService()),
-        delServiceData:(theService)=>dispatch(DelService(theService)),
-        updateSerivce:(editData)=>dispatch(UpdateService(editData))
+        GetAllService: () => dispatch(GetService()),
+        delServiceData: (theService) => dispatch(DelService(theService)),
+        updateSerivce: (editData) => dispatch(UpdateService(editData))
     }
 }
 
-export default connect (mapStateToProps,mapDispatchToProps)(Service)
+export default connect(mapStateToProps, mapDispatchToProps)(Service)

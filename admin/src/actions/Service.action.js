@@ -23,11 +23,8 @@ export const createService = (Data) => {
         console.log(Data)
         dispatch(createDataRequest())
         try {
-            const response = await axios.post('http://localhost:3001/services', Data)
-            console.log(response)
-
-            if (response.status === 201) {
-                dispatch(createDataSuccess(response.data))
+            if (Data !== null) {
+                dispatch(createDataSuccess(Data))
                 dispatch(GetService())
             } else {
                 dispatch(createDataFail('Sorry We Failed to Submit Data!!! Try Again...'))

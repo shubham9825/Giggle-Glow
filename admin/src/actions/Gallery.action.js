@@ -23,7 +23,7 @@ export const CreateGallery=(Data)=>{
     return async(dispatch)=>{
         dispatch(createrequest())
          const Intdata=JSON.parse(Data)
-         console.log(Intdata)
+         console.log(Data)
 
          if(Intdata!==''){
             dispatch(createsuccess(Data))
