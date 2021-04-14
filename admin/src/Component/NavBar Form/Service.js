@@ -135,7 +135,21 @@ function Service(props) {
     
     const HandleSubmit = (e) => {
         e.preventDefault()
-        console.log(data)
+         
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
         if (validateForm(services.errors)) {
             alert("Form Submitted")
             if(data._id===0){
