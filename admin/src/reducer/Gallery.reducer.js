@@ -60,7 +60,7 @@ export const GalleryReducer=(state=initialstate,action)=>{
                 ...state,
                 isLoading:false,
                 delData:action.payload,
-                message:'File Successfully Deleted'
+                message:'File Deleted Successfully...'
             }
         case DELETE_FILE_FAIL:
             return{

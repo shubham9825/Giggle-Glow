@@ -33,13 +33,11 @@ function Gallery(props) {
         formData.append('file', data);
         console.log(data.name)
         if (data.name == null) {
-            setmsg('Please Upload File !!!')
-            setshow(true)   
+            alert('Please Upload File!!!') 
         } else {
             if (!data.name.match(/\.(jpg|jpeg|png|gif)$/)) {
-                setmsg('Only Jpg , Jpeg , Png , Gif File Allowed!!!')
-                setshow(true)
-                MessageTime()
+                alert('Only Jpg , Jpeg , Png , Gif File Allowed!!!') 
+                e.target.reset() //reset image and Clear Message
             } else {
                 try {
                     const response = await axios.post('http://localhost:3001/upload', formData, { 
@@ -67,6 +65,7 @@ function Gallery(props) {
                     console.log(dummy)
                     props.gallerypost(dummy)
                     setmsg('')
+                    setdata('')
 
                     setdisplay(true)
                     const { fileName, filePath } = response.data
@@ -112,16 +111,15 @@ function Gallery(props) {
                 <fieldset>
                     <legend>Gallery</legend>   
                     <Form.Group>
-                        <Form.File inputProps={{ accept: 'image/*' }}   name='UploadImg' onChange={handleChange} label="Enter Image"></Form.File>
+                        <Form.File name='UploadImg' onChange={handleChange} label="Enter Image"></Form.File>
                     </Form.Group> 
                     <Progress percentage={uploadPercentage} /><br/>
                     <Button variant="primary" type="submit">Submit</Button>
                     {/* <p>{data.name}</p> */}
                     {display && (
                         <div className='row mt-5'>
-                            <div className='col-md-6 m-auto'>
-                                <h3 className='text-center'>{upload.fileName}</h3>
-                                <img style={{ width: '350px', height:'350px'}} src={`http://localhost:3001/${upload.fileName}`} alt='Image Not Found' />
+                            <div className='col-md-6'>
+                                <img style={{ width: '150px', height: '150px',cursor:'pointer' }} onClick={()=> window.open(`http://localhost:3001/${upload.fileName}`, "_blank")} src={`http://localhost:3001/${upload.fileName}`} alt='Image Not Found' />
                             </div>
                         </div>
                     ) }
@@ -142,7 +140,9 @@ function Gallery(props) {
                         {props.creategallery.getData.map(theData =>
                             <tr key={theData._id}>
                                 <td>{theData.fileName}</td>
-                                <td><img style={{ width: '150px', height:'150px'}} src={`http://localhost:3001/${theData.fileName}`} alt='Image Not Found' /></td>
+                                <td style={{cursor:'pointer'}} onClick={()=> window.open(`http://localhost:3001/${theData.fileName}`, "_blank")}>
+                                    <img style={{ width: '150px', height: '150px',cursor:'pointer' }} src={`http://localhost:3001/${theData.fileName}`} alt='Image Not Found' />
+                                </td>
                                 <td>
                                 <ButtonGroup>
                                          <Button onClick={() => deleteData(theData)}>Delete</Button>
