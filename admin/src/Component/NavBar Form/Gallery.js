@@ -31,12 +31,13 @@ function Gallery(props) {
         
         const formData = new FormData();
         formData.append('file', data);
+        console.log(data.name)
         if (data.name == null) {
             setmsg('Please Upload File !!!')
             setshow(true)   
         } else {
             if (!data.name.match(/\.(jpg|jpeg|png|gif)$/)) {
-                setmsg('Only Jpg , Jpeg , Png , Gif File Allowed')
+                setmsg('Only Jpg , Jpeg , Png , Gif File Allowed!!!')
                 setshow(true)
                 MessageTime()
             } else {
@@ -111,7 +112,7 @@ function Gallery(props) {
                 <fieldset>
                     <legend>Gallery</legend>   
                     <Form.Group>
-                        <Form.File name='UploadImg' onChange={handleChange} label="Enter Image"></Form.File>
+                        <Form.File inputProps={{ accept: 'image/*' }}   name='UploadImg' onChange={handleChange} label="Enter Image"></Form.File>
                     </Form.Group> 
                     <Progress percentage={uploadPercentage} /><br/>
                     <Button variant="primary" type="submit">Submit</Button>

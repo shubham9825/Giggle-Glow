@@ -3,9 +3,10 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Form, Button, Table, ButtonGroup, Alert } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { createService, DelService, GetService, UpdateService } from '../../actions/Service.action'
+import { CreateService, DelService, GetService, UpdateService } from '../../actions/Service.action'
 
 function Service(props) {
+    //validation
     const [services, setservices] = useState({
         service_name: null,
         short_discription: null,
@@ -26,8 +27,8 @@ function Service(props) {
 
     //editdata
     const editUser = (tempUser) => {
-        console.log(tempUser)
         setdata(tempUser)
+        setdisplay(true)
         services.errors = {}
     }
 
@@ -41,14 +42,17 @@ function Service(props) {
 
     //api call
     const initialState = {
-        // _id: 0,
+        _id: 0,
         service_name: '',
         short_discription: '',
         tagline: '',
         long_question: '',
         image: ''
-    }
+    } 
 
+    //message Display
+    const [msg, setmsg] = useState('')
+    //api call
     const [data, setdata] = useState(initialState)
 
     const HandleChange = (e) => {
@@ -129,59 +133,63 @@ function Service(props) {
         return valid
     }
 
-
-    //for image state
+    //display Previous updated Image
+    const [display,setdisplay]=useState(false)
+    //for image(use for store image object)
     const [dummy, setdummy] = useState('')
 
     const HandleImage = (e) => {
         setdummy(e.target.files[0])
-        // delete data._id
         setdata({
             ...data,
             image: e.target.files[0].name
         })
-
     }
 
     const HandleSubmit = async (e) => {
         e.preventDefault()
-        
+
         if (validateForm(services.errors)) {
-            alert("Form Submitted")
-            const formdata = new FormData()
-            formdata.append('file', dummy)
-            
-            const dummydata=JSON.stringify(data)
-            formdata.append('data',dummydata)
+            if (data._id === 0) {
+                const formdata = new FormData()
+                formdata.append('file', dummy)
 
-            const response = await axios.post('http://localhost:3001/services', formdata, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
+                if (!dummy.name.match(/\.(jpg|jpeg|png|gif)$/)) {
+                    alert('Only Jpg , Jpeg , Png , Gif File Allowed!!!')
+                } else {
+                    delete data._id
+                    const dummydata = JSON.stringify(data)
+                    formdata.append('data', dummydata)
+
+                    const response = await axios.post('http://localhost:3001/services', formdata, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    })
+                    console.log(response.data)
+                    setmsg('')
+                    props.createNewService(data)
+                    props.GetAllService()
+                    setShow(true)
+                    MessageTime()
+                    setdata(initialState)
                 }
-            })
-
-            props.createNewService(data)
+            } else {
+                let tempUser = {}
+                tempUser._id = data._id
+                tempUser.service_name = data.service_name
+                tempUser.short_discription = data.short_discription
+                tempUser.tagline = data.tagline
+                tempUser.long_question = data.long_question
+                tempUser.image = data.image
+                props.updateSerivce(tempUser)
+                setmsg('')
                 setShow(true)
                 MessageTime()
-            
-                console.log(response.data)
-            // if (data._id === 0) {
-            //     delete data._id         
-            //     props.createNewService(data)
-            //     setShow(true)
-            //     MessageTime()
-            // } else {
-            //     let tempUser = {}
-            //     tempUser._id = data._id
-            //     tempUser.service_name = data.service_name
-            //     tempUser.short_discription = data.short_discription
-            //     tempUser.tagline = data.tagline
-            //     tempUser.long_question = data.long_question
-            //     // props.updateSerivce(tempUser)
-            //     setShow(true)
-            //     MessageTime()
-            // }
-            // setdata(initialState)
+                setdata(initialState)
+            }
+            e.target.reset()
+            setdisplay(false)
         } else {
             alert("Form Not Submitted")
         }
@@ -196,14 +204,15 @@ function Service(props) {
             setShow(false)
         }, 4000)
     }
+
     return (
         <>
             {show && <Alert className='pb-0' variant="danger" onClose={() => setShow(false)} dismissible>
-                <p>{props.createService.msg}{props.createService.error}</p>
+                <p>{msg}{props.createService.msg}{props.createService.error}</p>
             </Alert>
             }
-
-            <Form className='container mt-5' onSubmit={HandleSubmit}>
+            
+            <Form className='container mt-5 ' onSubmit={HandleSubmit}>
                 <fieldset>
                     <legend>Service</legend>
                     <Form.Group>
@@ -227,7 +236,8 @@ function Service(props) {
                         <div style={{ color: '#f50000' }}>{services.errors.long_question}</div>
                     </Form.Group>
                     <Form.Group>
-                        <Form.File name="UploadImg" onChange={HandleImage} alt="Image Not Uploaded" label="Enter Image"></Form.File>
+                        <Form.File name="UploadImg" onChange={HandleImage} alt="Image Not Uploaded" label="Enter Image"></Form.File><br/>
+                        {display && <img style={{ width: '150px', height: '150px',cursor:'pointer' }} onClick={()=> window.open(`http://localhost:3001/service/${data.image}`, "_blank")} src={`http://localhost:3001/service/${data.image}`} alt='Image Not Found' />}
                     </Form.Group>
                     <Button variant="primary" type="submit" >Submit</Button>
                 </fieldset>
@@ -252,10 +262,8 @@ function Service(props) {
                                 <td>{theData.short_discription}</td>
                                 <td>{theData.tagline}</td>
                                 <td>{theData.long_question}</td>
-                                {console.log(theData.image)}
-                                <td>
-                                    <img style={{ width: '150px', height:'150px'}} src={`http://localhost:3001/${theData.image}`} alt='Image Not Found' />
-                                </td>
+                                {/* When Click On Image Display Large Image */}
+                                <td style={{cursor:'pointer'}} onClick={()=> window.open(`http://localhost:3001/service/${theData.image}`, "_blank")}><img style={{ width: '150px', height: '150px',cursor:'pointer' }} src={`http://localhost:3001/service/${theData.image}`} alt='Image Not Found' /></td>
                                 <td>
                                     <ButtonGroup>
                                         <Button onClick={() => editUser(theData)}>Edit</Button>&nbsp;&nbsp;
@@ -279,7 +287,7 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        createNewService: (data) => dispatch(createService(data)),
+        createNewService: (data) => dispatch(CreateService(data)),
         GetAllService: () => dispatch(GetService()),
         delServiceData: (theService) => dispatch(DelService(theService)),
         updateSerivce: (editData) => dispatch(UpdateService(editData))

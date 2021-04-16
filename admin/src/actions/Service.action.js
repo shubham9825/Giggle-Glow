@@ -2,7 +2,7 @@ import axios from 'axios'
 import { CREATE_USER_FAIL, CREATE_USER_REQUEST, CREATE_USER_SUCCESS, DELETE_USER_FAIL, DELETE_USER_REQUEST, DELETE_USER_SUCCESS, GET_USER_FAIL, GET_USER_REQUEST, GET_USER_SUCCESS, UPDATE_USER_FAIL, UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS } from '../constant/service.constant'
 
 //Post Request
-export const createService = (Data) => {
+export const CreateService = (Data) => {    
     const createDataRequest = () => {
         return {
             type: CREATE_USER_REQUEST
@@ -25,7 +25,6 @@ export const createService = (Data) => {
         try {
             if (Data !== null) {
                 dispatch(createDataSuccess(Data))
-                dispatch(GetService())
             } else {
                 dispatch(createDataFail('Sorry We Failed to Submit Data!!! Try Again...'))
             }
@@ -137,8 +136,9 @@ export const UpdateService =(Data)=>{
             delete Data.updatedAt //old data's field can't enter because we set only response field so it edit only that field not other so it will deleted to puting and this field is automatically changed when data update it will be same for above and belove delete operation's.
             delete Data.createdAt
             console.log(Data)
+            console.log(_id)
             const response = await axios.put(`http://localhost:3001/services/${_id}`,Data)
-            console.log(response)
+            console.log(response.data)
             if(response.status===200){
                 dispatch(updateDataSuccess(response.data))
                 dispatch(GetService())

@@ -17,8 +17,6 @@ import Main from './Component/NavBar Form/Main'
 
 function App() {
 
-  let user = sessionStorage.user
-
   return (
     <>
       <Provider store={store}>

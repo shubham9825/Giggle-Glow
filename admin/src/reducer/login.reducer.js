@@ -19,7 +19,7 @@ export const LoginReducer=(state=initialstate,action)=>{
                 ...state,
                 isLoading:false,
                 error:'',
-                newData:action.payload,
+                newData:action.payload
             }
         case CREATE_LOGIN_FAIL:
             return{

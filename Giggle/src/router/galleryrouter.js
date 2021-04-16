@@ -5,7 +5,6 @@ const router=new express.Router()
 
 router.post('/upload',(req,res)=>{
     console.log(req.files)
-            
     const file=req.files.file
     file.mv(`${__dirname}/../uploads/${file.name}`,async err=>{
         if(err){

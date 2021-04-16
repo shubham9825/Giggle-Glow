@@ -231,7 +231,7 @@ function Pforgot(props) {
             <div className="auth-wrapper" >
                 <div className="auth-inner" >
                     <Form  >
-                        <h3>Forgot Password</h3>
+                        <h3>Forgot Password</h3>    
                         {props.createForgot.showmail && <div>
                             <div className="form-group">
                                 <label>Email address</label>
