@@ -7,10 +7,10 @@ import { connect } from 'react-redux'
 import { CreatePlogin } from '../../actions/Plogin.action';
 
 export function Plogin(props) {
-   let history=useHistory()
-   console.log('plogin')
-  
-   const [plogin, setplogin] = useState({
+  let history = useHistory()
+  console.log('plogin')
+
+  const [plogin, setplogin] = useState({
     email: null,
     password: null,
     errors: {
@@ -19,27 +19,27 @@ export function Plogin(props) {
     }
   })
 
- //api calling state
- const initialdata = {
-  email: '',
-  password: '',
-}
-const [data, setdata] = useState(initialdata)
-  
-    //login Redirect
-    if(props.createPlogin.newData){
-       history.push('/psignuprecord')
-    }
-    
-const handleChange = (e) => {
+  //api calling state
+  const initialdata = {
+    email: '',
+    password: '',
+  }
+  const [data, setdata] = useState(initialdata)
+
+  //login Redirect
+  if (props.createPlogin.newData) {
+    history.push('/parent_notice')
+  }
+
+  const handleChange = (e) => {
     let name = e.target.name
     let value = e.target.value
     let errors = plogin.errors
-    
+
     setdata({
       ...data,
       [name]: value
-  })
+    })
 
     const validEmailRegex = RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
     switch (name) {
@@ -63,13 +63,13 @@ const handleChange = (e) => {
           errors.password = 'Password is To Short...!'
           break
         }
-        if(value.length<0){
+        if (value.length < 0) {
           errors.password = 'Password error...!'
         }
         errors.password = ''
         break
     }
-    
+
     setplogin({
       ...plogin,
       [name]: value,
@@ -84,7 +84,7 @@ const handleChange = (e) => {
     )
     return valid;
   }
-    
+
   const HandleSubmit = (e) => {
     e.preventDefault()
     if (validationForm(plogin.errors)) {
@@ -92,34 +92,35 @@ const handleChange = (e) => {
       setShow(true)
       MessageTime()
       setdata(initialdata)
-     } else {
+    } else {
       alert("Please Fill Proper Form")
-    } 
+    }
   }
 
-   //Message State
-   const [show, setShow] = useState(false);
-    
-   //Alert Message timing 
-   const MessageTime=()=>{
-           setTimeout(() => {
-               setShow(false)
-             }, 5000)
-   }
-  
+  //Message State
+  const [show, setShow] = useState(false);
+
+  //Alert Message timing 
+  const MessageTime = () => {
+    setTimeout(() => {
+      setShow(false)
+    }, 5000)
+  }
+
   return (
-    <>
-    {show && <Alert className='pb-0' variant="danger" onClose={() => setShow(false)} dismissible>
-                  <p>{props.createPlogin.error}</p>
-             </Alert>
-    }
+    <div>
+      {show && <Alert className='pb-0 position-absolute w-100' style={{ "top": "0", "left": "0px" }} variant="danger" onClose={() => setShow(false)} dismissible>
+        <p>{props.createPlogin.error}</p>
+      </Alert>
+      }
+      <br /><br />
       <div className="auth-wrapper" >
         <div className="auth-inner" >
           <Form onSubmit={HandleSubmit}>
             <h3>Sign In For Parent's</h3>
             <div className="form-group">
               <label>Email address</label>
-              <input type="email" onChange={handleChange} className="form-control" name='email' placeholder="Enter email" />
+              <input type="email" onChange={handleChange} className="form-control" name='email' placeholder="Enter email" autoFocus={true} />
               <div style={{ color: '#f50000' }}>{plogin.errors.email}</div>
             </div>
 
@@ -130,29 +131,29 @@ const handleChange = (e) => {
             </div>
 
             <button type="submit" className="btn btn-primary btn-block">Submit</button>
-           
+
             <p className="forgot-password text-right">
               Forgot <Link to='/pforgot'>password?</Link>
             </p>
             <p className="forgot-password text-right">
-              New User? <Link to='/psignup'>Create an Account</Link> 
+              New User? <Link to='/psignup'>Create an Account</Link>
             </p>
           </Form>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
-const mapStateToProps=(store)=>{
-  return{
-    createPlogin:store.createPlogin
+const mapStateToProps = (store) => {
+  return {
+    createPlogin: store.createPlogin
   }
 }
 
-const mapDispatchToProps=(dispatch)=>{
-  return{
-      createNewPlogin:(data)=>dispatch(CreatePlogin(data))
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createNewPlogin: (data) => dispatch(CreatePlogin(data))
   }
 }
-export default connect(mapStateToProps,mapDispatchToProps)(Plogin)
+export default connect(mapStateToProps, mapDispatchToProps)(Plogin)

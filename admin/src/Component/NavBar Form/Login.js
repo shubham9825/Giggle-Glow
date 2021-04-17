@@ -111,7 +111,7 @@ const handleChange = (e) => {
 
   return (
     <>
-    {show && <Alert className='pb-0' variant="danger" onClose={() => setShow(false)} dismissible>
+    {show && <Alert className='pb-0 position-absolute w-100' variant="danger" style={{ "top": "0", "left": "0px" }} onClose={() => setShow(false)} dismissible>
                     <p>{props.createLogin.error}</p>
              </Alert>  }
       <div className="auth-wrapper" >

@@ -81,6 +81,11 @@ const RegistrationSchema=new mongoose.Schema({
         required:true,
         trim:true,
         maximum:200
+    },
+    password:{
+        type:String,
+        require:true,
+        trim:true
     }
 },{
     timestamps:true

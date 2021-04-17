@@ -6,7 +6,7 @@ import { Link, useHistory } from 'react-router-dom'
 import { CreatePforgot, UpdatePforgot } from '../../actions/Pforgot.action'
 
 function Pforgot(props) {
-    
+
     let history = useHistory()
     //validation For Email        
     const [pforgot, setpforgot] = useState({
@@ -44,8 +44,8 @@ function Pforgot(props) {
 
     //otp generate 
     useEffect(() => {
-        props.createForgot.showmail=true
-        setmail(true)
+        props.createPforgot.showmail = true
+        // setmail(true)
         const min = 1000
         const max = 9999
         var otp = Math.floor(Math.random() * (max - min + 1)) + min //otp generate
@@ -154,7 +154,7 @@ function Pforgot(props) {
             ...data,
             [name]: value
         })
-    }   
+    }
 
     const validationForm = (errors) => {
         let valid = true
@@ -184,12 +184,12 @@ function Pforgot(props) {
             alert('Form Submited')
             if (validotp.otp == data.otp) {
                 setpass(true)
-                props.createPforgot.showOtp=false
+                props.createPforgot.showOtp = false
             } else {
                 setpass(false)
                 alert('not match')
             }
-            
+
         } else {
             alert("Please Fill Proper Form")
         }
@@ -223,19 +223,21 @@ function Pforgot(props) {
     }
 
     return (
-        <>
-            {show && <Alert className='pb-0' variant="danger" onClose={() => setShow(false)} dismissible>
+        <div className="position-relative">
+            {show && <Alert className='pb-0 position-absolute w-100' style={{ "top": "0", "left": "0px" }} variant="danger" onClose={() => setShow(false)} dismissible>
                 <p>{props.createPforgot.msg}{props.createPforgot.error}</p>
             </Alert>
             }
+            <br /><br />
             <div className="auth-wrapper" >
                 <div className="auth-inner" >
                     <Form  >
-                        <h3>Forgot Password</h3>    
-                        {props.createForgot.showmail && <div>
+                        <h3>Forgot Password</h3>
+                        {props.createPforgot.showmail && <div>
                             <div className="form-group">
                                 <label>Email address</label>
-                                <input type="email" value={data.email} onChange={handleChange} className="form-control" name='email' placeholder="Enter email" />
+                                <input type="email" value={data.email} onChange={handleChange} className="form-control" name='email' placeholder="Enter email"
+                                    autoFocus={true} />
                                 <div style={{ color: '#f50000' }}>{pforgot.errors.email}</div>
                             </div>
                             <button type="submit" onClick={EmailSubmit} className="btn btn-primary btn-block mb-2">Submit</button>
@@ -244,7 +246,7 @@ function Pforgot(props) {
                         {props.createPforgot.showOtp && <div>
                             <div className="form-group">
                                 <label>Enter OTP</label>
-                                <input type="number" onChange={HandleOtp} className="form-control" name='otp' placeholder="Enter OTP" />
+                                <input type="number" onChange={HandleOtp} className="form-control" name='otp' placeholder="Enter OTP" autoFocus={true} />
                                 <div style={{ color: '#f50000' }}>{validotp.errors.otp}</div>
                             </div><button type="submit" onClick={OtpSubmit} className="btn btn-primary btn-block mb-2">Submit</button>
                         </div>}
@@ -252,7 +254,7 @@ function Pforgot(props) {
                         {pass && <div>
                             <div className="form-group">
                                 <label>Password</label>
-                                <input type="password" onChange={HandlePass} name='password' className="form-control" placeholder="Enter password" />
+                                <input type="password" onChange={HandlePass} name='password' className="form-control" placeholder="Enter password" autoFocus={true} />
                                 <div style={{ color: '#f50000' }}>{validpass.errors.password}</div>
                             </div>
 
@@ -270,7 +272,7 @@ function Pforgot(props) {
                     </Form>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 

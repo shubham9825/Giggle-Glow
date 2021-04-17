@@ -69,9 +69,10 @@ function Profile(props) {
                     </tbody>
                 </Table> 
             }  */}
-            profile Data
+            {/* profile Data */}
             <Table>
-                <tr>
+               <tbody>
+               <tr>
                               <td>{auth.fname}</td>
                                 <td>{auth.lname}</td>
                                 <td>{auth.address}</td>
@@ -87,6 +88,7 @@ function Profile(props) {
                                 <td>{auth.drphonenum}</td>
                                 <td>{auth.allergies}</td>
                 </tr>
+               </tbody>
             </Table>
         </>
     )
