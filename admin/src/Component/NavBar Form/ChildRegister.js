@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React, { useEffect, useState } from 'react'
-import { Form, Button, Col, Table, ButtonGroup } from 'react-bootstrap'
+import { Form, Button, Col, Table, ButtonGroup, Alert } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { createChild, DelRegistartion, getChild, UpdateRegistraton } from '../../actions/child.action'
 
@@ -15,13 +15,15 @@ function ChildRegister(props) {
     const deleteData = (thechild) => {
         console.log(thechild)
         props.delChildData(thechild)
+        setShow(true)
+        MessageTime()
     }
 
     //update data
-    const updateData =(tempuser)=>{
+    const updateData = (tempuser) => {
         setdata(tempuser)
         console.log(tempuser)
-        Register.errors={}
+        Register.errors = {}
     }
 
     const [Register, SetRegister] = useState({
@@ -58,7 +60,7 @@ function ChildRegister(props) {
     })
 
     const initialState = {
-        _id:0,
+        _id: 0,
         fname: '',
         lname: '',
         address: '',
@@ -73,7 +75,7 @@ function ChildRegister(props) {
         doctornm: '',
         drphonenum: '',
         allergies: '',
-        password:''
+        password: ''
     }
 
     const [data, setdata] = useState(initialState)
@@ -270,10 +272,12 @@ function ChildRegister(props) {
 
         setdata({
             ...data,
+            password,
             [name]: value
         })
-    }   
-     
+    }
+
+    const password = 12345678
 
     const validationForm = (errors) => {
         let valid = true
@@ -283,43 +287,59 @@ function ChildRegister(props) {
         return valid;
     }
 
+    const [show, setShow] = useState(false)
+
     const HandleSubmit = (e) => {
         e.preventDefault()
         if (validationForm(Register.errors)) {
             alert("Form Submitted")
-            if(data._id===0){
+            if (data._id === 0) {
                 //insert
                 delete data._id
                 props.createNewChild(data)
-            }else{
+                setShow(true)
+                MessageTime()
+            } else {
                 //update
-                let tempuser={}
-                tempuser._id=data._id
+                let tempuser = {}
+                tempuser._id = data._id
                 tempuser.fname = data.fname
                 tempuser.lname = data.lname
                 tempuser.address = data.address
                 tempuser.city = data.city
                 tempuser.states = data.states
                 tempuser.zipcode = data.zipcode
-                tempuser.gender = data.gender 
+                tempuser.gender = data.gender
                 tempuser.parentnm = data.parentnm
-                tempuser.phonenum = data.phonenum 
-                tempuser.plcwork = data.plcwork 
-                tempuser.email = data.email 
-                tempuser.doctornm = data.doctornm 
-                tempuser.drphonenum = data.drphonenum 
+                tempuser.phonenum = data.phonenum
+                tempuser.plcwork = data.plcwork
+                tempuser.email = data.email
+                tempuser.doctornm = data.doctornm
+                tempuser.drphonenum = data.drphonenum
                 tempuser.allergies = data.allergies
-                props.updateChild(tempuser) 
+                props.updateChild(tempuser)
+                setShow(true)
+                MessageTime()
             }
-             setdata(initialState)
+            setdata(initialState)
+            e.target.reset()
         } else {
             alert("Form Not Submitted")
         }
     }
+    //Alert Message timing 
+    const MessageTime = () => {
+        setTimeout(() => {
+            setShow(false)
+        }, 4000)
+    }
 
     return (
-        <>
-            <p style={{float:'right'}}>{props.createChild.msg}{props.createChild.error}</p><br/>
+        <div className="position-relative">
+            {show && <Alert className='pb-0 position-absolute w-100' style={{ "top": "0", "left": "0px" }} variant="danger" onClose={() => setShow(false)} dismissible>
+                <p>{props.createChild.msg}{props.createChild.error}</p>
+            </Alert>
+            }<br />
             <Form className="container mt-5" onSubmit={HandleSubmit}>
                 <fieldset className="mainedit">
                     <legend>Child Registration</legend>
@@ -353,7 +373,7 @@ function ChildRegister(props) {
 
                         <Form.Group as={Col} controlId="formGridState" >
                             <Form.Label>State</Form.Label>
-                            <Form.Control as="select"  required onChange={HandleChange} name="states" value={data.states} >
+                            <Form.Control as="select" required onChange={HandleChange} name="states" value={data.states} >
                                 <option>Choose...</option>
                                 <option>Gujarat</option>
                                 <option>maharashtra</option>
@@ -370,8 +390,8 @@ function ChildRegister(props) {
                     <Form.Group >
                         <Form.Label>Male or Female?</Form.Label>
                         <div onChange={HandleChange}>
-                            <Form.Check label="Male" type="radio" name="gender" required  value="Male" />
-                            <Form.Check label="FeMale" type="radio" name="gender"  value="Female" />
+                            <Form.Check label="Male" type="radio" name="gender"  value="Male" />
+                            <Form.Check label="FeMale" type="radio" name="gender" value="Female" />
                         </div>
                         <div style={{ color: '#f50000' }} >{Register.errors.gender}</div>
                     </Form.Group><br />
@@ -433,57 +453,65 @@ function ChildRegister(props) {
                 </fieldset>
             </Form>
             <br /><br /><br />
+
             {/* Get Table Data */}
-            {props.createChild.getData.length > 0 &&
-                <Table striped responsive hover className='container '>
-                    <thead>
-                        <tr>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Address</th>
-                            <th>City</th>
-                            <th>State</th>
-                            <th>Zipcode</th>
-                            <th>Gender</th>
-                            <th>Parent's name</th>
-                            <th>Parent's no.</th>
-                            <th>Place of work</th>
-                            <th>email</th>
-                            <th>Dr. Name</th>
-                            <th>Dr. phone num.</th>
-                            <th>Allergies</th>
-                            <th>Edit | Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {props.createChild.getData.map(theData =>
-                            <tr key={theData._id}>
-                                <td>{theData.fname}</td>
-                                <td>{theData.lname}</td>
-                                <td>{theData.address}</td>
-                                <td>{theData.city}</td>
-                                <td>{theData.states}</td>
-                                <td>{theData.zipcode}</td>
-                                <td>{theData.gender}</td>
-                                <td>{theData.parentnm}</td>
-                                <td>{theData.phonenum}</td>
-                                <td>{theData.plcwork}</td>
-                                <td>{theData.email}</td>
-                                <td>{theData.doctornm}</td>
-                                <td>{theData.drphonenum}</td>
-                                <td>{theData.allergies}</td>
-                                <td>
-                                    <ButtonGroup>
-                                         <Button onClick={() => updateData(theData)}>Edit</Button>&nbsp;&nbsp;
+            <div className='container card-header '>
+                <h3 className="fa fa-table" style={{ fontSize: "20px" }}> Child Registration Details</h3><br />
+                <div className="card-body">
+                    <div className="table-responsive">
+                        {props.createChild.getData.length > 0 &&
+                            <Table striped responsive hover className='table table-bordered'>
+                                <thead>
+                                    <tr>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Address</th>
+                                        <th>City</th>
+                                        <th>State</th>
+                                        <th>Zipcode</th>
+                                        <th>Gender</th>
+                                        <th>Parent's name</th>
+                                        <th>Parent's no.</th>
+                                        <th>Place of work</th>
+                                        <th>email</th>
+                                        <th>Dr. Name</th>
+                                        <th>Dr. phone num.</th>
+                                        <th>Allergies</th>
+                                        <th>Edit | Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {props.createChild.getData.map(theData =>
+                                        <tr key={theData._id}>
+                                            <td>{theData.fname}</td>
+                                            <td>{theData.lname}</td>
+                                            <td>{theData.address}</td>
+                                            <td>{theData.city}</td>
+                                            <td>{theData.states}</td>
+                                            <td>{theData.zipcode}</td>
+                                            <td>{theData.gender}</td>
+                                            <td>{theData.parentnm}</td>
+                                            <td>{theData.phonenum}</td>
+                                            <td>{theData.plcwork}</td>
+                                            <td>{theData.email}</td>
+                                            <td>{theData.doctornm}</td>
+                                            <td>{theData.drphonenum}</td>
+                                            <td>{theData.allergies}</td>
+                                            <td>
+                                                <ButtonGroup>
+                                                    <Button onClick={() => updateData(theData)}>Edit</Button>&nbsp;&nbsp;
                                          <Button onClick={() => deleteData(theData)}>Delete</Button>
-                                    </ButtonGroup>
-                                </td>
-                            </tr>
-                        )}
-                    </tbody>
-                </Table>
-            }
-        </>
+                                                </ButtonGroup>
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </Table>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
     )
 }
 
@@ -497,8 +525,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         createNewChild: (data) => dispatch(createChild(data)),
         getAllRegister: () => dispatch(getChild()),
-        delChildData:(thechild)=>dispatch(DelRegistartion(thechild)),
-        updateChild:(editData)=>dispatch(UpdateRegistraton(editData))
+        delChildData: (thechild) => dispatch(DelRegistartion(thechild)),
+        updateChild: (editData) => dispatch(UpdateRegistraton(editData))
     }
 }
 
