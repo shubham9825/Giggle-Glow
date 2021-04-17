@@ -1,29 +1,29 @@
 import React from 'react'
 import { Button, Card, Container, Row, Col } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
-import admin from  '../images/admin.jpeg'
+import admin from '../images/admin.jpeg'
 import parent from '../images/parent.jpeg'
+import logo from '../images/logo1.jpeg'
 
 function Home() {
     const history = useHistory();
-
     const AdminSubmit = () => {
-        sessionStorage.setItem("user","admin")
+        sessionStorage.setItem("user", "admin")
         history.push(`/login`)
     }
-
     const ParentSubmit = () => {
-        sessionStorage.setItem("user","parent")
+        sessionStorage.setItem("user", "parent")
         history.push(`/plogin`)
     }
 
-
-
     return (
-
         <>
-        &nbsp;&nbsp;
+        <br/>
+           <div className="child-care logo" align="center">
+                    <img src={logo} width="500" height="250" />
+                </div>
             <Container>
+                <br/>
                 <Row>
                     <Col>
                         <Card border="primary" bg="warning" text="light">
