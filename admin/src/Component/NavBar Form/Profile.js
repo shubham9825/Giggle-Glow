@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Alert,Table } from 'react-bootstrap'
-import { connect } from 'react-redux'
-import { getProfile } from '../../actions/Profile.action'
+// import { connect } from 'react-redux'
+// import { getProfile } from '../../actions/Profile.action'
 
 function Profile(props) {
 

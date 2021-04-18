@@ -42,7 +42,6 @@ function SignupRecord(props) {
                             <th className="text-center">FirstName</th>
                             <th className="text-center">LastName</th>
                             <th className="text-center">Email</th>
-                            <th className="text-center">Password</th>
                             <th className="text-center">Delete</th>
                         </tr>
                     </thead>
@@ -52,8 +51,7 @@ function SignupRecord(props) {
                                 <td>{theData.fname}</td>
                                 <td>{theData.lname}</td>
                                 <td>{theData.email}</td>
-                                <td>{theData.password}</td>
-                                  <td><Button onClick={()=>ondelete(theData)}>Delete</Button></td> 
+                                <td><Button onClick={()=>ondelete(theData)}>Delete</Button></td> 
                             </tr>
                         )}
                     </tbody>

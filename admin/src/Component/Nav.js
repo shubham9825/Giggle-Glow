@@ -1,13 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import Sidebardata, { Psidebardata } from './SideNav/Sidebardata';
-import * as AiIcons from 'react-icons/ai';
+// import * as AiIcons from 'react-icons/ai';
 
 function Nav() {
   let user = sessionStorage.user
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-default fixed-top" id="mainNav">
-      <Link className="navbar-brand" to="/home"><img src="img/logo.png" data-retina="true" alt width={163} height={36} /></Link>
+      <Link className="navbar-brand" to="/home"><img src="img/logo.png" data-retina="true" alt="Image Not Found" width={163} height={36} /></Link>
       <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span className="navbar-toggler-icon" />
       </button>
@@ -41,7 +41,7 @@ function Nav() {
         </ul>
         <ul className="navbar-nav sidenav-toggler">
           <li className="nav-item">
-            <a className="nav-link text-center" id="sidenavToggler">
+            <a   className="nav-link text-center" id="sidenavToggler">
               <i className="fa fa-fw fa-angle-left" />
             </a>
           </li>

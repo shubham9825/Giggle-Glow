@@ -8,7 +8,6 @@ import { CreatePlogin } from '../../actions/Plogin.action';
 
 export function Plogin(props) {
   let history = useHistory()
-  console.log('plogin')
 
   const [plogin, setplogin] = useState({
     email: null,
@@ -134,9 +133,6 @@ export function Plogin(props) {
 
             <p className="forgot-password text-right">
               Forgot <Link to='/pforgot'>password?</Link>
-            </p>
-            <p className="forgot-password text-right">
-              New User? <Link to='/psignup'>Create an Account</Link>
             </p>
           </Form>
         </div>

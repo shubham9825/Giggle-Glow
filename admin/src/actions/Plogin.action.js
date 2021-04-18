@@ -3,7 +3,6 @@ import { CREATE_PLOGIN_FAIL, CREATE_PLOGIN_REQUEST, CREATE_PLOGIN_SUCCESS } from
 
 //Post Request
 export const CreatePlogin=(Data)=>{
-
       const createuserrequest=()=>{
         return{
             type:CREATE_PLOGIN_REQUEST

@@ -13,7 +13,6 @@ import { NoticeReducer } from './Notice.reducer'
 import { ForgotReducer } from './Forgot.reducer'
 import { GalleryReducer } from './Gallery.reducer'
 import { PloginReducer } from './Plogin.reducer'
-import { PsignupReducer } from './Psignup.reducer'
 import { PforgotReducer } from './Pforgot.reducer'
 
 export * from './Formup.reducer'
@@ -30,7 +29,6 @@ export * from './Lunch.reducer'
 export * from './Forgot.reducer'
 export * from './Gallery.reducer'
 export * from './Plogin.reducer'
-export * from './Psignup.reducer'
 export * from './Gallery.reducer'
 export * from './Pforgot.reducer'
 
@@ -49,6 +47,5 @@ export const rootReducer=combineReducers({
     createForgot:ForgotReducer,
     CreateGallery:GalleryReducer,
     createPlogin:PloginReducer,
-    createPsignup:PsignupReducer,
     createPforgot:PforgotReducer
  })

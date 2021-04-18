@@ -17,11 +17,8 @@ import Contact from '../NavBar Form/Contact'
 import SuggestionRecord from '../NavBar Form/SuggestionRecord'
 import Lunch from '../NavBar Form/Lunch'
 import FormUp from '../NavBar Form/FormUp'
-import Logout from '../NavBar Form/Logout'
 import Notice from '../NavBar Form/Notice'
 import SignupRecord from '../NavBar Form/SignupRecord'
-import Plogout from '../NavBar Form/Plogout'
-import PsignupRecord from '../NavBar Form/PsignupRecord'
 import Pnotice from '../NavBar Form/Pnotice'
 import InquireRecord from '../NavBar Form/InquireRecord'
 import Psuggestion from '../NavBar Form/Psuggestion'
@@ -131,21 +128,7 @@ const Sidebardata = [
     main: () => <InquireRecord></InquireRecord>,
     icon: <MdIcons.MdPayment />,
     cName: 'nav-text'
-  },
-  {
-    title: 'PsignupRecord',
-    path: '/psignuprecord',
-    main: () => <PsignupRecord></PsignupRecord>,
-    icon: <MdIcons.MdPayment />,
-    cName: 'nav-text'
   }
-  // {
-  //   title: 'Logout',
-  //   path: '/logout',
-  //   main: () => <Logout></Logout>,
-  //   icon: <MdIcons.MdPayment />,
-  //   cName: 'nav-text'
-  // }
 ];
 export default Sidebardata
 
@@ -178,12 +161,6 @@ export const Psidebardata = [
     icon: <RiIcons.RiQuestionnaireFill />,
     cName: 'nav-text'
   }
-    // {
-  //   title: 'Plogout',
-  //   path: '/plogout',
-  //   main: () => <Plogout></Plogout>,
-  //   icon: <MdIcons.MdPayment />,
-  //   cName: 'nav-text'
-  // }
+     
 ];
 

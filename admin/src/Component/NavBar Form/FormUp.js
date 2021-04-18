@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { Form, Button, Table, Alert, ButtonGroup } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { createFormup, GetFormup, DelFormup, UpdateFormup } from '../../actions/Formup.action'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; 
 
 function FormUp(props) {
     //get request
@@ -102,6 +104,7 @@ function FormUp(props) {
             setdata(initialdata)
         } else {
             alert("Form Not Submitted")
+            toast.success("Form Not Submitted")
         }
     }
     //Message State
@@ -111,15 +114,17 @@ function FormUp(props) {
     const MessageTime=()=>{
             setTimeout(() => {
                 setShow(false)
-              }, 4000)
+              }, 5000)
     }
     return (
         <>
         <div className="position-relative">
-            {show && <Alert className='pb-0 position-absolute  w-100' style={{"top" : "0" , "left" : "0px"}} variant="danger" onClose={() => setShow(false)} dismissible>
+            {show && <Alert className='pb-0 position-absolute  w-100' style={{transition:'0.2s'}} style={{"top" : "0" , "left" : "7px"}} variant="danger" onClose={() => setShow(false)} dismissible>
                         <p>{props.createFormup.msg}{props.createFormup.error}</p>
                     </Alert>
-            }<br/>
+            } <br/>
+            
+            <ToastContainer />
             <Form className="container pt-5" onSubmit={HandleSubmit}>
                 <fieldset>
                     <legend>Form Up/Inqurie Response </legend>  

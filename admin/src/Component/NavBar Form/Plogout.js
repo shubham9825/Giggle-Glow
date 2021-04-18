@@ -5,7 +5,6 @@ export function Plogout() {
     let history=useHistory()
 
     useEffect(()=>{
-        console.log(sessionStorage)
         sessionStorage.removeItem('login')
         history.push('/')
     },[])

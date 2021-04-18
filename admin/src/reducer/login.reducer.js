@@ -12,13 +12,12 @@ export const LoginReducer=(state=initialstate,action)=>{
             return{
                 ...state,
                 isLoading:true,
-                error:''
+                error:null
             }
         case CREATE_LOGIN_SUCCESS:
             return{
                 ...state,
                 isLoading:false,
-                error:'',
                 newData:action.payload
             }
         case CREATE_LOGIN_FAIL:

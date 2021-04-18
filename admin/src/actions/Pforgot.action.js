@@ -57,7 +57,7 @@ export const UpdatePforgot=(Data)=>{
     }
     return async(dispatch)=>{ 
         dispatch(updateforgotrequest())
-        console.log(Data.password,Data.email)
+       
         const email=Data.email
         try{   
             const response=await axios.put(`http://localhost:3001/pforgot/${email}`,Data) 

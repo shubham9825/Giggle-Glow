@@ -156,7 +156,8 @@ function Lunch(props) {
                     <thead>
                         <tr>
                             <th>Food</th>
-                            <th colSpan="2">Suggest</th>
+                            <th>Suggest</th>
+                            <th>Edit | Delete</th>
                         </tr>
                     </thead>
                     <tbody>

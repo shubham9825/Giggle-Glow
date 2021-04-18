@@ -141,7 +141,7 @@ function Gallery(props) {
                             <tr key={theData._id}>
                                 <td>{theData.fileName}</td>
                                 <td style={{cursor:'pointer'}} onClick={()=> window.open(`http://localhost:3001/${theData.fileName}`, "_blank")}>
-                                    <img style={{ width: '150px', height: '150px',cursor:'pointer' }} src={`http://localhost:3001/${theData.fileName}`} alt='Image Not Found' />
+                                    <img style={{ width: '150px', height: '150px',cursor:'pointer' }} src={`http://localhost:3001/${theData.fileName}`} alt="Image Not Found" />
                                 </td>
                                 <td>
                                 <ButtonGroup>

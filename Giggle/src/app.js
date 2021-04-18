@@ -16,7 +16,6 @@ const suggestion=require('./router/suggestion')
 const lunch=require('./router/lunch')
 const signup=require('./router/signup')
 const notice=require('./router/notice')
-const psignup = require('./router/psignup')
 const cors=require('cors')
 const fileUpload = require('express-fileupload')
 
@@ -46,7 +45,6 @@ app.use(lunch)
 app.use(signup)
 app.use(notice)
 app.use(gallery)
-app.use(psignup)
 
 app.listen(PORT,()=>{
     console.log(`Server is Run at PORT:${PORT}`)
