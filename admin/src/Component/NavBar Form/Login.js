@@ -108,12 +108,13 @@ export function Login(props) {
   //  }
   return (
     <>
-       {show && <Alert className='pb-0 position-absolute w-100'  variant="danger" style={{ "top": "0", "left": "0px" }} onClose={() => setShow(false)} dismissible>
+       {/* {show && <Alert className='pb-0 position-absolute w-100'  variant="danger" style={{ "top": "0", "left": "0px" }} onClose={() => setShow(false)} dismissible>
                     <p>{props.createLogin.error}</p>
-             </Alert>  }
-          
-      {/* {show && <span>{toast.success(props.createLogin.error)} </span>} */}
+             </Alert>  } */}
+          {console.log(show)}
+      {show && <div>{toast.success(props.createLogin.error)} </div>}
          <ToastContainer/>  
+
       <div className="auth-wrapper" >
         <div className="auth-inner" >
           <Form onSubmit={HandleSubmit}>
@@ -123,7 +124,6 @@ export function Login(props) {
               <input type="email" onChange={handleChange} className="form-control" name='email' placeholder="Enter email" />
               <div style={{ color: '#f50000' }}>{login.errors.email}</div>
             </div>
-
             <div className="form-group">
               <label>Password</label>
               <input type="password" onChange={handleChange} className="form-control" name='password' placeholder="Enter password" />

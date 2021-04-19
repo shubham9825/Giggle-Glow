@@ -36,24 +36,31 @@ function SuggestionRecord(props) {
             }
             <br /><br /><br />
             {/* Get Table Data */}
-            {props.CreateSuggestion.getData.length > 0 &&
-                <Table striped responsive hover className='container'>
-                    <thead>
-                        <tr>
-                            <th className="text-center">Response</th>
-                            <th className="text-center">Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {props.CreateSuggestion.getData.map(data =>
-                            <tr key={data._id}>
-                                <td>{data.suggest}</td>
-                                <td><Button onClick={() => onDeleteData(data)}>Delete</Button></td>
-                            </tr>
-                        )}
-                    </tbody>
-                </Table>
-            }
+            <div className='container card-header'>
+                <h3 className="fa fa-table" style={{ fontSize: "20px" }}> Suggestion Details</h3><br />
+                <div className="card-body">
+                    <div className="table-responsive">
+                        {props.CreateSuggestion.getData.length > 0 &&
+                            <Table striped responsive hover className='container'>
+                                <thead>
+                                    <tr>
+                                        <th className="text-center">Response</th>
+                                        <th className="text-center">Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {props.CreateSuggestion.getData.map(data =>
+                                        <tr key={data._id}>
+                                            <td>{data.suggest}</td>
+                                            <td><Button onClick={() => onDeleteData(data)}>Delete</Button></td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </Table>
+                        }
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }

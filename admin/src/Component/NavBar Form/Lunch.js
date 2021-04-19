@@ -35,7 +35,7 @@ function Lunch(props) {
     }
     //api calling
     const initialdata = {
-        _id:0,
+        _id: 0,
         food: '',
         suggest: ''
     }
@@ -112,23 +112,25 @@ function Lunch(props) {
     }
 
     //Message State
-    const [show, setShow] = useState(false) 
+    const [show, setShow] = useState(false)
     //Alert Message timing 
-    const MessageTime=()=>{
+    const MessageTime = () => {
         setTimeout(() => {
             setShow(false)
-          }, 4000)
+        }, 4000)
     }
     return (
-        <div>
-            {show && <Alert className='pb-0' variant="danger" onClose={() => setShow(false)} dismissible>
-                        <p>{props.CreateLunch.msg}{props.CreateLunch.error}</p>
-                  </Alert>
-            }
-            
+        <div className="position-relative">
+             {show && <Alert className='pb-0 position-absolute w-100' style={{ "top": "0", "left": "0px" }} variant="danger" onClose={() => setShow(false)} dismissible>
+                     <p>{props.CreateLunch.msg}{props.CreateLunch.error}</p>
+                      </Alert>
+            }<br/>
+
             <Form className="container mt-5" onSubmit={HandleSubmit} >
                 <fieldset>
                     <legend>Lunch</legend>
+                    <hr className='m-0' style={{ background: 'rgb(148, 141, 141)' }}></hr>
+                    <br />
                     <Form.Group>
                         <Form.Label>State</Form.Label>
                         <Form.Control as="select" onChange={HandleChange} value={data.food} name="food" >
@@ -151,31 +153,38 @@ function Lunch(props) {
             </Form><br /><br />
 
             {/* Get Table Data */}
-            {props.CreateLunch.getData.length > 0 &&
-                <Table striped responsive hover className='container'>
-                    <thead>
-                        <tr>
-                            <th>Food</th>
-                            <th>Suggest</th>
-                            <th>Edit | Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {props.CreateLunch.getData.map(theData =>
-                            <tr key={theData._id}>
-                                <td>{theData.food}</td>
-                                <td>{theData.suggest}</td>
-                                <td>
-                                    <ButtonGroup>
-                                         <Button onClick={() => EditUser(theData)}>Edit</Button>&nbsp;&nbsp;
+            <div className='container card-header'>
+                <h3 className="fa fa-table" style={{ fontSize: "20px" }}> Lunch Details</h3><br />
+                <div className="card-body">
+                    <div className="table-responsive">
+                        {props.CreateLunch.getData.length > 0 &&
+                            <Table striped responsive hover className='container'>
+                                <thead>
+                                    <tr>    
+                                        <th>Food</th>
+                                        <th>Suggest</th>
+                                        <th>Edit | Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {props.CreateLunch.getData.map(theData =>
+                                        <tr key={theData._id}>
+                                            <td>{theData.food}</td>
+                                            <td>{theData.suggest}</td>
+                                            <td>
+                                                <ButtonGroup>
+                                                    <Button onClick={() => EditUser(theData)}>Edit</Button>&nbsp;&nbsp;
                                          <Button onClick={() => onDeleteData(theData)}>Delete</Button>
-                                    </ButtonGroup>
-                                </td>
-                            </tr>
-                        )}
-                    </tbody>
-                </Table>
-            }
+                                                </ButtonGroup>
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </Table>
+                        }
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }

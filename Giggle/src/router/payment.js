@@ -13,6 +13,7 @@ router.get('/payments',async (req,res)=>{
 })
 
 router.post('/payments',async (req,res)=>{
+    console.log(req.body)
     try{
         const payments = new Payment(req.body)
         await payments.save()
@@ -24,7 +25,7 @@ router.post('/payments',async (req,res)=>{
 
 router.put('/payments/:id', async (req,res)=>{
     const update = Object.keys(req.body)
-    const allowedUpdates = ['date','installmetnum','installmetamt']
+    const allowedUpdates = ['date','entry_time','exit_time','total_time','fees']
     const isValidOperation = update.every((update) => allowedUpdates.includes(update))
 
     if(!isValidOperation){

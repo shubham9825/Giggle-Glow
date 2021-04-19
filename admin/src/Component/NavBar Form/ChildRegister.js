@@ -390,7 +390,7 @@ function ChildRegister(props) {
                     <Form.Group >
                         <Form.Label>Male or Female?</Form.Label>
                         <div onChange={HandleChange}>
-                            <Form.Check label="Male" type="radio" name="gender"  value="Male" />
+                            <Form.Check label="Male" type="radio" name="gender" value="Male" />
                             <Form.Check label="FeMale" type="radio" name="gender" value="Female" />
                         </div>
                         <div style={{ color: '#f50000' }} >{Register.errors.gender}</div>
@@ -500,7 +500,7 @@ function ChildRegister(props) {
                                             <td>
                                                 <ButtonGroup>
                                                     <Button onClick={() => updateData(theData)}>Edit</Button>&nbsp;&nbsp;
-                                         <Button onClick={() => deleteData(theData)}>Delete</Button>
+                                                    <Button onClick={() => deleteData(theData)}>Delete</Button>
                                                 </ButtonGroup>
                                             </td>
                                         </tr>

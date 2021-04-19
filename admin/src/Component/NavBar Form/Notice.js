@@ -8,10 +8,10 @@ export function Notice(props) {
     //for getdata
     useEffect(() => {
         props.GetNotice()
-    },[])
+    }, [])
 
     //delete
-    const delData = (thenotice)=>{
+    const delData = (thenotice) => {
         console.log(thenotice)
         props.delNoticeData(thenotice)
         setShow(true)
@@ -27,12 +27,12 @@ export function Notice(props) {
     })
 
     //update
-    const updateData =(tempUser)=>{
+    const updateData = (tempUser) => {
         setdata(tempUser)
-        notice.errors ={}
+        notice.errors = {}
     }
     const initialState = {
-        _id:0,
+        _id: 0,
         title: '',
         description: ''
     }
@@ -90,15 +90,15 @@ export function Notice(props) {
 
         if (validateForm(notice.errors)) {
             alert("Form Submitted")
-            if(data._id===0){
+            if (data._id === 0) {
                 delete data._id//delete
                 props.CreateNewNotice(data)
                 setShow(true)
                 MessageTime()
-            }else{
-                let tempUser={}
+            } else {
+                let tempUser = {}
                 tempUser._id = data._id
-                tempUser.title =data.title
+                tempUser.title = data.title
                 tempUser.description = data.description
                 props.updateNotice(tempUser)
                 setShow(true)
@@ -111,22 +111,25 @@ export function Notice(props) {
     }
 
     //Message State
-    const [show, setShow] = useState(false) 
+    const [show, setShow] = useState(false)
     //Alert Message timing 
-    const MessageTime=()=>{
+    const MessageTime = () => {
         setTimeout(() => {
             setShow(false)
-          }, 4000)
+        }, 4000)
     }
     return (
         <>
-        {show && <Alert className='pb-0' variant="danger" onClose={() => setShow(false)} dismissible>
-                        <p>{props.createNotice.msg}{props.createNotice.error}</p>
-                  </Alert>
-         }
+            <div className="position-relative">
+             {show && <Alert className='pb-0 position-absolute w-100' style={{ "top": "0", "left": "0px" }} variant="danger" onClose={() => setShow(false)} dismissible>
+                 <p>{props.createNotice.msg}{props.createNotice.error}</p>
+            </Alert>
+            }<br/>
             <Form className="container mt-5" onSubmit={HandleSubmit}>
                 <fieldset>
                     <legend>Notice</legend>
+                    <hr className='m-0' style={{ background: 'rgb(148, 141, 141)' }}></hr>
+                    <br />
                     <Form.Group>
                         <Form.Label>Notice Title</Form.Label>
                         <Form.Control type="text" name="title" onChange={HandleChange} placeholder="Enter Notice Heading." required value={data.title} />
@@ -140,33 +143,42 @@ export function Notice(props) {
                     <Button variant="primary" type="submit">Submit</Button>
                 </fieldset>
             </Form>
-            <br /><br /><br />
+            <br /><br />
+
             {/* Get Table Data */}
-            {props.createNotice.getData.length > 0 &&
-                <Table striped hover className='container'>
-                    <thead>
-                        <tr>
-                            <th className="text-center">Title</th>
-                            <th className="text-center">Description</th>
-                            <th>Edit | Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {props.createNotice.getData.map(theData =>
-                            <tr key={theData._id}>
-                                <td>{theData.title}</td>
-                                <td>{theData.description}</td>
-                                <td>
-                                    <ButtonGroup>
-                                       <Button onClick={()=> updateData(theData)}>Edit</Button>&nbsp;&nbsp;
-                                       <Button onClick={()=> delData(theData)}>Delete</Button>
-                                    </ButtonGroup>
-                                </td>
-                            </tr>
-                        )}
-                    </tbody>
-                </Table>
-            }
+            <div className='container card-header'>
+                <h3 className="fa fa-table" style={{ fontSize: "20px" }}> Inquiry Details</h3><br />
+                <div className="card-body">
+                    <div className="table-responsive">
+                        {props.createNotice.getData.length > 0 &&
+                            <Table striped hover className='container'>
+                                <thead>
+                                    <tr>
+                                        <th className="text-center">Title</th>
+                                        <th className="text-center">Description</th>
+                                        <th>Edit | Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {props.createNotice.getData.map(theData =>
+                                        <tr key={theData._id}>
+                                            <td>{theData.title}</td>
+                                            <td>{theData.description}</td>
+                                            <td>
+                                                <ButtonGroup>
+                                                    <Button onClick={() => updateData(theData)}>Edit</Button>&nbsp;&nbsp;
+                                       <Button onClick={() => delData(theData)}>Delete</Button>
+                                                </ButtonGroup>
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </Table>
+                        }
+                    </div>
+                </div>
+            </div>
+            </div>
         </>
     )
 }
@@ -181,8 +193,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         CreateNewNotice: (data) => dispatch(createNotice(data)),
         GetNotice: () => dispatch(getNotice()),
-        delNoticeData:(thenotice)=>dispatch(DelNotice(thenotice)),
-        updateNotice:(editData)=>dispatch(UpdateNotice(editData))
+        delNoticeData: (thenotice) => dispatch(DelNotice(thenotice)),
+        updateNotice: (editData) => dispatch(UpdateNotice(editData))
     }
 }
 

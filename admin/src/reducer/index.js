@@ -14,6 +14,7 @@ import { ForgotReducer } from './Forgot.reducer'
 import { GalleryReducer } from './Gallery.reducer'
 import { PloginReducer } from './Plogin.reducer'
 import { PforgotReducer } from './Pforgot.reducer'
+import {PaymentReducer} from './Payment.reducer'
 
 export * from './Formup.reducer'
 export * from './Contact.reducer'
@@ -31,6 +32,7 @@ export * from './Gallery.reducer'
 export * from './Plogin.reducer'
 export * from './Gallery.reducer'
 export * from './Pforgot.reducer'
+export * from './Payment.reducer'
 
 export const rootReducer=combineReducers({
     createFormup:FormupReducer,
@@ -47,5 +49,6 @@ export const rootReducer=combineReducers({
     createForgot:ForgotReducer,
     CreateGallery:GalleryReducer,
     createPlogin:PloginReducer,
-    createPforgot:PforgotReducer
+    createPforgot:PforgotReducer,
+    CratePayment:PaymentReducer
  })

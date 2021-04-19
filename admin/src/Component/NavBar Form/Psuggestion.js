@@ -87,11 +87,13 @@ function Suggestion(props) {
                 <p>{props.CreateSuggestion.msg}{props.CreateSuggestion.error}</p>
             </Alert>
             }
-            <br /><br />
+            <br /> 
 
             <Form className="container mt-5" onSubmit={HandleSubmit}>
                 <fieldset>
                     <legend>Suggestion</legend>
+                    <hr className='m-0' style={{ background: 'rgb(148, 141, 141)' }}></hr>
+                    <br />
                     <Form.Group>
                         <Form.Label>Suggestion </Form.Label>
                         <Form.Control as='textarea' value={data.suggest} rows={5} name="suggest" onChange={HandleChange} placeholder="Enter Your Suggestion" />

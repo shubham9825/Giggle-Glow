@@ -9,7 +9,7 @@ function Contact(props) {
     useEffect(() => {
         props.getContactdata()
     }, [])
-    
+
     const [Submit, SetSubmit] = useState({
         address: null,
         phone: null,
@@ -121,34 +121,36 @@ function Contact(props) {
                 MessageTime()
             }
             setdata(initialdata)
-            } else {
-                alert("Form Not Submitted")
-            }
+        } else {
+            alert("Form Not Submitted")
+        }
     }
     //edit user
     const EditUser = (tempUser) => {
         console.log(tempUser)
-        Submit.errors={}  //when data set in form then ir remove require word in form
+        Submit.errors = {}  //when data set in form then ir remove require word in form
         setdata(tempUser)
     }
 
-     //Message State
-     const [show, setShow] = useState(false) 
-     //Alert Message timing 
-     const MessageTime=()=>{
-         setTimeout(() => {
-             setShow(false)
-           }, 4000)
-     }
+    //Message State
+    const [show, setShow] = useState(false)
+    //Alert Message timing 
+    const MessageTime = () => {
+        setTimeout(() => {
+            setShow(false)
+        }, 4000)
+    }
     return (
         <div className="position-relative">
-        {show && <Alert className='pb-0 position-absolute w-100' style={{"top" : "0" , "left" : "0px"}} variant="danger" onClose={() => setShow(false)} dismissible>
-                        <p>{props.createContact.msg}{props.createContact.error}</p>
-                  </Alert>
-         }<br/> 
+            {show && <Alert className='pb-0 position-absolute w-100' style={{ "top": "0", "left": "5px" }} variant="danger" onClose={() => setShow(false)} dismissible>
+                <p>{props.createContact.msg}{props.createContact.error}</p>
+            </Alert>
+            }<br />
             <Form className="container pt-5" onSubmit={HandleSubmit} >
                 <fieldset>
                     <legend>Contact Us</legend>
+                    <hr className='m-0' style={{ background:'rgb(148, 141, 141)' }}></hr>
+                    <br />
                     <Form.Group>
                         <Form.Label>Address</Form.Label>
                         <Form.Control value={data.address} as="textarea" name="address" placeholder="Enter your daycare Address." rows={2} onChange={HandleChange} />
@@ -169,33 +171,40 @@ function Contact(props) {
             </Form><br /><br />
 
             {/* Get Table Data */}
-            {props.createContact.getData.length > 0 &&
-                <Table striped hover className='container'>
-                    <thead>
-                        <tr>
-                            <th>Address</th>
-                            <th>Phone No</th>
-                            <th>Email</th>
-                            <th>Edit | Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {props.createContact.getData.map(theData =>
-                            <tr key={theData._id}>
-                                <td>{theData.address}</td>
-                                <td>{theData.phone}</td>
-                                <td>{theData.email}</td>
-                                <td>
-                                    <ButtonGroup>
-                                         <Button onClick={() => EditUser(theData)}>Edit</Button>&nbsp;&nbsp;
+            <div className='container card-header'>
+                <h3 className="fa fa-table" style={{ fontSize: "20px" }}> Contact Details</h3><br />
+                <div className="card-body">
+                    <div className="table-responsive">
+                        {props.createContact.getData.length > 0 &&
+                            <Table striped hover className='container'>
+                                <thead>
+                                    <tr>
+                                        <th>Address</th>
+                                        <th>Phone No</th>
+                                        <th>Email</th>
+                                        <th>Edit | Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {props.createContact.getData.map(theData =>
+                                        <tr key={theData._id}>
+                                            <td>{theData.address}</td>
+                                            <td>{theData.phone}</td>
+                                            <td>{theData.email}</td>
+                                            <td>
+                                                <ButtonGroup>
+                                                    <Button onClick={() => EditUser(theData)}>Edit</Button>&nbsp;&nbsp;
                                          <Button onClick={() => onDeleteData(theData)}>Delete</Button>
-                                    </ButtonGroup>
-                                </td>
-                            </tr>
-                        )}
-                    </tbody>
-                </Table>
-            }
+                                                </ButtonGroup>
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </Table>
+                        }
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }

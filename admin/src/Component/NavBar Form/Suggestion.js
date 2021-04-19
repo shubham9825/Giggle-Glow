@@ -106,26 +106,28 @@ function Suggestion(props) {
         setdata(tempUser)
     }
 
-     //Message State
-     const [show, setShow] = useState(false) 
-    
-     //Alert Message timing 
-     const MessageTime=()=>{
-             setTimeout(() => {
-                 setShow(false)
-               }, 4000)
-     }
+    //Message State
+    const [show, setShow] = useState(false)
+
+    //Alert Message timing 
+    const MessageTime = () => {
+        setTimeout(() => {
+            setShow(false)
+        }, 4000)
+    }
     return (
         <>
 
             {show && <Alert className='pb-0' variant="danger" onClose={() => setShow(false)} dismissible>
-                        <p>{props.CreateSuggestion.msg}{props.CreateSuggestion.error}</p>
-                    </Alert>
+                <p>{props.CreateSuggestion.msg}{props.CreateSuggestion.error}</p>
+            </Alert>
             }
-            
+
             <Form className="container mt-5" onSubmit={HandleSubmit}>
                 <fieldset>
                     <legend>Suggestion</legend>
+                    <hr className='m-0' style={{ background: 'rgb(148, 141, 141)' }}></hr>
+                    <br />
                     <Form.Group>
                         <Form.Label>Suggestion </Form.Label>
                         <Form.Control as='textarea' value={data.suggest} rows={5} name="suggest" onChange={HandleChange} placeholder="Enter Your Suggestion" />
@@ -136,21 +138,28 @@ function Suggestion(props) {
             </Form>
 
             {/* Get Table Data */}
-            {props.CreateSuggestion.getData.length > 0 &&
-                <Table striped responsive hover className='container'>
-                    <thead>
-                        <tr><th colSpan="2" className="text-center">Response</th></tr>
-                    </thead>
-                    <tbody>
-                        {props.CreateSuggestion.getData.map(data =>
-                            <tr key={data._id}>
-                                <td>{data.suggest}</td>
-                                <td><Button onClick={() => EditUser(data)}>Edit</Button>&nbsp;&nbsp;<Button onClick={() => onDeleteData(data)}>Delete</Button></td>
-                            </tr>
-                        )}
-                    </tbody>
-                </Table>
-            }
+            <div className='container card-header'>
+                <h3 className="fa fa-table" style={{ fontSize: "20px" }}> Suggestion Details</h3><br />
+                <div className="card-body">
+                    <div className="table-responsive">
+                        {props.CreateSuggestion.getData.length > 0 &&
+                            <Table striped responsive hover className='table table-bordered'>
+                                <thead>
+                                    <tr><th colSpan="2" className="text-center">Response</th></tr>
+                                </thead>
+                                <tbody>
+                                    {props.CreateSuggestion.getData.map(data =>
+                                        <tr key={data._id}>
+                                            <td>{data.suggest}</td>
+                                            <td><Button onClick={() => EditUser(data)}>Edit</Button>&nbsp;&nbsp;<Button onClick={() => onDeleteData(data)}>Delete</Button></td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </Table>
+                        }
+                    </div>
+                </div>
+            </div>
         </>
     )
 }

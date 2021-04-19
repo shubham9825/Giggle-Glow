@@ -48,7 +48,7 @@ function Service(props) {
         tagline: '',
         long_question: '',
         image: ''
-    } 
+    }
 
     //message Display
     const [msg, setmsg] = useState('')
@@ -134,7 +134,7 @@ function Service(props) {
     }
 
     //display Previous updated Image
-    const [display,setdisplay]=useState(false)
+    const [display, setdisplay] = useState(false)
     //for image(use for store image object)
     const [dummy, setdummy] = useState('')
 
@@ -210,11 +210,13 @@ function Service(props) {
             {show && <Alert className='pb-0' variant="danger" onClose={() => setShow(false)} dismissible>
                 <p>{msg}{props.createService.msg}{props.createService.error}</p>
             </Alert>
-            }
-            
+            } <br/>
+
             <Form className='container mt-5 ' onSubmit={HandleSubmit}>
                 <fieldset>
                     <legend>Service</legend>
+                    <hr className='m-0' style={{ background: 'rgb(148, 141, 141)' }}></hr>
+                    <br />
                     <Form.Group>
                         <Form.Label>Service Name</Form.Label>
                         <Form.Control type="text" name="service_name" onChange={HandleChange} placeholder="Enter Service Name" value={data.service_name} />
@@ -236,45 +238,53 @@ function Service(props) {
                         <div style={{ color: '#f50000' }}>{services.errors.long_question}</div>
                     </Form.Group>
                     <Form.Group>
-                        <Form.File name="UploadImg" onChange={HandleImage} alt="Image Not Uploaded" label="Enter Image"></Form.File><br/>
-                        {display && <img style={{ width: '150px', height: '150px',cursor:'pointer' }} onClick={()=> window.open(`http://localhost:3001/service/${data.image}`, "_blank")} src={`http://localhost:3001/service/${data.image}`} alt='Image Not Found' />}
+                        <Form.File name="UploadImg" onChange={HandleImage} alt="Image Not Uploaded" label="Enter Image"></Form.File><br />
+                        {display && <img style={{ width: '150px', height: '150px', cursor: 'pointer' }} onClick={() => window.open(`http://localhost:3001/service/${data.image}`, "_blank")} src={`http://localhost:3001/service/${data.image}`} alt='Image Not Found' />}
                     </Form.Group>
                     <Button variant="primary" type="submit" >Submit</Button>
                 </fieldset>
             </Form><br /><br />
+
             {/* Get Table Data */}
-            {props.createService.getData.length > 0 &&
-                <Table striped hover className='container'>
-                    <thead>
-                        <tr>
-                            <th>Service Name</th>
-                            <th>Service Discription</th>
-                            <th>Service Tagline</th>
-                            <th>Service Question</th>
-                            <th>Image</th>
-                            <th>Edit | Delete </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {props.createService.getData.map(theData =>
-                            <tr key={theData._id}>
-                                <td>{theData.service_name}</td>
-                                <td>{theData.short_discription}</td>
-                                <td>{theData.tagline}</td>
-                                <td>{theData.long_question}</td>
-                                {/* When Click On Image Display Large Image */}
-                                <td style={{cursor:'pointer'}} onClick={()=> window.open(`http://localhost:3001/service/${theData.image}`, "_blank")}><img style={{ width: '150px', height: '150px',cursor:'pointer' }} src={`http://localhost:3001/service/${theData.image}`} alt='Image Not Found' /></td>
-                                <td>
-                                    <ButtonGroup>
-                                        <Button onClick={() => editUser(theData)}>Edit</Button>&nbsp;&nbsp;
+            <div className='container card-header'>
+                <h3 className="fa fa-table" style={{ fontSize: "20px" }}> Service Details</h3><br />
+                <div className="card-body">
+                    <div className="table-responsive">
+                        {props.createService.getData.length > 0 &&
+                            <Table striped responsive hover className='table table-bordered'>
+                                <thead>
+                                    <tr>
+                                        <th>Service Name</th>
+                                        <th>Service Discription</th>
+                                        <th>Service Tagline</th>
+                                        <th>Service Question</th>
+                                        <th>Image</th>
+                                        <th>Edit | Delete </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {props.createService.getData.map(theData =>
+                                        <tr key={theData._id}>
+                                            <td>{theData.service_name}</td>
+                                            <td>{theData.short_discription}</td>
+                                            <td>{theData.tagline}</td>
+                                            <td>{theData.long_question}</td>
+                                            {/* When Click On Image Display Large Image */}
+                                            <td style={{ cursor: 'pointer' }} onClick={() => window.open(`http://localhost:3001/service/${theData.image}`, "_blank")}><img style={{ width: '150px', height: '150px', cursor: 'pointer' }} src={`http://localhost:3001/service/${theData.image}`} alt='Image Not Found' /></td>
+                                            <td>
+                                                <ButtonGroup>
+                                                    <Button onClick={() => editUser(theData)}>Edit</Button>&nbsp;&nbsp;
                                         <Button onClick={() => deleteData(theData)}>Delete</Button>
-                                    </ButtonGroup>
-                                </td>
-                            </tr>
-                        )}
-                    </tbody>
-                </Table>
-            }
+                                                </ButtonGroup>
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </Table>
+                        }
+                    </div>
+                </div>
+            </div>
         </>
     )
 }

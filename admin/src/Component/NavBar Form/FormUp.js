@@ -4,7 +4,7 @@ import { Form, Button, Table, Alert, ButtonGroup } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { createFormup, GetFormup, DelFormup, UpdateFormup } from '../../actions/Formup.action'
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'; 
+import 'react-toastify/dist/ReactToastify.css';
 
 function FormUp(props) {
     //get request
@@ -24,9 +24,9 @@ function FormUp(props) {
     const deleteData = (theformup) => {
         console.log(theformup)
         props.delFormupdata(theformup)
-         //alert
-         setShow(true)
-         MessageTime()
+        //alert
+        setShow(true)
+        MessageTime()
     }
 
     //edit
@@ -60,7 +60,7 @@ function FormUp(props) {
                 errors.response = ''
                 break
         }
-        
+
         setdata({
             ...data,
             [name]: value
@@ -101,6 +101,7 @@ function FormUp(props) {
                 setShow(true)
                 MessageTime()
             }
+            setShow(false)
             setdata(initialdata)
         } else {
             alert("Form Not Submitted")
@@ -108,61 +109,71 @@ function FormUp(props) {
         }
     }
     //Message State
-    const [show, setShow] = useState(false) 
-    
+    const [show, setShow] = useState(false)
+
     //Alert Message timing 
-    const MessageTime=()=>{
-            setTimeout(() => {
-                setShow(false)
-              }, 5000)
+    const MessageTime = () => {
+        setTimeout(() => {
+            setShow(false)
+        }, 5000)
     }
     return (
         <>
-        <div className="position-relative">
-            {show && <Alert className='pb-0 position-absolute  w-100' style={{transition:'0.2s'}} style={{"top" : "0" , "left" : "7px"}} variant="danger" onClose={() => setShow(false)} dismissible>
-                        <p>{props.createFormup.msg}{props.createFormup.error}</p>
-                    </Alert>
-            } <br/>
-            
-            <ToastContainer />
-            <Form className="container pt-5" onSubmit={HandleSubmit}>
-                <fieldset>
-                    <legend>Form Up/Inqurie Response </legend>  
-                    <Form.Group>
-                        <Form.Label>Response of Inquirers</Form.Label>
-                        <Form.Control value={data.response} as="textarea" name="response" onChange={HandleChange} placeholder="Enter Response of Inquirers." rows={3} />
-                        <div style={{ color: '#f50000' }}>{formup.errors.response}</div>
-                    </Form.Group>
-                    <Button variant="primary" type="submit">Submit</Button>
-                </fieldset>
-            </Form><br /><br />
-            
-            {/* Get Table Data */}
-            {props.createFormup.getData.length > 0 &&
-                <Table striped hover className='container'>
-                    <thead>
-                        <tr>
-                            <th className="text-center">Response</th>
-                            <th className="text-center">Edit / Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {props.createFormup.getData.map(theData =>
-                            <tr key={theData._id}>
-                                <td>{theData.response}</td>
-                                {/* <td><Button onClick={() => editUser(theData)}>Edit</Button></td>
-                                <td><Button onClick={() => deleteData(theData)}>Delete</Button></td> */}
-                                <td>
-                                    <ButtonGroup>
-                                         <Button onClick={() => editUser(theData)}>Edit</Button>&nbsp;&nbsp;
-                                         <Button onClick={() => deleteData(theData)}>Delete</Button>
-                                    </ButtonGroup>
-                                </td>
-                            </tr>
-                        )}
-                    </tbody>
-                </Table>
-            }
+            <div className="position-relative">
+                {show && <Alert className='pb-0 position-absolute  w-100' style={{ "top": "0", "left": "5px" }} variant="danger" onClose={() => setShow(false)} dismissible>
+                    <p>{props.createFormup.msg}{props.createFormup.error}</p>
+                </Alert>
+                } <br />
+
+                {console.log(show)}
+                {show && toast.success(props.createFormup.msg)}
+                <ToastContainer />
+
+                <Form className="container pt-5" onSubmit={HandleSubmit}>
+                    <fieldset>
+                        <legend>FormUp/Inqurie Response </legend>
+                        <hr className='m-0' style={{ background: 'rgb(148, 141, 141)' }}></hr>
+                        <br />
+                        <Form.Group>
+                            <Form.Label>Response of Inquirers</Form.Label>
+                            <Form.Control value={data.response} as="textarea" name="response" onChange={HandleChange} placeholder="Enter Response of Inquirers." rows={3} />
+                            <div style={{ color: '#f50000' }}>{formup.errors.response}</div>
+                        </Form.Group>
+                        <Button variant="primary" type="submit">Submit</Button>
+                    </fieldset>
+                </Form><br /><br />
+
+                {/* Get Table Data */}
+                <div className='container card-header'>
+                    <h3 className="fa fa-table" style={{ fontSize: "20px" }}> FormUp Details</h3><br />
+                    <div className="card-body">
+                        <div className="table-responsive">
+                            {props.createFormup.getData.length > 0 &&
+                                <Table striped responsive hover className='table table-bordered'>
+                                    <thead>
+                                        <tr>
+                                            <th className="text-center">Response</th>
+                                            <th className="text-center">Edit / Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {props.createFormup.getData.map(theData =>
+                                            <tr key={theData._id}>
+                                                <td>{theData.response}</td>
+                                                <td>
+                                                    <ButtonGroup>
+                                                        <Button onClick={() => editUser(theData)}>Edit</Button>&nbsp;&nbsp;
+                                                        <Button onClick={() => deleteData(theData)}>Delete</Button>
+                                                    </ButtonGroup>
+                                                </td>
+                                            </tr>
+                                        )}
+                                    </tbody>
+                                </Table>
+                            }
+                        </div>
+                    </div>
+                </div>
             </div>
         </>
     )

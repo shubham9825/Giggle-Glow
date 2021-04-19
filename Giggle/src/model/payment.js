@@ -6,15 +6,25 @@ const paymentSchema = new mongoose.Schema({
         trim:true,
         required:true
     },
-    installmetnum:{
-        type:Number,
+    entry_time:{
+        type:String,
         trim:true,
         required:true
     },
-    installmetamt:{
-        type:Number,
+    exit_time:{
+        type:String,
         trim:true,
         required:true
+    },
+    total_time:{
+        type:String,
+        trim:true,
+        required:true
+    },
+    fees:{
+        type:Number,
+        trim:true,
+        required:true 
     }
 },{
     timestamps:true
