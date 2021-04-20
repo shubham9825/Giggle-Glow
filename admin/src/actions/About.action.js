@@ -1,23 +1,23 @@
-import {CREATE_USER_REQUEST,CREATE_USER_SUCCESS,CREATE_USER_FAIL,GET_USER_FAIL, GET_USER_REQUEST, GET_USER_SUCCESS,DELETE_USER_FAIL, DELETE_USER_REQUEST, DELETE_USER_SUCCESS } from '../constant'
+import {GET_USER_FAIL, GET_USER_REQUEST, GET_USER_SUCCESS,DELETE_USER_FAIL, DELETE_USER_REQUEST, DELETE_USER_SUCCESS } from '../constant'
 import axios from 'axios'
-import { UPDATE_USER_FAIL, UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS } from '../constant/about.constant'
+import { CREATE_ABOUT_FAIL, CREATE_ABOUT_REQUEST, CREATE_ABOUT_SUCCESS, UPDATE_USER_FAIL, UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS } from '../constant/about.constant'
  
 //post Request
 export const createAbout=(Data)=>{
     const createDataRequest=()=>{
         return{
-            type:CREATE_USER_REQUEST
+            type:CREATE_ABOUT_REQUEST
         }
     }
     const createDataSuccess=(newData)=>{
         return{
-            type:CREATE_USER_SUCCESS,
+            type:CREATE_ABOUT_SUCCESS,
             payload:newData
         }
     }
     const createDataFail=(error)=>{
         return{
-            type:CREATE_USER_FAIL,
+            type:CREATE_ABOUT_FAIL,
             error
         }
     }

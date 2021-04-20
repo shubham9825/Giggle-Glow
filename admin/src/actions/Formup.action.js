@@ -1,4 +1,7 @@
-import { CREATE_USER_REQUEST, CREATE_USER_SUCCESS, CREATE_USER_FAIL, GET_USER_REQUEST, GET_USER_SUCCESS, GET_USER_FAIL, DELETE_USER_REQUEST, DELETE_USER_SUCCESS, DELETE_USER_FAIL, UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS, UPDATE_USER_FAIL } from "../constant/formup.constant"
+import { CREATE_USER_REQUEST, CREATE_USER_SUCCESS, CREATE_USER_FAIL,
+     GET_USER_REQUEST, GET_USER_SUCCESS, GET_USER_FAIL, 
+     FDELETE_USER_REQUEST, FDELETE_USER_SUCCESS, FDELETE_USER_FAIL, 
+     UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS, UPDATE_USER_FAIL } from "../constant/formup.constant"
 import axios from 'axios'
 
 //Post Request
@@ -80,18 +83,18 @@ export const GetFormup = () => {
 export const DelFormup = (theformup) => {
     const delDataRequest = () => {
         return {
-            type: DELETE_USER_REQUEST
+            type: FDELETE_USER_REQUEST
         }
     }
     const delDataSuccess = (delData) => {
         return {
-            type: DELETE_USER_SUCCESS,
+            type: FDELETE_USER_SUCCESS,
             payload: delData
         }
     }
     const delDataFail = (error) => {
         return {
-            type: DELETE_USER_FAIL,
+            type: FDELETE_USER_FAIL,
             error
         }
     }
@@ -102,7 +105,7 @@ export const DelFormup = (theformup) => {
             console.log(response)
             if (response.status === 200) {
                 dispatch(delDataSuccess(response.data))
-                dispatch(GetFormup())
+                //dispatch(GetFormup())
             } else {
                 dispatch(delDataFail('Sorry We Failed to Delete Data!!! Try Again...'))
             }

@@ -1,5 +1,5 @@
-import {CREATE_USER_REQUEST,CREATE_USER_SUCCESS,CREATE_USER_FAIL,GET_USER_FAIL, GET_USER_REQUEST, GET_USER_SUCCESS,DELETE_USER_FAIL, DELETE_USER_REQUEST, DELETE_USER_SUCCESS} from '../constant'
-import { UPDATE_USER_FAIL, UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS } from '../constant/about.constant'
+import { GET_USER_FAIL, GET_USER_REQUEST, GET_USER_SUCCESS,DELETE_USER_FAIL, DELETE_USER_REQUEST, DELETE_USER_SUCCESS} from '../constant'
+import { CREATE_ABOUT_FAIL, CREATE_ABOUT_REQUEST, CREATE_ABOUT_SUCCESS, UPDATE_USER_FAIL, UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS } from '../constant/about.constant'
 
 const initialstate={
     isLoading:false,
@@ -13,14 +13,14 @@ const initialstate={
 
 export const AboutReducer=(state=initialstate,action)=>{
     switch(action.type){
-        case CREATE_USER_REQUEST:
+        case CREATE_ABOUT_REQUEST:
             return{
                 ...state,
                 isLoading:true,
                 error:'',
                 newData:null
             }
-        case CREATE_USER_SUCCESS:
+        case CREATE_ABOUT_SUCCESS:
             return{
                 ...state,
                 isLoading:false,
@@ -28,7 +28,7 @@ export const AboutReducer=(state=initialstate,action)=>{
                 newData:action.payload,
                 msg:'Form Created Successfully...'
             }
-        case CREATE_USER_FAIL:
+        case CREATE_ABOUT_FAIL:
             return{
                 ...state,
                 isLoading:false,

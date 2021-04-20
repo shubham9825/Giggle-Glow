@@ -3,9 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Form, Button, Table, Alert, ButtonGroup } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { createFormup, GetFormup, DelFormup, UpdateFormup } from '../../actions/Formup.action'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
+ 
 function FormUp(props) {
     //get request
     useEffect(() => {
@@ -117,6 +115,7 @@ function FormUp(props) {
             setShow(false)
         }, 5000)
     }
+
     return (
         <>
             <div className="position-relative">
@@ -124,11 +123,7 @@ function FormUp(props) {
                     <p>{props.createFormup.msg}{props.createFormup.error}</p>
                 </Alert>
                 } <br />
-
-                {console.log(show)}
-                {show && toast.success(props.createFormup.msg)}
-                <ToastContainer />
-
+                
                 <Form className="container pt-5" onSubmit={HandleSubmit}>
                     <fieldset>
                         <legend>FormUp/Inqurie Response </legend>

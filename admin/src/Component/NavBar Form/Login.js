@@ -5,9 +5,7 @@ import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import { CreateLogin } from '../../actions/Login.action';
 import { connect } from 'react-redux'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
+ 
 export function Login(props) {
   let history = useHistory()
   const [login, setlogin] = useState({
@@ -94,27 +92,23 @@ export function Login(props) {
       setShow(true)
       setdata(initialdata)
     } else {
-      alert("Please Fill Proper Form")
-      // setShow(true)
-      toast.error("Please Fill Proper Form");
+      alert("Please Fill Proper Form")       
     }
   }
 
   // Alert Message timing 
-  //  const MessageTime=()=>{
-  //          setTimeout(() => {
-  //              setShow(false)
-  //            }, 5000)
-  //  }
+   const MessageTime=()=>{
+           setTimeout(() => {
+               setShow(false)
+             }, 5000)
+   }
   return (
     <>
-       {/* {show && <Alert className='pb-0 position-absolute w-100'  variant="danger" style={{ "top": "0", "left": "0px" }} onClose={() => setShow(false)} dismissible>
+       {show && <Alert className='pb-0 position-absolute w-100'  variant="danger" style={{ "top": "0", "left": "0px" }} onClose={() => setShow(false)} dismissible>
                     <p>{props.createLogin.error}</p>
-             </Alert>  } */}
+             </Alert>  }
           {console.log(show)}
-      {show && <div>{toast.success(props.createLogin.error)} </div>}
-         <ToastContainer/>  
-
+    
       <div className="auth-wrapper" >
         <div className="auth-inner" >
           <Form onSubmit={HandleSubmit}>

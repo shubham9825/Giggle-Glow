@@ -15,9 +15,8 @@ import Logout from './Component/NavBar Form/Logout';
 import Plogout from './Component/NavBar Form/Plogout';
 import Nav from './Component/Nav'
 import Practice from './Component/NavBar Form/Practice';
-
+ 
 function App() {
-
   return (
     <>
       <Provider store={store}>
@@ -39,7 +38,7 @@ function App() {
                                                 path={theRouter.path}
                                                 exact={theRouter.exact}
                                                 key={index} >
-                                                 
+
                                                  <Nav></Nav>
                                                   <div>
                                                   <theRouter.main></theRouter.main>                                                

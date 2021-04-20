@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const paymentSchema = new mongoose.Schema({
-    date:{
+    t_date:{
         type:Date,
         trim:true,
         required:true

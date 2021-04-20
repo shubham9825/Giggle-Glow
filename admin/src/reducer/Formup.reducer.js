@@ -1,4 +1,7 @@
-import {CREATE_USER_REQUEST,CREATE_USER_SUCCESS,CREATE_USER_FAIL, GET_USER_REQUEST, GET_USER_SUCCESS, GET_USER_FAIL, DELETE_USER_REQUEST, DELETE_USER_SUCCESS, DELETE_USER_FAIL, UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS, UPDATE_USER_FAIL} from '../constant/formup.constant'
+import {CREATE_USER_REQUEST,CREATE_USER_SUCCESS,CREATE_USER_FAIL, GET_USER_REQUEST, 
+    GET_USER_SUCCESS, GET_USER_FAIL, 
+    FDELETE_USER_REQUEST, FDELETE_USER_SUCCESS, FDELETE_USER_FAIL, 
+    UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS, UPDATE_USER_FAIL} from '../constant/formup.constant'
 
 const initialstate={
     isLoading:false,
@@ -55,20 +58,20 @@ export const FormupReducer=(state=initialstate,action)=>{
                 error:action.error
             }
         //delete
-        case DELETE_USER_REQUEST:
+        case FDELETE_USER_REQUEST:
             return{
                 ...state,
                 isLoading:true,
                 error:''
             }
-        case DELETE_USER_SUCCESS:
+        case FDELETE_USER_SUCCESS:
             return{
                 ...state,
                 isLoading:false,
                 delData:action.payload,
                 msg:'Data Deleted SuccessFully...'          
             }
-        case DELETE_USER_FAIL:
+        case FDELETE_USER_FAIL:
             return{
                 ...state,
                 isLoading:false,

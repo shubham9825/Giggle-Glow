@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react'
 import { Form, Button, Table, ButtonGroup, Alert } from 'react-bootstrap'
 import { createAbout, GetAbout, DeleteAbout, UpdateAbout } from '../../actions/About.action'
 import { connect } from 'react-redux'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function About(props) {
     const [Submition, SetSubmition] = useState({
@@ -143,75 +145,77 @@ function About(props) {
             setShow(false)
         }, 4000)
     }
+    const tost = toast.success(props.createAbout.msg)
     return (
-        <div className="position-relative">
+        <>
+            <div className="position-relative">
+                {show && <Alert className='pb-0 position-absolute w-100' style={{ "top": "0", "left": "5px" }} variant="danger" onClose={() => setShow(false)} dismissible>
+                    <p>{props.createAbout.msg}{props.createAbout.error}</p>
+                </Alert>
+                } <br />
 
-            {show && <Alert className='pb-0 position-absolute w-100' style={{ "top": "0", "left": "5px" }} variant="danger" onClose={() => setShow(false)} dismissible>
-                <p>{props.createAbout.msg}{props.createAbout.error}</p>
-            </Alert>
-            }   <br />
-            <Form className="container pt-5" onSubmit={HandleSubmit}>
-                <fieldset>
-                    <legend>About</legend>
-                    <hr className='m-0' style={{ background: 'rgb(148, 141, 141)' }}></hr>
-                    <br />
-                    <Form.Group>
-                        <Form.Label>About</Form.Label>
-                        <Form.Control as="textarea" placeholder="Enter any fact's or about detail for your website."
-                            rows={2} onChange={HandleChange} name="about" value={data.about} />
-                        <div style={{ color: '#f50000' }} >{Submition.errors.about}</div>
-                    </Form.Group>
-                    <Form.Group>
-                        <Form.Label>Our Mission</Form.Label>
-                        <Form.Control as="textarea" placeholder="Enter your Mission." value={data.mission} rows={2} onChange={HandleChange} name="mission" />
-                        <div style={{ color: '#f50000' }} >{Submition.errors.mission}</div>
-                    </Form.Group>
-                    <Form.Group>
-                        <Form.Label>Our Vision</Form.Label>
-                        <Form.Control as="textarea" placeholder="Enter your Vision." value={data.vision} rows={2} onChange={HandleChange} name="vision" />
-                        <div style={{ color: '#f50000' }} >{Submition.errors.vision}</div>
-                    </Form.Group>
-                    <Button variant="primary" type="submit">Submit</Button>
-                </fieldset>
-            </Form><br /><br />
+                <Form className="container pt-5" onSubmit={HandleSubmit}>
+                    <fieldset>
+                        <legend>About</legend>
+                        <hr className='m-0' style={{ background: 'rgb(148, 141, 141)' }}></hr>
+                        <br />
+                        <Form.Group>
+                            <Form.Label>About</Form.Label>
+                            <Form.Control as="textarea" placeholder="Enter any fact's or about detail for your website."
+                                rows={2} onChange={HandleChange} name="about" value={data.about} />
+                            <div style={{ color: '#f50000' }} >{Submition.errors.about}</div>
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Our Mission</Form.Label>
+                            <Form.Control as="textarea" placeholder="Enter your Mission." value={data.mission} rows={2} onChange={HandleChange} name="mission" />
+                            <div style={{ color: '#f50000' }} >{Submition.errors.mission}</div>
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Our Vision</Form.Label>
+                            <Form.Control as="textarea" placeholder="Enter your Vision." value={data.vision} rows={2} onChange={HandleChange} name="vision" />
+                            <div style={{ color: '#f50000' }} >{Submition.errors.vision}</div>
+                        </Form.Group>
+                        <Button variant="primary" type="submit">Submit</Button>
+                    </fieldset>
+                </Form><br /><br />
 
-            {/* Get Table Data */}
-            <div className='container card-header'>
-                <h3 className="fa fa-table" style={{ fontSize: "20px" }}> About Details</h3><br />
-                <div className="card-body">
-                    <div className="table-responsive">
-                        {props.createAbout.getData.length > 0 &&
-                            <Table striped hover responsive className='table table-bordered'>
-                                <thead>
-                                    <tr>
-                                        <th>about</th>
-                                        <th>mission</th>
-                                        <th>vision</th>
-                                        <th>Edit | Delete</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {props.createAbout.getData.map(theData =>
-                                        <tr key={theData._id}>
-                                            <td>{theData.about}</td>
-                                            <td>{theData.mission}</td>
-                                            <td>{theData.vision}</td>
-                                            <td>
-                                                <ButtonGroup>
-                                                    <Button onClick={() => EditUser(theData)}>Edit</Button>&nbsp;&nbsp;
-                                         <Button onClick={() => onDeleteData(theData)}>Delete</Button>
-                                                </ButtonGroup>
-                                            </td>
+                {/* Get Table Data */}
+                <div className='container card-header'>
+                    <h3 className="fa fa-table" style={{ fontSize: "20px" }}> About Details</h3><br />
+                    <div className="card-body">
+                        <div className="table-responsive">
+                            {props.createAbout.getData.length > 0 &&
+                                <Table striped hover responsive className='table table-bordered'>
+                                    <thead>
+                                        <tr>
+                                            <th>about</th>
+                                            <th>mission</th>
+                                            <th>vision</th>
+                                            <th>Edit | Delete</th>
                                         </tr>
-                                    )}
-                                </tbody>
-                            </Table>
-                        }
+                                    </thead>
+                                    <tbody>
+                                        {props.createAbout.getData.map(theData =>
+                                            <tr key={theData._id}>
+                                                <td>{theData.about}</td>
+                                                <td>{theData.mission}</td>
+                                                <td>{theData.vision}</td>
+                                                <td>
+                                                    <ButtonGroup>
+                                                        <Button onClick={() => EditUser(theData)}>Edit</Button>&nbsp;&nbsp;
+                                         <Button onClick={() => onDeleteData(theData)}>Delete</Button>
+                                                    </ButtonGroup>
+                                                </td>
+                                            </tr>
+                                        )}
+                                    </tbody>
+                                </Table>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
-
-        </div>
+        </>
     )
 }
 

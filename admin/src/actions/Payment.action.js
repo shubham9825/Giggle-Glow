@@ -23,6 +23,7 @@ export const createPayment = (Data)=>{
     return async(dispatch)=>{
         console.log(Data)
         dispatch(createDataRequest())
+        console.log(Data)
         try{
             const response = await axios.post('http://localhost:3001/payments',Data)
             console.log(response)
