@@ -13,14 +13,15 @@ import Pforgot from './Component/NavBar Form/Pforgot'
 import Main from './Component/NavBar Form/Main'
 import Logout from './Component/NavBar Form/Logout';
 import Plogout from './Component/NavBar Form/Plogout';
-import Nav from './Component/Nav'
-import Practice from './Component/NavBar Form/Practice';
+  import Navbar from './Component/SideNav/Navbar';
+import Design from './Component/Page/Design';
  
 function App() {
   return (
     <>
       <Provider store={store}>
         <Router>
+              {/* <Design></Design> */}
           <Switch>
             <Route path='/' component={Main} exact={true}></Route> 
             {/* <Practice></Practice> */}
@@ -31,22 +32,19 @@ function App() {
             <Route path='/plogin' component={Plogin}></Route>
             <Route path='/plogout' component={Plogout}></Route>
             <Route path='/pforgot' component={Pforgot}></Route>  
-              <div className="content-wrapper">
-              <div className="container-fluid adminnav">
               {
               [...Sidebardata,...Psidebardata].map((theRouter,index)=><PrivateRoute 
                                                 path={theRouter.path}
                                                 exact={theRouter.exact}
                                                 key={index} >
 
-                                                 <Nav></Nav>
+                                                <Navbar></Navbar>
                                                   <div>
                                                   <theRouter.main></theRouter.main>                                                
                                                   </div>
                                                 </PrivateRoute>  
             )}
-          </div>
-          </div>
+          
          </Switch>
         </Router>    
       </Provider>
