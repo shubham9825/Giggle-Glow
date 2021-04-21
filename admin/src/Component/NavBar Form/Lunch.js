@@ -105,10 +105,10 @@ function Lunch(props) {
                 setShow(true)
                 MessageTime()
             }
+            setdata(initialdata)
         } else {
-            alert("Form Not Submitted")
+            alert('Please Fill Proper Form! !!')
         }
-        setdata(initialdata)
     }
 
     //Message State
@@ -118,6 +118,10 @@ function Lunch(props) {
         setTimeout(() => {
             setShow(false)
         }, 4000)
+    }
+    //reset button
+    const HandleReset = () => {
+        setdata(initialdata)
     }
     return (
         <div className="position-relative">
@@ -134,7 +138,7 @@ function Lunch(props) {
                     <Form.Group>
                         <Form.Label>State</Form.Label>
                         <Form.Control as="select" onChange={HandleChange} value={data.food} name="food" >
-                            <option>Choose Food...</option>
+                            <option hidden>Choose Food...</option>
                             <option>Wafer</option>
                             <option>Biscuit</option>
                             <option>Milk</option>
@@ -148,7 +152,8 @@ function Lunch(props) {
                         <Form.Control as='textarea' rows={5} name="suggest" value={data.suggest} onChange={HandleChange} placeholder="Enter Your Suggestion" />
                         <div style={{ color: '#f50000' }}>{lunch.errors.suggest}</div>
                     </Form.Group>
-                    <Button variant="primary" type="submit">Submit</Button>
+                    <Button variant="primary" type="submit">Submit</Button>&nbsp;&nbsp;
+                    <Button variant="primary" type="reset" onClick={HandleReset}>Reset</Button>
                 </fieldset>
             </Form><br /><br />
 
@@ -169,12 +174,12 @@ function Lunch(props) {
                                 <tbody>
                                     {props.CreateLunch.getData.map(theData =>
                                         <tr key={theData._id}>
-                                            <td>{theData.food}</td>
+                                            <td style={{width:'20%'}}>{theData.food}</td>
                                             <td>{theData.suggest}</td>
-                                            <td>
+                                            <td style={{width:'20%'}}>
                                                 <ButtonGroup>
-                                                    <Button onClick={() => EditUser(theData)}>Edit</Button>&nbsp;&nbsp;
-                                         <Button onClick={() => onDeleteData(theData)}>Delete</Button>
+                                                    <Button variant="success" onClick={() => EditUser(theData)}>Edit</Button>&nbsp;&nbsp;
+                                                   <Button variant="danger" onClick={() => onDeleteData(theData)}>Delete</Button>
                                                 </ButtonGroup>
                                             </td>
                                         </tr>

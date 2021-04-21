@@ -13,10 +13,10 @@ function Service(props) {
         tagline: null,
         long_question: null,
         errors: {
-            service_name: '*Required',
-            short_discription: '*Required',
-            tagline: '*Required',
-            long_question: '*Required'
+            service_name: ' ',
+            short_discription: ' ',
+            tagline: ' ',
+            long_question: ' '
         }
     })
 
@@ -41,7 +41,7 @@ function Service(props) {
     }
 
     //api call
-    const initialState = {
+    const initialdata = {
         _id: 0,
         service_name: '',
         short_discription: '',
@@ -50,10 +50,8 @@ function Service(props) {
         image: ''
     }
 
-    //message Display
-    const [msg, setmsg] = useState('')
     //api call
-    const [data, setdata] = useState(initialState)
+    const [data, setdata] = useState(initialdata)
 
     const HandleChange = (e) => {
         let name = e.target.name
@@ -64,6 +62,10 @@ function Service(props) {
             case 'service_name':
                 if (value.length < 3) {
                     errors.service_name = 'Service Name is Too Short!'
+                    break
+                }
+                if (value.trim() == '') {
+                    errors.service_name = '*Required'
                     break
                 }
                 if (!(/^[a-z A-Z]*$/g).test(value)) {
@@ -77,15 +79,15 @@ function Service(props) {
                     errors.short_discription = 'description is Too Short!'
                     break
                 }
-                if (!(/^[a-z A-Z]*$/g).test(value)) {
-                    errors.short_discription = 'Enter Alphabets only!'
+                if (value.trim() == '') {
+                    errors.short_discription = '*Required'
                     break
                 }
                 errors.short_discription = ''
                 break
             case 'tagline':
                 if (value.trim() == '') {
-                    errors.tagline = 'Required'
+                    errors.tagline = '*Required'
                     break
                 }
                 if (value.length < 3) {
@@ -103,8 +105,12 @@ function Service(props) {
                     errors.long_question = 'Tagline is Too Short!'
                     break
                 }
-                if (!(/^[a-zA-Z0-9   ]*$/g).test(value)) {
+                if (!(/^[a-zA-Z0-9]*$/g).test(value)) {
                     errors.long_question = 'Enter Alphabets only!'
+                    break
+                }
+                if (value.trim() == '') {
+                    errors.long_question = '*Required'
                     break
                 }
                 errors.long_question = ''
@@ -154,25 +160,30 @@ function Service(props) {
                 const formdata = new FormData()
                 formdata.append('file', dummy)
 
-                if (!dummy.name.match(/\.(jpg|jpeg|png|gif)$/)) {
-                    alert('Only Jpg , Jpeg , Png , Gif File Allowed!!!')
+                // Image upload condition
+                if (dummy == '') {
+                    alert('please Upload Image')
                 } else {
-                    delete data._id
-                    const dummydata = JSON.stringify(data)
-                    formdata.append('data', dummydata)
+                    if (!dummy.name.match(/\.(jpg|jpeg|png|gif)$/)) {
+                        alert('Only Jpg , Jpeg , Png , Gif File Allowed!!!')
+                    } else {
+                        delete data._id
+                        const dummydata = JSON.stringify(data)
+                        formdata.append('data', dummydata)
 
-                    const response = await axios.post('http://localhost:3001/services', formdata, {
-                        headers: {
-                            'Content-Type': 'multipart/form-data'
-                        }
-                    })
-                    console.log(response.data)
-                    setmsg('')
-                    props.createNewService(data)
-                    props.GetAllService()
-                    setShow(true)
-                    MessageTime()
-                    setdata(initialState)
+                        const response = await axios.post('http://localhost:3001/services', formdata, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
+                        })
+                        props.createNewService(data)
+                        props.GetAllService()
+                        setShow(true)
+                        MessageTime()
+                        e.target.reset()
+                        setdata(initialdata)
+                        setdisplay(false)
+                    }
                 }
             } else {
                 let tempUser = {}
@@ -183,15 +194,14 @@ function Service(props) {
                 tempUser.long_question = data.long_question
                 tempUser.image = data.image
                 props.updateSerivce(tempUser)
-                setmsg('')
                 setShow(true)
                 MessageTime()
-                setdata(initialState)
+                e.target.reset()
+                setdata(initialdata)
+                setdisplay(false)
             }
-            e.target.reset()
-            setdisplay(false)
         } else {
-            alert("Form Not Submitted")
+            alert('Please Fill Proper Form!!!')
         }
     }
 
@@ -205,83 +215,91 @@ function Service(props) {
         }, 4000)
     }
 
+    //reset button
+    const HandleReset = () => {
+        setdata(initialdata)
+        setdisplay(false)
+    }
     return (
         <>
-            {show && <Alert className='pb-0' variant="danger" onClose={() => setShow(false)} dismissible>
-                <p>{msg}{props.createService.msg}{props.createService.error}</p>
-            </Alert>
-            } <br/>
+            <div className="position-relative">
+                {show && <Alert className='pb-0 position-absolute w-100' style={{ "top": "0", "left": "0px" }} variant="danger" onClose={() => setShow(false)} dismissible>
+                    <p>{props.createService.msg}{props.createService.error}</p>
+                </Alert>
+                } <br />
 
-            <Form className='container mt-5 ' onSubmit={HandleSubmit}>
-                <fieldset>
-                    <legend>Service</legend>
-                    <hr className='m-0' style={{ background: 'rgb(148, 141, 141)' }}></hr>
-                    <br />
-                    <Form.Group>
-                        <Form.Label>Service Name</Form.Label>
-                        <Form.Control type="text" name="service_name" onChange={HandleChange} placeholder="Enter Service Name" value={data.service_name} />
-                        <div style={{ color: '#f50000' }}>{services.errors.service_name}</div>
-                    </Form.Group>
-                    <Form.Group>
-                        <Form.Label>Short Description</Form.Label>
-                        <Form.Control as="textarea" rows={2} name="short_discription" onChange={HandleChange} placeholder="Enter Short Discription" value={data.short_discription} />
-                        <div style={{ color: '#f50000' }}>{services.errors.short_discription}</div>
-                    </Form.Group>
-                    <Form.Group>
-                        <Form.Label>TagLine</Form.Label>
-                        <Form.Control type="text" name="tagline" onChange={HandleChange} placeholder="Enter TagLine" value={data.tagline} />
-                        <div style={{ color: '#f50000' }}>{services.errors.tagline}</div>
-                    </Form.Group>
-                    <Form.Group>
-                        <Form.Label>Long Question</Form.Label>
-                        <Form.Control as="textarea" name="long_question" onChange={HandleChange} rows={2} placeholder="Enter Your Question" value={data.long_question} />
-                        <div style={{ color: '#f50000' }}>{services.errors.long_question}</div>
-                    </Form.Group>
-                    <Form.Group>
-                        <Form.File name="UploadImg" onChange={HandleImage} alt="Image Not Uploaded" label="Enter Image"></Form.File><br />
-                        {display && <img style={{ width: '150px', height: '150px', cursor: 'pointer' }} onClick={() => window.open(`http://localhost:3001/service/${data.image}`, "_blank")} src={`http://localhost:3001/service/${data.image}`} alt='Image Not Found' />}
-                    </Form.Group>
-                    <Button variant="primary" type="submit" >Submit</Button>
-                </fieldset>
-            </Form><br /><br />
+                <Form className='container mt-5 ' onSubmit={HandleSubmit}>
+                    <fieldset>
+                        <legend>Service</legend>
+                        <hr className='m-0' style={{ background: 'rgb(148, 141, 141)' }}></hr>
+                        <br />
+                        <Form.Group>
+                            <Form.Label>Service Name</Form.Label>
+                            <Form.Control type="text" name="service_name" onChange={HandleChange} placeholder="Enter Service Name" value={data.service_name} />
+                            <div style={{ color: '#f50000' }}>{services.errors.service_name}</div>
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Short Description</Form.Label>
+                            <Form.Control as="textarea" rows={2} name="short_discription" onChange={HandleChange} placeholder="Enter Short Discription" value={data.short_discription} />
+                            <div style={{ color: '#f50000' }}>{services.errors.short_discription}</div>
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>TagLine</Form.Label>
+                            <Form.Control type="text" name="tagline" onChange={HandleChange} placeholder="Enter TagLine" value={data.tagline} />
+                            <div style={{ color: '#f50000' }}>{services.errors.tagline}</div>
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Long Question</Form.Label>
+                            <Form.Control as="textarea" name="long_question" onChange={HandleChange} rows={2} placeholder="Enter Your Question" value={data.long_question} />
+                            <div style={{ color: '#f50000' }}>{services.errors.long_question}</div>
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.File name="UploadImg" onChange={HandleImage} alt="Image Not Uploaded" label="Enter Image"></Form.File><br />
+                            {display && <img style={{ width: '150px', height: '150px', cursor: 'pointer' }} onClick={() => window.open(`http://localhost:3001/service/${data.image}`, "_blank")} src={`http://localhost:3001/service/${data.image}`} alt='Image Not Found' />}
+                        </Form.Group>
+                        <Button   type="submit" >Submit</Button>&nbsp;&nbsp;
+                        <Button variant="primary" type="reset" onClick={HandleReset}>Reset</Button>
+                    </fieldset>
+                </Form><br /><br />
 
-            {/* Get Table Data */}
-            <div className='container card-header'>
-                <h3 className="fa fa-table" style={{ fontSize: "20px" }}> Service Details</h3><br />
-                <div className="card-body">
-                    <div className="table-responsive">
-                        {props.createService.getData.length > 0 &&
-                            <Table striped responsive hover className='table table-bordered'>
-                                <thead>
-                                    <tr>
-                                        <th>Service Name</th>
-                                        <th>Service Discription</th>
-                                        <th>Service Tagline</th>
-                                        <th>Service Question</th>
-                                        <th>Image</th>
-                                        <th>Edit | Delete </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {props.createService.getData.map(theData =>
-                                        <tr key={theData._id}>
-                                            <td>{theData.service_name}</td>
-                                            <td>{theData.short_discription}</td>
-                                            <td>{theData.tagline}</td>
-                                            <td>{theData.long_question}</td>
-                                            {/* When Click On Image Display Large Image */}
-                                            <td style={{ cursor: 'pointer' }} onClick={() => window.open(`http://localhost:3001/service/${theData.image}`, "_blank")}><img style={{ width: '150px', height: '150px', cursor: 'pointer' }} src={`http://localhost:3001/service/${theData.image}`} alt='Image Not Found' /></td>
-                                            <td>
-                                                <ButtonGroup>
-                                                    <Button onClick={() => editUser(theData)}>Edit</Button>&nbsp;&nbsp;
-                                        <Button onClick={() => deleteData(theData)}>Delete</Button>
-                                                </ButtonGroup>
-                                            </td>
+                {/* Get Table Data */}
+                <div className='container card-header'>
+                    <h3 className="fa fa-table" style={{ fontSize: "20px" }}> Service Details</h3><br />
+                    <div className="card-body">
+                        <div className="table-responsive">
+                            {props.createService.getData.length > 0 &&
+                                <Table striped responsive hover className='table table-bordered'>
+                                    <thead>
+                                        <tr>
+                                            <th>Service Name</th>
+                                            <th>Service Discription</th>
+                                            <th>Service Tagline</th>
+                                            <th>Service Question</th>
+                                            <th>Image</th>
+                                            <th>Edit | Delete </th>
                                         </tr>
-                                    )}
-                                </tbody>
-                            </Table>
-                        }
+                                    </thead>
+                                    <tbody>
+                                        {props.createService.getData.map(theData =>
+                                            <tr key={theData._id}>
+                                                <td>{theData.service_name}</td>
+                                                <td>{theData.short_discription}</td>
+                                                <td>{theData.tagline}</td>
+                                                <td>{theData.long_question}</td>
+                                                {/* When Click On Image Display Large Image */}
+                                                <td style={{ cursor: 'pointer' }} onClick={() => window.open(`http://localhost:3001/service/${theData.image}`, "_blank")}><img style={{ width: '150px', height: '150px', cursor: 'pointer' }} src={`http://localhost:3001/service/${theData.image}`} alt='Image Not Found' /></td>
+                                                <td>
+                                                    <ButtonGroup>
+                                                        <Button variant="success" onClick={() => editUser(theData)}>Edit</Button>&nbsp;&nbsp;
+                                                        <Button variant="danger" onClick={() => deleteData(theData)}>Delete</Button>
+                                                    </ButtonGroup>
+                                                </td>
+                                            </tr>
+                                        )}
+                                    </tbody>
+                                </Table>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>

@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { createPayment } from '../../actions/Payment.action'
+import TimePicker from 'react-time-picker';
+
 
 function Payment(props) {
     const [payments, setpayments] = useState({
@@ -96,6 +98,8 @@ function Payment(props) {
             alert("Form Not Submitted")
         }
     }
+    
+    const [value, onChange] = useState('10:00');
 
     return (
         <>
@@ -103,6 +107,10 @@ function Payment(props) {
             <Form className="container mt-5" onSubmit={HandleSubmit}>
                 <fieldset>
                     <legend>Payment / Fees</legend>
+                    <TimePicker
+        onChange={onChange}
+        value={value}
+      />
                     <Form.Group>
                         <Form.Label>Date</Form.Label>
                         <Form.Control type="date" name="t_date" data-date="" data-date-format="YYYY-MM-DD" onChange={HandleChange} placeholder="Enter Date." />
@@ -111,7 +119,7 @@ function Payment(props) {
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Entry Time</Form.Label>
-                        <Form.Control type="time" name="entry_time" onChange={HandleChange} placeholder="Enter Entry Time." />
+                        <Form.Control pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]" type="text" name="entry_time" onChange={HandleChange} placeholder="Enter Entry Time." />
                         <div style={{ color: '#f50000' }}>{payments.errors.entry_time}</div>
                     </Form.Group>
                     <Form.Group>

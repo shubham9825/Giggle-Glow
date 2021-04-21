@@ -56,7 +56,7 @@ export function Notice(props) {
                     errors.description = 'Required'
                     break
                 }
-                if (value.length < 5 && value.length > 300) {
+                if (value.length < 5  ) {
                     errors.description = 'description is Too Short!'
                     break
                 }
@@ -106,7 +106,7 @@ export function Notice(props) {
             }
             setdata(initialState)
         } else {
-            alert("Form Not Submitted")
+            alert('Please Fill Proper Form!!!')
         }
     }
 
@@ -117,6 +117,10 @@ export function Notice(props) {
         setTimeout(() => {
             setShow(false)
         }, 4000)
+    }
+    //reset button
+    const HandleReset = () => {
+        setdata(initialState)
     }
     return (
         <>
@@ -132,15 +136,17 @@ export function Notice(props) {
                     <br />
                     <Form.Group>
                         <Form.Label>Notice Title</Form.Label>
-                        <Form.Control type="text" name="title" onChange={HandleChange} placeholder="Enter Notice Heading." required value={data.title} />
+                        <Form.Control type="text" name="title" onChange={HandleChange} placeholder="Enter Notice Heading." value={data.title} />
                         <div style={{ color: '#f50000' }}>{notice.errors.title}</div>
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Notice Description</Form.Label>
-                        <Form.Control as="textarea" name="description" onChange={HandleChange} placeholder="Enter Notice." required value={data.description} rows={3} />
+                        <Form.Control as="textarea" name="description" onChange={HandleChange} placeholder="Enter Notice." value={data.description} rows={3} />
                         <div style={{ color: '#f50000' }}>{notice.errors.description}</div>
                     </Form.Group>
-                    <Button variant="primary" type="submit">Submit</Button>
+                    <Button variant="primary" type="submit">Submit</Button>&nbsp;&nbsp;
+                    <Button variant="primary" type="reset" onClick={HandleReset}>Reset</Button>
+                    
                 </fieldset>
             </Form>
             <br /><br />
@@ -151,7 +157,7 @@ export function Notice(props) {
                 <div className="card-body">
                     <div className="table-responsive">
                         {props.createNotice.getData.length > 0 &&
-                            <Table striped hover className='container'>
+                            <Table striped responsive hover className='table table-bordered'>
                                 <thead>
                                     <tr>
                                         <th className="text-center">Title</th>
@@ -162,12 +168,12 @@ export function Notice(props) {
                                 <tbody>
                                     {props.createNotice.getData.map(theData =>
                                         <tr key={theData._id}>
-                                            <td>{theData.title}</td>
+                                            <td style={{width:'20%'}}>{theData.title}</td>
                                             <td>{theData.description}</td>
-                                            <td>
+                                            <td style={{width:'20%'}}>
                                                 <ButtonGroup>
-                                                    <Button onClick={() => updateData(theData)}>Edit</Button>&nbsp;&nbsp;
-                                       <Button onClick={() => delData(theData)}>Delete</Button>
+                                                    <Button variant="success" onClick={() => updateData(theData)}>Edit</Button>&nbsp;&nbsp;
+                                                    <Button variant="danger"onClick={() => delData(theData)}>Delete</Button>
                                                 </ButtonGroup>
                                             </td>
                                         </tr>

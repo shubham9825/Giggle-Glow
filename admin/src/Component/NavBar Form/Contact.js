@@ -15,9 +15,9 @@ function Contact(props) {
         phone: null,
         email: null,
         errors: {
-            address: '*Required',
-            phone: '*Required',
-            email: '*Required'
+            address: ' ',
+            phone: ' ',
+            email: ' '
         }
     })
 
@@ -66,7 +66,7 @@ function Contact(props) {
                     break
                 }
                 if (!(/^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/).test(value)) {
-                    errors.phone = 'Only 10 Number Allowed...!'
+                    errors.phone = 'Mobile Number Incorrect...!'
                     break
                 }
                 errors.phone = ''
@@ -122,7 +122,7 @@ function Contact(props) {
             }
             setdata(initialdata)
         } else {
-            alert("Form Not Submitted")
+            alert('Please Fill Proper Form!!!')
         }
     }
     //edit user
@@ -140,9 +140,14 @@ function Contact(props) {
             setShow(false)
         }, 4000)
     }
+
+    //reset button
+    const HandleReset = () => {
+        setdata(initialdata)
+    }
     return (
         <div className="position-relative">
-            {show && <Alert className='pb-0 position-absolute w-100' style={{ "top": "0", "left": "5px" }} variant="danger" onClose={() => setShow(false)} dismissible>
+            {show && <Alert className='pb-0 position-absolute w-100' style={{ "top": "0", "left": "0" }} variant="danger" onClose={() => setShow(false)} dismissible>
                 <p>{props.createContact.msg}{props.createContact.error}</p>
             </Alert>
             }<br />
@@ -166,7 +171,8 @@ function Contact(props) {
                         <Form.Control type="email" value={data.email} name="email" placeholder="Enter your Email." onChange={HandleChange} />
                         <div style={{ color: '#f50000' }} >{Submit.errors.email}</div>
                     </Form.Group>
-                    <Button variant="primary" type="submit">Submit</Button>
+                    <Button variant="primary" type="submit">Submit</Button>&nbsp;&nbsp;
+                    <Button variant="primary" type="reset" onClick={HandleReset}>Reset</Button>
                 </fieldset>
             </Form><br /><br />
 
@@ -193,8 +199,8 @@ function Contact(props) {
                                             <td>{theData.email}</td>
                                             <td>
                                                 <ButtonGroup>
-                                                    <Button onClick={() => EditUser(theData)}>Edit</Button>&nbsp;&nbsp;
-                                         <Button onClick={() => onDeleteData(theData)}>Delete</Button>
+                                                    <Button variant="success" onClick={() => EditUser(theData)}>Edit</Button>&nbsp;&nbsp;
+                                                    <Button variant="danger" onClick={() => onDeleteData(theData)}>Delete</Button>
                                                 </ButtonGroup>
                                             </td>
                                         </tr>

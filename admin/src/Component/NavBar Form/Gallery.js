@@ -33,7 +33,7 @@ function Gallery(props) {
         formData.append('file', data);
         console.log(data.name)
         if (data.name == null) {
-            alert('Please Upload File!!!')
+            alert('Please Fill Proper Form!!!')
         } else {
             if (!data.name.match(/\.(jpg|jpeg|png|gif)$/)) {
                 alert('Only Jpg , Jpeg , Png , Gif File Allowed!!!')
@@ -137,21 +137,21 @@ function Gallery(props) {
                             <Table striped hover className='container'>
                                 <thead>
                                     <tr>
-                                        <th className="text-center">Response</th>
+                                        <th>Response</th>
                                         <th className="text-center">Image</th>
-                                        <th className="text-center">Delete</th>
+                                        <th>Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {props.creategallery.getData.map(theData =>
                                         <tr key={theData._id}>
-                                            <td>{theData.fileName}</td>
+                                            <td style={{width:"30%"}}>{theData.fileName}</td>
                                             <td>
                                                 <img style={{ width: '150px', height: '150px', cursor: 'pointer',display: 'block',marginRight: 'auto',marginLeft: 'auto' }} onClick={() => window.open(`http://localhost:3001/${theData.fileName}`, "_blank")} src={`http://localhost:3001/${theData.fileName}`} alt="Image Not Found" />
                                             </td>
-                                            <td>
+                                            <td style={{width:"20%"}}>
                                                 <ButtonGroup>
-                                                    <Button onClick={() => deleteData(theData)}>Delete</Button>
+                                                    <Button variant="danger" style={{display: 'flex', justifyContent: 'center'}}  onClick={() => deleteData(theData)}>Delete</Button>
                                                 </ButtonGroup>
                                             </td>
                                         </tr>

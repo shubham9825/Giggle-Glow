@@ -44,10 +44,9 @@ function Inqurie(props) {
             {show && <Alert className='pb-0 position-absolute w-100' style={{ "top": "0", "left": "0px" }} variant="danger" onClose={() => setShow(false)} dismissible>
                 <p>{props.createInquiry.msg}{props.createInquiry.error}</p>
             </Alert>
-            }
-            <br /><br />
-
-            {/* Get Table Data */}
+            } <br/>
+           
+            {/* Get Table Data */} <br /><br />
             <div className='container card-header'>
                 <h3 className="fa fa-table" style={{ fontSize: "20px" }}> Inquiry Record's</h3><br />
                 <div className="card-body">
@@ -74,7 +73,7 @@ function Inqurie(props) {
                                             <td>{theData.message}</td>
                                             <td>
                                                 <ButtonGroup>
-                                                    <Button onClick={() => onDeleteData(theData)}>Delete</Button>
+                                                    <Button variant='danger' onClick={() => onDeleteData(theData)}>Delete</Button>
                                                 </ButtonGroup>
                                             </td>
                                         </tr>

@@ -27,39 +27,40 @@ function SignupRecord(props) {
     }
     return (
         <>
-            {show && <Alert className='pb-0' variant="danger" onClose={() => setShow(false)} dismissible>
-                <p>{props.createSignup.msg}{props.createSignup.error}</p>
-            </Alert>
-            }
+            <div className="position-relative">
+                {show && <Alert className='pb-0 position-absolute w-100' style={{ "top": "0", "left": "0px" }} variant="danger" onClose={() => setShow(false)} dismissible>
+                    <p>{props.createSignup.msg}{props.createSignup.error}</p>
+                </Alert>
+                } <br/>
 
-
-            {/* Get Table Data */} <br /><br />
-            <div className='container card-header'>
-                <h3 className="fa fa-table" style={{ fontSize: "20px" }}> Signup Details</h3><br />
-                <div className="card-body">
-                    <div className="table-responsive">
-                        {props.createSignup.getData.length > 0 &&
-                            <Table striped responsive hover className='table table-bordered'>
-                                <thead>
-                                    <tr>
-                                        <th className="text-center">FirstName</th>
-                                        <th className="text-center">LastName</th>
-                                        <th className="text-center">Email</th>
-                                        <th className="text-center">Delete</th>
-                                    </tr>
-                                </thead>
-                                <tbody >
-                                    {props.createSignup.getData.map(theData =>
-                                        <tr key={theData._id}>
-                                            <td>{theData.fname}</td>
-                                            <td>{theData.lname}</td>
-                                            <td>{theData.email}</td>
-                                            <td><Button onClick={() => ondelete(theData)}>Delete</Button></td>
+                {/* Get Table Data */} <br /><br />
+                <div className='container card-header'>
+                    <h3 className="fa fa-table" style={{ fontSize: "20px" }}> Signup Details</h3><br />
+                    <div className="card-body">
+                        <div className="table-responsive">
+                            {props.createSignup.getData.length > 0 &&
+                                <Table striped responsive hover className='table table-bordered'>
+                                    <thead>
+                                        <tr>
+                                            <th className="text-center">FirstName</th>
+                                            <th className="text-center">LastName</th>
+                                            <th className="text-center">Email</th>
+                                            <th className="text-center">Delete</th>
                                         </tr>
-                                    )}
-                                </tbody>
-                            </Table>
-                        }
+                                    </thead>
+                                    <tbody >
+                                        {props.createSignup.getData.map(theData =>
+                                            <tr key={theData._id}>
+                                                <td>{theData.fname}</td>
+                                                <td>{theData.lname}</td>
+                                                <td>{theData.email}</td>
+                                                <td><Button variant='danger' onClick={() => ondelete(theData)}>Delete</Button></td>
+                                            </tr>
+                                        )}
+                                    </tbody>
+                                </Table>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>

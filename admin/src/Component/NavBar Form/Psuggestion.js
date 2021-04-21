@@ -68,7 +68,7 @@ function Suggestion(props) {
             MessageTime()
             setdata(initialdata)
         } else {
-            alert("Form Not Submitted")
+            alert('Please Fill Proper Form!!!')
         }
     }
 

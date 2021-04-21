@@ -33,26 +33,26 @@ function SuggestionRecord(props) {
             {show && <Alert className='pb-0 position-absolute w-100' style={{ "top": "0", "left": "0px" }} variant="danger" onClose={() => setShow(false)} dismissible>
                 <p>{props.CreateSuggestion.msg}{props.CreateSuggestion.error}</p>
             </Alert>
-            }
-            <br /><br /><br />
-            {/* Get Table Data */}
+            }  
+           
+            {/* Get Table Data */} <br /><br /><br />
             <div className='container card-header'>
                 <h3 className="fa fa-table" style={{ fontSize: "20px" }}> Suggestion Details</h3><br />
                 <div className="card-body">
                     <div className="table-responsive">
                         {props.CreateSuggestion.getData.length > 0 &&
-                            <Table striped responsive hover className='container'>
+                            <Table  striped responsive hover className='table table-bordered'>
                                 <thead>
                                     <tr>
                                         <th className="text-center">Response</th>
-                                        <th className="text-center">Delete</th>
+                                        <th>Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {props.CreateSuggestion.getData.map(data =>
                                         <tr key={data._id}>
-                                            <td>{data.suggest}</td>
-                                            <td><Button onClick={() => onDeleteData(data)}>Delete</Button></td>
+                                            <td style={{width:'80%'}}>{data.suggest}</td>
+                                            <td style={{width:'20%'}}><Button variant='danger' onClick={() => onDeleteData(data)}>Delete</Button></td>
                                         </tr>
                                     )}
                                 </tbody>

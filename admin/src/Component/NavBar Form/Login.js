@@ -90,6 +90,7 @@ export function Login(props) {
     if (validationForm(login.errors)) {
       props.createNewLogin(data)
       setShow(true)
+      MessageTime()
       setdata(initialdata)
     } else {
       alert("Please Fill Proper Form")       
@@ -104,7 +105,7 @@ export function Login(props) {
    }
   return (
     <>
-       {show && <Alert className='pb-0 position-absolute w-100'  variant="danger" style={{ "top": "0", "left": "0px" }} onClose={() => setShow(false)} dismissible>
+       {show && <Alert className='pb-0 position-absolute w-100'  variant="danger" style={{ "top": "0", "left": "0" }} onClose={() => setShow(false)} dismissible>
                     <p>{props.createLogin.error}</p>
              </Alert>  }
           {console.log(show)}

@@ -12,29 +12,17 @@ function Inqurie(props) {
         phone: null,
         message: null,
         errors: {
-            fname: '*Required',
-            lname: '*Required',
-            email: '*Required',
-            phone: '*Required',
-            message: '*Required'
+            fname: ' ',
+            lname: ' ',
+            email: ' ',
+            phone: ' ',
+            message: ' '
         }
     })
     const validEmailRegex = RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
-    //get request
-    useEffect(() => {
-        props.GetInquiryData()
-    }, [])
-
-    //delete request
-    const onDeleteData = (theInquiry) => {
-        props.deleteInquiryData(theInquiry)
-        setShow(true)
-        MessageTime()
-    }
 
     //api calling state
     const initialdata = {
-        _id: 0,
         fname: '',
         lname: '',
         email: '',
@@ -136,39 +124,14 @@ function Inqurie(props) {
         e.preventDefault()
         if (validateForm(inquirys.errors)) {
             alert("Form Submitted")
-
-            //update
-            if (data._id === 0) {
-                // insert
-                delete data._id
-                props.CreateNewInquiry(data)
-                setShow(true)
-                MessageTime()
-            } else {
-                // update
-                let tempUser = {}
-                tempUser._id = data._id
-                tempUser.fname = data.fname
-                tempUser.lname = data.lname
-                tempUser.email = data.email
-                tempUser.phone = data.phone
-                tempUser.message = data.message
-                props.updateInquiry(tempUser)
-                setShow(true)
-                MessageTime()
-            }
+            props.CreateNewInquiry(data)
+            setShow(true)
+            MessageTime()
             setdata(initialdata)
         } else {
-            alert("Form Not Submitted")
+            alert('Please Fill Proper Form!!!')
         }
 
-    }
-
-    //edit user
-    const EditUser = (tempUser) => {
-        inquirys.errors = {}
-        console.log(tempUser)
-        setdata(tempUser)
     }
 
     //Message State
@@ -219,47 +182,7 @@ function Inqurie(props) {
                     </Form.Group>
                     <Button variant="primary" type="submit">Submit</Button>
                 </fieldset>
-            </Form><br /><br />
-
-            {/* Get Table Data */}
-            <div className='container card-header'>
-                <h3 className="fa fa-table" style={{ fontSize: "20px" }}> Inquiry Details</h3><br />
-                <div className="card-body">
-                    <div className="table-responsive">
-                    {props.createInquiry.getData.length > 0 &&
-            <Table striped responsive hover className='container'>
-                <thead>
-                    <tr>
-                        <th>FirstName</th>
-                        <th>LastName</th>
-                        <th>Email</th>
-                        <th>Phone No</th>
-                        <th>Message</th>
-                        <th>Edit | Delete</th>
-                    </tr>
-                 </thead>
-                <tbody>
-                        {props.createInquiry.getData.map(theData=>
-                            <tr key={theData._id}>
-                                <td>{theData.fname}</td>
-                                <td>{theData.lname}</td>
-                                <td>{theData.email}</td>
-                                <td>{theData.phone}</td>
-                                <td>{theData.message}</td>
-                                <td>
-                                    <ButtonGroup>
-                                         <Button onClick={() => EditUser(theData)}>Edit</Button>&nbsp;&nbsp;
-                                         <Button onClick={() => onDeleteData(theData)}>Delete</Button>
-                                    </ButtonGroup>
-                                </td>
-                            </tr>
-                        )}
-                 </tbody>
-            </Table>
-            }
-                    </div>
-                </div>
-            </div>
+            </Form>
         </div>
     )
 }
@@ -272,10 +195,7 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        CreateNewInquiry: (data) => dispatch(createInquiry(data)),
-        GetInquiryData: () => dispatch(GetInquiry()),
-        deleteInquiryData: (theInquiry) => dispatch(DeleteInquiry(theInquiry)),
-        updateInquiry: (data) => dispatch(UpdateInquiry(data))
+        CreateNewInquiry: (data) => dispatch(createInquiry(data))
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Inqurie)

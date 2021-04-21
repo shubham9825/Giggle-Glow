@@ -19,18 +19,18 @@ function Pnotice(props) {
                 <div className="card-body">
                     <div className="table-responsive"> 
                     {props.createNotice.getData.length > 0 &&
-                        <Table striped hover className='container'>
+                        <Table striped responsive hover className='table table-bordered'>
                             <thead>
                                 <tr>
-                                    <th className="text-center">Title</th>
+                                    <th>Title</th>
                                     <th className="text-center">Description</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {props.createNotice.getData.map(theData =>
                                     <tr key={theData._id}>
-                                        <td>{theData.title}</td>
-                                        <td>{theData.description}</td>
+                                        <td style={{width:'20%'}}>{theData.title}</td>
+                                        <td style={{width:'80%'}}>{theData.description}</td>
                                     </tr>
                                 )}
                             </tbody>

@@ -14,7 +14,7 @@ function FormUp(props) {
     const [formup, setformup] = useState({
         response: '*Required',
         errors: {
-            response: '*Required'
+            response: ' '
         }
     })
 
@@ -87,23 +87,21 @@ function FormUp(props) {
             if (data._id === 0) {
                 delete data._id //delete id 
                 props.createNewFormup(data)//create form or insert
-                //alert
-                setShow(true)
-                MessageTime()
+                  //alert
+                  setShow(true)
+                  MessageTime()
             } else {
                 let tempUser = {}
                 tempUser.response = data.response
                 tempUser._id = data._id
                 props.updateFormup(tempUser) //update 
-                //alert
-                setShow(true)
-                MessageTime()
+                 //alert
+                 setShow(true)
+                 MessageTime()
             }
-            setShow(false)
             setdata(initialdata)
         } else {
-            alert("Form Not Submitted")
-            toast.success("Form Not Submitted")
+            alert('Please Fill Proper Form!!!')
         }
     }
     //Message State
@@ -113,13 +111,17 @@ function FormUp(props) {
     const MessageTime = () => {
         setTimeout(() => {
             setShow(false)
-        }, 5000)
+        }, 4000)
     }
 
+    //reset button
+    const HandleReset = () => {
+        setdata(initialdata)
+    }
     return (
         <>
             <div className="position-relative">
-                {show && <Alert className='pb-0 position-absolute  w-100' style={{ "top": "0", "left": "5px" }} variant="danger" onClose={() => setShow(false)} dismissible>
+                {show && <Alert className='pb-0 position-absolute  w-100' style={{ "top": "0", "left": "0" }} variant="danger" onClose={() => setShow(false)} dismissible>
                     <p>{props.createFormup.msg}{props.createFormup.error}</p>
                 </Alert>
                 } <br />
@@ -134,7 +136,8 @@ function FormUp(props) {
                             <Form.Control value={data.response} as="textarea" name="response" onChange={HandleChange} placeholder="Enter Response of Inquirers." rows={3} />
                             <div style={{ color: '#f50000' }}>{formup.errors.response}</div>
                         </Form.Group>
-                        <Button variant="primary" type="submit">Submit</Button>
+                        <Button variant="primary" type="submit">Submit</Button>&nbsp;&nbsp;
+                        <Button variant="primary" type="reset" onClick={HandleReset}>Reset</Button>
                     </fieldset>
                 </Form><br /><br />
 
@@ -148,17 +151,17 @@ function FormUp(props) {
                                     <thead>
                                         <tr>
                                             <th className="text-center">Response</th>
-                                            <th className="text-center">Edit / Delete</th>
+                                            <th className="text-center">Edit | Delete</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {props.createFormup.getData.map(theData =>
                                             <tr key={theData._id}>
-                                                <td>{theData.response}</td>
-                                                <td>
+                                                <td style={{width:'80%'}}>{theData.response}</td>
+                                                <td style={{width:'20%'}}>
                                                     <ButtonGroup>
-                                                        <Button onClick={() => editUser(theData)}>Edit</Button>&nbsp;&nbsp;
-                                                        <Button onClick={() => deleteData(theData)}>Delete</Button>
+                                                        <Button variant="success" onClick={() => editUser(theData)}>Edit</Button>&nbsp;&nbsp;
+                                                        <Button variant="danger" onClick={() => deleteData(theData)}>Delete</Button>
                                                     </ButtonGroup>
                                                 </td>
                                             </tr>

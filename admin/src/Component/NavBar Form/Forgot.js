@@ -44,8 +44,8 @@ function Forgot(props) {
 
     //otp generate 
     useEffect(() => {
-        // setmail(true)
-        props.createForgot.showmail=true
+        props.createForgot.showmail = true
+        props.createForgot.showOtp = false
         const min = 1000
         const max = 9999
         var otp = Math.floor(Math.random() * (max - min + 1)) + min //otp generate
@@ -167,51 +167,45 @@ function Forgot(props) {
     const EmailSubmit = (e) => {
         e.preventDefault()
         if (validationForm(forgot.errors)) {
-            alert('Form Submited')
             //otp send call
             props.forgotPass(data)
             setShow(true)
             MessageTime()
-            setmail(false)
         } else {
             alert("Please Fill Proper Form")
         }
     }
-
+   
     const OtpSubmit = (e) => {
         e.preventDefault()
         if (validationForm(validotp.errors)) {
-            alert('Form Submited')
             if (validotp.otp == data.otp) {
-                setpass(true)
+                alert('Otp Varified')
                 props.createForgot.showOtp = false
+                setpass(true)
             } else {
                 setpass(false)
-                alert('not match')
+                alert('Otp Not Match!!! Try Again...')
             }
-
         } else {
-            alert("Please Fill Proper Form")
+            alert("Please Fill Proper Form!!!")
         }
     }
 
     const PassSubmit = (e) => {
         e.preventDefault()
         if (validationForm(validpass.errors)) {
-            alert('Form Submited')
             props.editpass(data)
             setShow(true)
             MessageTime()
             setTimeout(() => {
                 history.push('/login')
-            }, 3000);
+            }, 2000);
         } else {
             alert("Please Fill Proper Form")
         }
     }
 
-    //email
-    const [mail, setmail] = useState(false)
     //message 
     const [show, setShow] = useState(false)
     //password
@@ -226,51 +220,53 @@ function Forgot(props) {
 
     return (
         <>
-            {show && <Alert className='pb-0 position-absolute w-100' style={{ "top": "0", "left": "0px" }} variant="danger" onClose={() => setShow(false)} dismissible>
-                <p>{props.createForgot.msg}{props.createForgot.error}</p>
-            </Alert>
-            }
-            <div className="auth-wrapper" >
-                <div className="auth-inner" >
-                    <Form  >
-                        <h3>Forgot Password</h3>
-                        {props.createForgot.showmail  &&
-                            <div>
+            <div>
+                {show && <Alert className='pb-0 position-absolute  w-100' style={{ "top": "0", "left": "0" }} variant="danger" onClose={() => setShow(false)} dismissible>
+                                <p>{props.createForgot.msg}{props.createForgot.error}</p>
+                         </Alert>
+                }  
+                <div className="auth-wrapper" >
+                    <div className="auth-inner" >
+                        <Form  >
+                            <h3>Forgot Password</h3>
+                            {props.createForgot.showmail &&
+                                <div>
+                                    <div className="form-group">
+                                        <label>Email address</label>
+                                        <input type="email" value={data.email} onChange={handleChange} className="form-control" name='email' placeholder="Enter email" />
+                                        <div style={{ color: '#f50000' }}>{forgot.errors.email}</div>
+                                    </div>
+                                    <button type="submit" onClick={EmailSubmit} className="btn btn-primary btn-block mb-2">Submit</button>
+                                </div>}
+
+                            {props.createForgot.showOtp && <div>
                                 <div className="form-group">
-                                    <label>Email address</label>
-                                    <input type="email" value={data.email} onChange={handleChange} className="form-control" name='email' placeholder="Enter email" />
-                                    <div style={{ color: '#f50000' }}>{forgot.errors.email}</div>
-                                </div>
-                                <button type="submit" onClick={EmailSubmit} className="btn btn-primary btn-block mb-2">Submit</button>
+                                    <label>Enter OTP</label>
+                                    <input type="number" onChange={HandleOtp} className="form-control" name='otp' placeholder="Enter OTP" />
+                                    <div style={{ color: '#f50000' }}>{validotp.errors.otp}</div>
+                                </div><button type="submit" onClick={OtpSubmit} className="btn btn-primary btn-block mb-2">Submit</button>
                             </div>}
- 
-                        {props.createForgot.showOtp && <div>
-                            <div className="form-group">
-                                <label>Enter OTP</label>
-                                <input type="number" onChange={HandleOtp} className="form-control" name='otp' placeholder="Enter OTP" />
-                                <div style={{ color: '#f50000' }}>{validotp.errors.otp}</div>
-                            </div><button type="submit" onClick={OtpSubmit} className="btn btn-primary btn-block mb-2">Submit</button>
-                        </div>}
+                                
+                            {pass && <div>
+                                <div className="form-group">
+                                    <label>Password</label>
+                                    <input type="password" onChange={HandlePass} name='password' className="form-control" placeholder="Enter password" />
+                                    <div style={{ color: '#f50000' }}>{validpass.errors.password}</div>
+                                </div>
 
-                        {pass && <div>
-                            <div className="form-group">
-                                <label>Password</label>
-                                <input type="password" onChange={HandlePass} name='password' className="form-control" placeholder="Enter password" />
-                                <div style={{ color: '#f50000' }}>{validpass.errors.password}</div>
+                                <div className="form-group">
+                                    <label>Confirm Password</label>
+                                    <input type="password" onChange={HandlePass} name='cpassword' className="form-control" placeholder="Enter Confirm password" />
+                                    <div style={{ color: '#f50000' }}>{validpass.errors.cpassword}</div>
+                                </div>
+                                <button type="submit" onClick={PassSubmit} className="btn btn-primary btn-block mb-2">Submit</button>
                             </div>
-
-                            <div className="form-group">
-                                <label>Confirm Password</label>
-                                <input type="password" onChange={HandlePass} name='cpassword' className="form-control" placeholder="Enter Confirm password" />
-                                <div style={{ color: '#f50000' }}>{validpass.errors.cpassword}</div>
-                            </div>
-                            <button type="submit" onClick={PassSubmit} className="btn btn-primary btn-block mb-2">Submit</button>
-                        </div>
-                        }
-                        <p className="forgot-password text-right">
-                            Back To <Link to='/login'>Sign In?</Link>
-                        </p>
-                    </Form>
+                            }
+                            <p className="forgot-password text-right">
+                                Back To <Link to='/login'>Sign In?</Link>
+                            </p>
+                        </Form>
+                    </div>
                 </div>
             </div>
         </>

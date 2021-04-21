@@ -200,10 +200,6 @@ function ChildRegister(props) {
                     errors.plcwork = '*Requierd'
                     break
                 }
-                // if(!(/^[a-zA-Z]*$/g).test(value)){
-                //     errors.plcwork = 'Only Alphabet !'
-                //     break
-                // }
                 if (value.length < 10) {
                     errors.plcwork = 'To Short...!'
                     break
@@ -334,9 +330,13 @@ function ChildRegister(props) {
         }, 4000)
     }
 
+    //reset button
+    const HandleReset = () => {
+        setdata(initialState)
+    }
     return (
         <div className="position-relative">
-            {show && <Alert className='pb-0 position-absolute w-100' style={{ "top": "0", "left": "0px" }} variant="danger" onClose={() => setShow(false)} dismissible>
+            {show && <Alert className='pb-0 position-absolute w-100' style={{ "top": "0", "left": "0" }} variant="danger" onClose={() => setShow(false)} dismissible>
                 <p>{props.createChild.msg}{props.createChild.error}</p>
             </Alert>
             }<br />
@@ -449,7 +449,8 @@ function ChildRegister(props) {
                         <div style={{ color: '#f50000' }} >{Register.errors.allergies}</div>
                     </Form.Group>
                     <br />
-                    <Button variant="primary" type="submit">Submit</Button>
+                    <Button variant="primary" type="submit">Submit</Button>&nbsp;&nbsp;
+                    <Button variant="primary" type="reset" onClick={HandleReset}>Reset</Button>
                 </fieldset>
             </Form>
             <br /><br /><br />
@@ -499,8 +500,8 @@ function ChildRegister(props) {
                                             <td>{theData.allergies}</td>
                                             <td>
                                                 <ButtonGroup>
-                                                    <Button onClick={() => updateData(theData)}>Edit</Button>&nbsp;&nbsp;
-                                                    <Button onClick={() => deleteData(theData)}>Delete</Button>
+                                                    <Button variant="success" onClick={() => updateData(theData)}>Edit</Button>&nbsp;&nbsp;
+                                                    <Button variant="danger" onClick={() => deleteData(theData)}>Delete</Button>
                                                 </ButtonGroup>
                                             </td>
                                         </tr>

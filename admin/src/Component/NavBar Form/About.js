@@ -12,9 +12,9 @@ function About(props) {
         mission: null,
         vision: null,
         errors: {
-            about: '*Required',
-            mission: '*Required',
-            vision: '*Required'
+            about: ' ',
+            mission: ' ',
+            vision: ' '
         }
     })
 
@@ -58,7 +58,7 @@ function About(props) {
                     break
                 }
                 if (value.length < 10) {
-                    errors.about = 'Character is less than 10 so, enter more word.'
+                    errors.about = 'Too Short!'
                     break
                 }
                 errors.about = ''
@@ -69,7 +69,7 @@ function About(props) {
                     break
                 }
                 if (value.length < 10) {
-                    errors.mission = 'Character is less than 10 so, enter more word.'
+                    errors.mission = 'Too Short!'
                     break
                 }
                 errors.mission = ''
@@ -80,7 +80,7 @@ function About(props) {
                     break
                 }
                 if (value.length < 10) {
-                    errors.vision = 'Character is less than 10 so, enter more word.'
+                    errors.vision = 'Too Short!'
                     break
                 }
                 errors.vision = ''
@@ -124,10 +124,10 @@ function About(props) {
                 setShow(true)
                 MessageTime()
             }
+            setdata(initialdata)
         } else {
-            alert('Please Fill Form Proper!')
+            alert('Please Fill Proper Form!!!')
         }
-        setdata(initialdata)
     }
 
     //edit user
@@ -145,11 +145,16 @@ function About(props) {
             setShow(false)
         }, 4000)
     }
-    const tost = toast.success(props.createAbout.msg)
+      
+    //reset button
+    const HandleReset=()=>{
+        setdata(initialdata)
+    }
+
     return (
         <>
             <div className="position-relative">
-                {show && <Alert className='pb-0 position-absolute w-100' style={{ "top": "0", "left": "5px" }} variant="danger" onClose={() => setShow(false)} dismissible>
+                {show && <Alert className='pb-0 position-absolute w-100' style={{ "top": "0", "left": "0px" }} variant="danger" onClose={() => setShow(false)} dismissible>
                     <p>{props.createAbout.msg}{props.createAbout.error}</p>
                 </Alert>
                 } <br />
@@ -175,8 +180,9 @@ function About(props) {
                             <Form.Control as="textarea" placeholder="Enter your Vision." value={data.vision} rows={2} onChange={HandleChange} name="vision" />
                             <div style={{ color: '#f50000' }} >{Submition.errors.vision}</div>
                         </Form.Group>
-                        <Button variant="primary" type="submit">Submit</Button>
-                    </fieldset>
+                        <Button variant="primary" type="submit">Submit</Button> &nbsp;&nbsp;
+                        <Button variant="primary" type="reset" onClick={HandleReset}>Reset</Button>
+                     </fieldset>
                 </Form><br /><br />
 
                 {/* Get Table Data */}
@@ -202,8 +208,8 @@ function About(props) {
                                                 <td>{theData.vision}</td>
                                                 <td>
                                                     <ButtonGroup>
-                                                        <Button onClick={() => EditUser(theData)}>Edit</Button>&nbsp;&nbsp;
-                                         <Button onClick={() => onDeleteData(theData)}>Delete</Button>
+                                                        <Button variant="success" onClick={() => EditUser(theData)}>Edit</Button>&nbsp;&nbsp;
+                                                         <Button variant="danger" onClick={() => onDeleteData(theData)}>Delete</Button>
                                                     </ButtonGroup>
                                                 </td>
                                             </tr>

@@ -5,16 +5,11 @@ const contactSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true,
-        // min:10,
-        // max:100
     },
     phone: {
-        type: Number
-        // validate(value) {
-        //     if (value!=(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/)) {
-        //             throw new Error('Number is not valid.')
-        //         }
-        //     }
+        type: Number,
+        required: true,
+        trim: true,
     },
     email: {
         type: String,
@@ -22,11 +17,6 @@ const contactSchema = new mongoose.Schema({
         unique: true,
         trim: true,
         lowercase: true
-        // validate(value){
-        //     if(value!=/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/){
-        //         throw new Error('email is not valid.')
-        //     }
-        // }
     }
 }, {
     timestamps:true

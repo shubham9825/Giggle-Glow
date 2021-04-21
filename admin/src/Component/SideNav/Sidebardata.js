@@ -9,7 +9,6 @@ import Service from '../NavBar Form/Service'
 import Album from '../NavBar Form/Album'
 import Gallery from '../NavBar Form/Gallery'
 import Inquire from '../NavBar Form/Inquire'
-import Fee from '../NavBar Form/Fee'
 import Payment from '../NavBar Form/Payment'
 import ChildRegister from '../NavBar Form/ChildRegister'
 import About from '../NavBar Form/About'
@@ -23,6 +22,8 @@ import Pnotice from '../NavBar Form/Pnotice'
 import InquireRecord from '../NavBar Form/InquireRecord'
 import Psuggestion from '../NavBar Form/Psuggestion'
 import Profile from '../NavBar Form/Profile'
+import Logout from'../NavBar Form/Logout'
+import Plogout from'../NavBar Form/Plogout'
 
 const Sidebardata = [
 
@@ -60,13 +61,6 @@ const Sidebardata = [
     path: '/formup',
     main: () => <FormUp></FormUp>,
     icon: <FiIcons.FiRepeat />,
-    cName: 'nav-text'
-  },
-  {
-    title: 'Fees',
-    path: '/fees',
-    main: () => <Fee></Fee>,
-    icon: <MdIcons.MdPayment />,
     cName: 'nav-text'
   }, {
     title: 'Payment',
@@ -109,7 +103,7 @@ const Sidebardata = [
     cName: 'nav-text'
   },
   {
-    title: 'Suggection Record',
+    title: 'Suggestion Record',
     path: '/suggetion-record',
     main: () => <SuggestionRecord></SuggestionRecord>,
     icon: <MdIcons.MdPayment />,
@@ -126,6 +120,13 @@ const Sidebardata = [
     title: 'Inquirer-Record',
     path: '/inquirer_record',
     main: () => <InquireRecord></InquireRecord>,
+    icon: <MdIcons.MdPayment />,
+    cName: 'nav-text'
+  },
+  {
+    title: 'Logout',
+    path: '/logout',
+    main: () => <Logout></Logout>,
     icon: <MdIcons.MdPayment />,
     cName: 'nav-text'
   }
@@ -160,8 +161,14 @@ export const Psidebardata = [
     main: () => <Inquire></Inquire>,
     icon: <RiIcons.RiQuestionnaireFill />,
     cName: 'nav-text'
-  }
-     
+  },
+  {
+    title: 'Plogout',
+    path: '/plogout',
+    main: () => <Plogout></Plogout>,
+    icon: <MdIcons.MdPayment />,
+    cName: 'nav-text'
+}     
 ];
 
  

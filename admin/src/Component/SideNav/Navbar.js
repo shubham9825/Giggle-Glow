@@ -8,11 +8,9 @@ import SidebarData, { Psidebardata } from './Sidebardata'
 
 function Navbar() {
   const [sidebar, setSidebar] = useState(false);
-
   const showSidebar = () => setSidebar(!sidebar);
-
   let user = sessionStorage.user
-
+  
   return (
     <>
       <IconContext.Provider value={{ color: '#fff' }}>
@@ -21,6 +19,7 @@ function Navbar() {
             <FaIcons.FaBars onClick={showSidebar} />
           </Link>
         </div>
+      
         <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
           <ul className='nav-menu-items' onClick={showSidebar}>
             <li className='navbar-toggle'>

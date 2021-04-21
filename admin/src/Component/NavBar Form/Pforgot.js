@@ -45,7 +45,7 @@ function Pforgot(props) {
     //otp generate 
     useEffect(() => {
         props.createPforgot.showmail = true
-        // setmail(true)
+        props.createPforgot.showOtp = false
         const min = 1000
         const max = 9999
         var otp = Math.floor(Math.random() * (max - min + 1)) + min //otp generate
@@ -167,12 +167,10 @@ function Pforgot(props) {
     const EmailSubmit = (e) => {
         e.preventDefault()
         if (validationForm(pforgot.errors)) {
-            alert('Form Submited')
             //otp send call
             props.forgotPass(data)
             setShow(true)
             MessageTime()
-            setmail(false)
         } else {
             alert("Please Fill Proper Form")
         }
@@ -181,15 +179,14 @@ function Pforgot(props) {
     const OtpSubmit = (e) => {
         e.preventDefault()
         if (validationForm(validotp.errors)) {
-            alert('Form Submited')
             if (validotp.otp == data.otp) {
+                alert('Otp Varified')
                 setpass(true)
                 props.createPforgot.showOtp = false
             } else {
                 setpass(false)
                 alert('not match')
             }
-
         } else {
             alert("Please Fill Proper Form")
         }
@@ -198,18 +195,17 @@ function Pforgot(props) {
     const PassSubmit = (e) => {
         e.preventDefault()
         if (validationForm(validpass.errors)) {
-            alert('Form Submited')
             props.editpass(data)
             setShow(true)
             MessageTime()
-            history.push('/plogin')
+            setTimeout(() => {
+                history.push('/plogin')
+            }, 2000);
         } else {
             alert("Please Fill Proper Form")
         }
     }
 
-    //email
-    const [mail, setmail] = useState(false)
     //message 
     const [show, setShow] = useState(false)
     //password
