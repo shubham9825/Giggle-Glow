@@ -5,12 +5,7 @@ const LunchSchema=new mongoose.Schema({
         type:String,
         required:true,
         trim:true
-    },
-    suggest:{
-        type:String,
-        required:true,
-        trim:true
-    }
+    } 
 },{
     timestamps:true
 })

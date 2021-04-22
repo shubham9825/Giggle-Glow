@@ -26,9 +26,11 @@ function Inqurie(props) {
 
     //delete request
     const onDeleteData = (theInquiry) => {
-        props.deleteInquiryData(theInquiry)
-        setShow(true)
-        MessageTime()
+        if(confirm('Are you sure you want to Delete Record')){
+            props.deleteInquiryData(theInquiry)
+            setShow(true)
+            MessageTime()
+        }
     }
 
     //Message State
@@ -52,7 +54,7 @@ function Inqurie(props) {
                 <div className="card-body">
                     <div className="table-responsive">
                         {props.createInquiry.getData.length > 0 &&
-                            <Table striped responsive hover className='container'>
+                            <Table striped hover responsive className='table table-bordered'>
                                 <thead>
                                     <tr>
                                         <th>FirstName</th>

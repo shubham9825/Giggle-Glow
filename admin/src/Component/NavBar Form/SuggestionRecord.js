@@ -13,10 +13,11 @@ function SuggestionRecord(props) {
 
     //delete Data
     const onDeleteData = (theSuggest) => {
-        console.log(theSuggest)
-        props.deletesuggestion(theSuggest)
-        setShow(true)
-        MessageTime()
+        if(confirm('Are you sure you want to Delete Record')){
+            props.deletesuggestion(theSuggest)
+            setShow(true)
+            MessageTime()
+        }
     }
 
     //Message State

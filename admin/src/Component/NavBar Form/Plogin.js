@@ -27,7 +27,7 @@ export function Plogin(props) {
 
   //login Redirect
   if (props.createPlogin.newData) {
-    history.push('/parent_notice')
+    history.push('/profile')
   }
 
   const handleChange = (e) => {
@@ -119,7 +119,7 @@ export function Plogin(props) {
             <h3>Sign In For Parent's</h3>
             <div className="form-group">
               <label>Email address</label>
-              <input type="email" onChange={handleChange} className="form-control" name='email' placeholder="Enter email" autoFocus={true} />
+              <input autoFocus={true} type="email" onChange={handleChange} className="form-control" name='email' placeholder="Enter email" autoFocus={true} />
               <div style={{ color: '#f50000' }}>{plogin.errors.email}</div>
             </div>
 

@@ -5,8 +5,13 @@
   display: flex;
   justify-content: start;
   align-items: center;
- }
+  /* position: sticky;
+  top: 0;
+  overflow: hidden;
+  z-index: 1; */
+  }
 
+  
 .menu-bars {
   margin-left: 1rem;
   font-size: 25px;
@@ -20,7 +25,7 @@
   display: flex;
   justify-content: center;
   position: fixed;
-  top: 0;
+  top: 60px;
   left: -100%;
   overflow: auto;
   transition: 2000ms;

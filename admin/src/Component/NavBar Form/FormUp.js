@@ -19,12 +19,13 @@ function FormUp(props) {
     })
 
     //delete
-    const deleteData = (theformup) => {
-        console.log(theformup)
+    const deleteData = (theformup) => {    
+     if(confirm('Are you sure you want to Delete Record')){
         props.delFormupdata(theformup)
         //alert
         setShow(true)
         MessageTime()
+     } 
     }
 
     //edit
@@ -133,7 +134,7 @@ function FormUp(props) {
                         <br />
                         <Form.Group>
                             <Form.Label>Response of Inquirers</Form.Label>
-                            <Form.Control value={data.response} as="textarea" name="response" onChange={HandleChange} placeholder="Enter Response of Inquirers." rows={3} />
+                            <Form.Control autoFocus={true} value={data.response} as="textarea" name="response" onChange={HandleChange} placeholder="Enter Response of Inquirers." rows={3} />
                             <div style={{ color: '#f50000' }}>{formup.errors.response}</div>
                         </Form.Group>
                         <Button variant="primary" type="submit">Submit</Button>&nbsp;&nbsp;

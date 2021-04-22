@@ -10,23 +10,32 @@ function Navbar() {
   const [sidebar, setSidebar] = useState(false);
   const showSidebar = () => setSidebar(!sidebar);
   let user = sessionStorage.user
-  
+
   return (
     <>
       <IconContext.Provider value={{ color: '#fff' }}>
         <div className='navbar'>
-          <Link to='#' className='menu-bars'>
-            <FaIcons.FaBars onClick={showSidebar} />
-          </Link>
+          {/* <Link to='#' className='menu-bars'>
+            <FaIcons.FaBars onClick={showSidebar}   />
+          </Link> */}
+           
+          {sidebar ?  <Link to='#' className='menu-bars'>
+               <AiIcons.AiOutlineClose onClick={showSidebar} />
+             </Link> 
+               : 
+               <Link to='#' className='menu-bars'>
+               <FaIcons.FaBars onClick={showSidebar}   />
+             </Link>
+               }
         </div>
       
         <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
           <ul className='nav-menu-items' onClick={showSidebar}>
-            <li className='navbar-toggle'>
+            {/* <li className='navbar-toggle'>
               <Link to='#' className='menu-bars'>
                 <AiIcons.AiOutlineClose />
               </Link>
-            </li>
+            </li> */}
             { user==='admin' && SidebarData.map((item, index) => {
               return (
                 <li key={index} className={item.cName}>

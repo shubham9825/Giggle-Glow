@@ -35,10 +35,11 @@ function About(props) {
 
     //delete request
     const onDeleteData = (theAbout) => {
-        console.log(theAbout)
-        props.deleteAboutData(theAbout)
-        setShow(true)
-        MessageTime()
+        if(confirm('Are you sure you want to Delete Record')){
+            props.deleteAboutData(theAbout)
+            setShow(true)
+            MessageTime()
+        }
     }
 
     const HandleChange = (e) => {
@@ -166,7 +167,7 @@ function About(props) {
                         <br />
                         <Form.Group>
                             <Form.Label>About</Form.Label>
-                            <Form.Control as="textarea" placeholder="Enter any fact's or about detail for your website."
+                            <Form.Control autoFocus={true} as="textarea" placeholder="Enter any fact's or about detail for your website."
                                 rows={2} onChange={HandleChange} name="about" value={data.about} />
                             <div style={{ color: '#f50000' }} >{Submition.errors.about}</div>
                         </Form.Group>

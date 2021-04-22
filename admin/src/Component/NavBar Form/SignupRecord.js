@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { useEffect, useState } from 'react'
 import { Alert, Button, Table } from 'react-bootstrap'
 import { connect } from 'react-redux'
@@ -10,10 +12,12 @@ function SignupRecord(props) {
     }, [])
 
     //delete Request
-    const ondelete = (theRecord) => {
-        props.deleteRecord(theRecord)
-        setShow(true)
-        MessageTime()
+    const onDeleteData = (theRecord) => {
+        if(confirm('Are you sure you want to Delete Record')){
+            props.deleteRecord(theRecord)
+            setShow(true)
+            MessageTime()
+        }
     }
 
     //Message State
@@ -54,7 +58,7 @@ function SignupRecord(props) {
                                                 <td>{theData.fname}</td>
                                                 <td>{theData.lname}</td>
                                                 <td>{theData.email}</td>
-                                                <td><Button variant='danger' onClick={() => ondelete(theData)}>Delete</Button></td>
+                                                <td><Button variant='danger' onClick={() => onDeleteData(theData)}>Delete</Button></td>
                                             </tr>
                                         )}
                                     </tbody>

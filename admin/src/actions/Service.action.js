@@ -8,9 +8,10 @@ export const CreateService = (Data) => {
             type: CREATE_USER_REQUEST
         }
     }
-    const createDataSuccess = () => {
+    const createDataSuccess = (newData) => {
         return {
-            type: CREATE_USER_SUCCESS
+            type: CREATE_USER_SUCCESS,
+            payload:newData
         }
     }
     const createDataFail = () => {

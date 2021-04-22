@@ -7,10 +7,8 @@ import { CreateLunch, DeleteLunch, GetLunch, UpdateLunch } from '../../actions/L
 function Lunch(props) {
     const [lunch, setlunch] = useState({
         food: null,
-        suggest: null,
         errors: {
-            food: '*Requierd',
-            suggest: '*Requierd'
+            food: ' '
         }
     })
 
@@ -21,23 +19,22 @@ function Lunch(props) {
 
     //delete Request
     const onDeleteData = (theLunch) => {
-        console.log(theLunch)
-        props.deleteLunch(theLunch)
-        setShow(true)
-        MessageTime()
+        if(confirm('Are you sure you want to Delete Record')){
+            props.deleteLunch(theLunch)
+            setShow(true)
+            MessageTime()
+        }
     }
 
     //Update Request
     const EditUser = (tempUser) => {
         lunch.errors = {}
-        console.log(tempUser)
         setdata(tempUser)
     }
     //api calling
     const initialdata = {
         _id: 0,
-        food: '',
-        suggest: ''
+        food: ''
     }
     const [data, setdata] = useState(initialdata)
 
@@ -53,18 +50,6 @@ function Lunch(props) {
                 }
                 errors.food = ''
                 break
-            case 'suggest':
-                if (value.length < 10) {
-                    errors.suggest = 'Title is Too Short!!!'
-                    break
-                }
-                if (value.trim() == '') {
-                    errors.suggest = 'Blank Space not Allowed!!!'
-                    break
-                }
-                errors.suggest = ''
-                break
-
         }
         setlunch({
             ...lunch,
@@ -100,7 +85,6 @@ function Lunch(props) {
                 let tempUser = {}
                 tempUser._id = data._id
                 tempUser.food = data.food
-                tempUser.suggest = data.suggest
                 props.updateLunch(tempUser)
                 setShow(true)
                 MessageTime()
@@ -136,46 +120,32 @@ function Lunch(props) {
                     <hr className='m-0' style={{ background: 'rgb(148, 141, 141)' }}></hr>
                     <br />
                     <Form.Group>
-                        <Form.Label>State</Form.Label>
-                        <Form.Control as="select" onChange={HandleChange} value={data.food} name="food" >
-                            <option hidden>Choose Food...</option>
-                            <option>Wafer</option>
-                            <option>Biscuit</option>
-                            <option>Milk</option>
-                            <option>Apple</option>
-                            <option>Banana</option>
-                        </Form.Control>
-                        <div style={{ color: '#f50000' }} >{lunch.errors.food}</div>
-                    </Form.Group>
-                    <Form.Group>
-                        <Form.Label>Lunch Suggestion </Form.Label>
-                        <Form.Control as='textarea' rows={5} name="suggest" value={data.suggest} onChange={HandleChange} placeholder="Enter Your Suggestion" />
-                        <div style={{ color: '#f50000' }}>{lunch.errors.suggest}</div>
+                        <Form.Label>Food</Form.Label>
+                        <Form.Control as='textarea' rows={3} name="food" value={data.food} onChange={HandleChange} placeholder="Enter Today's Food  " />
+                        <div style={{ color: '#f50000' }}>{lunch.errors.food}</div>
                     </Form.Group>
                     <Button variant="primary" type="submit">Submit</Button>&nbsp;&nbsp;
                     <Button variant="primary" type="reset" onClick={HandleReset}>Reset</Button>
                 </fieldset>
             </Form><br /><br />
 
-            {/* Get Table Data */}
+            {/* Get Table Data */} 
             <div className='container card-header'>
                 <h3 className="fa fa-table" style={{ fontSize: "20px" }}> Lunch Details</h3><br />
                 <div className="card-body">
                     <div className="table-responsive">
                         {props.CreateLunch.getData.length > 0 &&
-                            <Table striped responsive hover className='container'>
+                            <Table striped hover responsive className='table table-bordered'>
                                 <thead>
                                     <tr>    
                                         <th>Food</th>
-                                        <th>Suggest</th>
                                         <th>Edit | Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {props.CreateLunch.getData.map(theData =>
                                         <tr key={theData._id}>
-                                            <td style={{width:'20%'}}>{theData.food}</td>
-                                            <td>{theData.suggest}</td>
+                                            <td style={{width:'80%'}}>{theData.food}</td>
                                             <td style={{width:'20%'}}>
                                                 <ButtonGroup>
                                                     <Button variant="success" onClick={() => EditUser(theData)}>Edit</Button>&nbsp;&nbsp;

@@ -24,7 +24,7 @@ router.post('/lunchs',async (req,res)=>{
 
 router.put('/lunchs/:id', async (req,res)=>{
     const update = Object.keys(req.body)
-    const allowedUpdates = ['food','suggest']
+    const allowedUpdates = ['food']
     const isValidOperation = update.every((update) => allowedUpdates.includes(update))
 
     if(!isValidOperation){

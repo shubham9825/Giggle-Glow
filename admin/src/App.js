@@ -11,9 +11,7 @@ import Forgot from './Component/NavBar Form/Forgot';
 import Plogin from './Component/NavBar Form/Plogin'
 import Pforgot from './Component/NavBar Form/Pforgot'
 import Main from './Component/NavBar Form/Main'
-import Logout from './Component/NavBar Form/Logout';
-import Plogout from './Component/NavBar Form/Plogout';
-  import Navbar from './Component/SideNav/Navbar';
+import Navbar from './Component/SideNav/Navbar';
 import Design from './Component/Page/Design';
  
 function App() {
@@ -27,17 +25,14 @@ function App() {
             {/* <Practice></Practice> */}
             <Route path='/login' component={Login}></Route>
              <Route path='/signup' component={SignUp}></Route>
-            <Route path='/logout' component={Logout}></Route>
             <Route path='/forgot' component={Forgot}></Route>
             <Route path='/plogin' component={Plogin}></Route>
-            <Route path='/plogout' component={Plogout}></Route>
             <Route path='/pforgot' component={Pforgot}></Route>  
               {
               [...Sidebardata,...Psidebardata].map((theRouter,index)=><PrivateRoute 
                                                 path={theRouter.path}
                                                 exact={theRouter.exact}
                                                 key={index} >
-
                                                 <Navbar></Navbar>
                                                   <div>
                                                   <theRouter.main></theRouter.main>                                                

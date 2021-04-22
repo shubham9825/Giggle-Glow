@@ -1,3 +1,4 @@
+/* eslint-disable */
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Form, Button, Alert, Table, ButtonGroup } from 'react-bootstrap'
@@ -20,10 +21,11 @@ function Gallery(props) {
 
     //delete
     const deleteData = (theData) => {
-        console.log(theData)
-        props.deleteImage(theData)
-        setshow(true)
-        MessageTime()
+        if(confirm('Are you sure you want to Delete Image')){
+            props.deleteImage(theData)
+            setshow(true)
+            MessageTime()
+        }
     }
 
     const HandleSubmit = async (e) => {
@@ -113,7 +115,7 @@ function Gallery(props) {
                     <hr className='m-0' style={{ background: 'rgb(148, 141, 141)' }}></hr>
                     <br/>
                     <Form.Group>
-                        <Form.File name='UploadImg' onChange={handleChange} label="Enter Image"></Form.File>
+                        <Form.File autoFocus={true} name='UploadImg' onChange={handleChange} label="Enter Image"></Form.File>
                     </Form.Group>
                     <Progress percentage={uploadPercentage} /><br />
                     <Button variant="primary" type="submit">Submit</Button>
@@ -134,7 +136,7 @@ function Gallery(props) {
                 <div className="card-body">
                     <div className="table-responsive">
                         {props.creategallery.getData.length > 0 &&
-                            <Table striped hover className='container'>
+                            <Table striped hover responsive className='table table-bordered'>
                                 <thead>
                                     <tr>
                                         <th>Response</th>

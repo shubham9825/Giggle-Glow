@@ -22,8 +22,9 @@ import Pnotice from '../NavBar Form/Pnotice'
 import InquireRecord from '../NavBar Form/InquireRecord'
 import Psuggestion from '../NavBar Form/Psuggestion'
 import Profile from '../NavBar Form/Profile'
-import Logout from'../NavBar Form/Logout'
 import Plogout from'../NavBar Form/Plogout'
+import Logout from '../NavBar Form/Logout'
+import LunchRecord from '../NavBar Form/LunchRecord'
 
 const Sidebardata = [
 
@@ -129,6 +130,13 @@ const Sidebardata = [
     main: () => <Logout></Logout>,
     icon: <MdIcons.MdPayment />,
     cName: 'nav-text'
+  },
+  {
+    title: 'Inquirer-Record',
+    path: '/inquirer_record',
+    main: () => <InquireRecord></InquireRecord>,
+    icon: <MdIcons.MdPayment />,
+    cName: 'nav-text'
   }
 ];
 export default Sidebardata
@@ -166,6 +174,13 @@ export const Psidebardata = [
     title: 'Plogout',
     path: '/plogout',
     main: () => <Plogout></Plogout>,
+    icon: <MdIcons.MdPayment />,
+    cName: 'nav-text'
+  },
+  {
+    title: 'Lunch-Record',
+    path: '/lunchrecord',
+    main: () => <LunchRecord></LunchRecord>,
     icon: <MdIcons.MdPayment />,
     cName: 'nav-text'
 }     

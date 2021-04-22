@@ -153,7 +153,7 @@ function SignUp(props) {
                         <h3>Sign Up</h3>
                         <div className="form-group">
                             <label>First name</label>
-                            <input type="text" value={data.fname} name='fname' onChange={HandleChange} className="form-control" placeholder="First name" />
+                            <input autoFocus={true} type="text" value={data.fname} name='fname' onChange={HandleChange} className="form-control" placeholder="First name" />
                             <div style={{ color: '#f50000' }}>{signup.errors.fname}</div>
                         </div>
 

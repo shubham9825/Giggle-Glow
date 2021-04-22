@@ -96,7 +96,7 @@ function Suggestion(props) {
                     <br />
                     <Form.Group>
                         <Form.Label>Suggestion </Form.Label>
-                        <Form.Control as='textarea' value={data.suggest} rows={5} name="suggest" onChange={HandleChange} placeholder="Enter Your Suggestion" />
+                        <Form.Control autoFocus={true} as='textarea' value={data.suggest} rows={5} name="suggest" onChange={HandleChange} placeholder="Enter Your Suggestion" />
                         <div style={{ color: '#f50000' }}>{suggestion.errors.suggest}</div>
                     </Form.Group>
                     <Button variant="primary" type="submit">Submit</Button>

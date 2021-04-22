@@ -105,7 +105,7 @@ export const DelFormup = (theformup) => {
             console.log(response)
             if (response.status === 200) {
                 dispatch(delDataSuccess(response.data))
-                //dispatch(GetFormup())
+                dispatch(GetFormup())
             } else {
                 dispatch(delDataFail('Sorry We Failed to Delete Data!!! Try Again...'))
             }

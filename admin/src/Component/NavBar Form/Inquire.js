@@ -156,7 +156,7 @@ function Inqurie(props) {
                     <Form.Row>
                         <Form.Group as={Col}>
                             <Form.Label>FirstName</Form.Label>
-                            <Form.Control type="text" value={data.fname} onChange={HandleChange} name="fname" placeholder="Enter your First name." />
+                            <Form.Control autoFocus={true} type="text" value={data.fname} onChange={HandleChange} name="fname" placeholder="Enter your First name." />
                             <div style={{ color: '#f50000' }}>{inquirys.errors.fname}</div>
                         </Form.Group>
                         <Form.Group as={Col}>

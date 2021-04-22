@@ -13,10 +13,11 @@ function ChildRegister(props) {
 
     //delete data
     const deleteData = (thechild) => {
-        console.log(thechild)
-        props.delChildData(thechild)
-        setShow(true)
-        MessageTime()
+        if(confirm('Are you sure you want to Delete Record')){
+            props.delChildData(thechild)
+            setShow(true)
+            MessageTime()
+        }
     }
 
     //update data
@@ -349,7 +350,7 @@ function ChildRegister(props) {
                         <input type='hidden' value={data._id}></input>
                         <Form.Group as={Col}>
                             <Form.Label>FirstName</Form.Label>
-                            <Form.Control type="text" placeholder="Enter FirstName" onChange={HandleChange} name="fname" value={data.fname} />
+                            <Form.Control autoFocus={true} type="text" placeholder="Enter FirstName" onChange={HandleChange} name="fname" value={data.fname} />
                             <div style={{ color: '#f50000' }} >{Register.errors.fname}</div>
                         </Form.Group>
 

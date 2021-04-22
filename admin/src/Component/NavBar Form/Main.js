@@ -18,22 +18,22 @@ function Home() {
 
     return (
         <>
-        <br/>
-           <div className="child-care logo" align="center">
-                    <img src={logo} width="500" height="250" />
-                </div>
+            <br />
+            <div className="child-care logo" align="center">
+                <img src={logo} width="500" height="250" />
+            </div>
             <Container>
-                <br/>
+                <br />
                 <Row>
-                    <Col>
+                    <Col lg="6">
                         <Card border="primary" bg="warning" text="light">
                             <Card.Header align="center"><h3>ADMIN</h3></Card.Header>
                             <div className="admin logo" align="center">
                                 <br />
                                 <img src={admin} width="100" height="100"></img>
                             </div>
-         &nbsp;
-        <div className="col-12" align="center">
+                            &nbsp;
+                            <div className="col-12" align="center">
                                 <Button variant="primary" onClick={AdminSubmit} >ADMIN</Button>
                             </div>
                             <br />

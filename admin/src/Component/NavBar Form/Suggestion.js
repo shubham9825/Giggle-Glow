@@ -20,10 +20,11 @@ function Suggestion(props) {
 
     //delete Data
     const onDeleteData = (theSuggest) => {
-        console.log(theSuggest)
-        props.deletesuggestion(theSuggest)
-        setShow(true)
-        MessageTime()
+        if(confirm('Are you sure you want to Delete Record')){
+            props.deletesuggestion(theSuggest)
+            setShow(true)
+            MessageTime()
+        }
     }
 
     //api calling state
@@ -130,7 +131,7 @@ function Suggestion(props) {
                     <br />
                     <Form.Group>
                         <Form.Label>Suggestion </Form.Label>
-                        <Form.Control as='textarea' value={data.suggest} rows={5} name="suggest" onChange={HandleChange} placeholder="Enter Your Suggestion" />
+                        <Form.Control autoFocus={true} as='textarea' value={data.suggest} rows={5} name="suggest" onChange={HandleChange} placeholder="Enter Your Suggestion" />
                         <div style={{ color: '#f50000' }}>{suggestion.errors.suggest}</div>
                     </Form.Group>
                     <Button variant="primary" type="submit">Submit</Button>

@@ -23,9 +23,11 @@ function Contact(props) {
 
     //delete data
     const onDeleteData = (theContact) => {
-        props.deleteContactData(theContact)
-        setShow(true)
-        MessageTime()
+        if(confirm('Are you sure you want to Delete Record')){
+            props.deleteContactData(theContact)
+            setShow(true)
+            MessageTime()
+        }
     }
 
     //api calling state
@@ -158,7 +160,7 @@ function Contact(props) {
                     <br />
                     <Form.Group>
                         <Form.Label>Address</Form.Label>
-                        <Form.Control value={data.address} as="textarea" name="address" placeholder="Enter your daycare Address." rows={2} onChange={HandleChange} />
+                        <Form.Control autoFocus={true} value={data.address} as="textarea" name="address" placeholder="Enter your daycare Address." rows={2} onChange={HandleChange} />
                         <div style={{ color: '#f50000' }} >{Submit.errors.address}</div>
                     </Form.Group>
                     <Form.Group>
@@ -182,7 +184,7 @@ function Contact(props) {
                 <div className="card-body">
                     <div className="table-responsive">
                         {props.createContact.getData.length > 0 &&
-                            <Table striped hover className='container'>
+                            <Table striped hover responsive className='table table-bordered'>
                                 <thead>
                                     <tr>
                                         <th>Address</th>

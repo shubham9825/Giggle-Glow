@@ -233,7 +233,7 @@ function Forgot(props) {
                                 <div>
                                     <div className="form-group">
                                         <label>Email address</label>
-                                        <input type="email" value={data.email} onChange={handleChange} className="form-control" name='email' placeholder="Enter email" />
+                                        <input autoFocus={true} type="email" value={data.email} onChange={handleChange} className="form-control" name='email' placeholder="Enter email" />
                                         <div style={{ color: '#f50000' }}>{forgot.errors.email}</div>
                                     </div>
                                     <button type="submit" onClick={EmailSubmit} className="btn btn-primary btn-block mb-2">Submit</button>

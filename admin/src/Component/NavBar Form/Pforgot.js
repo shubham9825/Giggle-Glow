@@ -232,7 +232,7 @@ function Pforgot(props) {
                         {props.createPforgot.showmail && <div>
                             <div className="form-group">
                                 <label>Email address</label>
-                                <input type="email" value={data.email} onChange={handleChange} className="form-control" name='email' placeholder="Enter email"
+                                <input autoFocus={true} type="email" value={data.email} onChange={handleChange} className="form-control" name='email' placeholder="Enter email"
                                     autoFocus={true} />
                                 <div style={{ color: '#f50000' }}>{pforgot.errors.email}</div>
                             </div>

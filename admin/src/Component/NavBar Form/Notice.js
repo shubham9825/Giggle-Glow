@@ -12,10 +12,11 @@ export function Notice(props) {
 
     //delete
     const delData = (thenotice) => {
-        console.log(thenotice)
-        props.delNoticeData(thenotice)
-        setShow(true)
-        MessageTime()
+        if(confirm('Are you sure you want to Delete Record')){
+            props.delNoticeData(thenotice)
+            setShow(true)
+            MessageTime()
+        }
     }
     const [notice, setnotice] = useState({
         title: null,
@@ -31,6 +32,7 @@ export function Notice(props) {
         setdata(tempUser)
         notice.errors = {}
     }
+
     const initialState = {
         _id: 0,
         title: '',

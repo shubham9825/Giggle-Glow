@@ -116,7 +116,7 @@ export function Login(props) {
             <h3>Sign In</h3>
             <div className="form-group">
               <label>Email address</label>
-              <input type="email" onChange={handleChange} className="form-control" name='email' placeholder="Enter email" />
+              <input autoFocus={true} type="email" onChange={handleChange} className="form-control" name='email' placeholder="Enter email" />
               <div style={{ color: '#f50000' }}>{login.errors.email}</div>
             </div>
             <div className="form-group">

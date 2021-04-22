@@ -34,10 +34,11 @@ function Service(props) {
 
     //deletedata
     const deleteData = (theService) => {
-        console.log(theService)
-        props.delServiceData(theService)
-        setShow(true)
-        MessageTime()
+        if(confirm('Are you sure you want to Delete Record')){
+            props.delServiceData(theService)
+            setShow(true)
+            MessageTime()
+        }
     }
 
     //api call
@@ -235,7 +236,7 @@ function Service(props) {
                         <br />
                         <Form.Group>
                             <Form.Label>Service Name</Form.Label>
-                            <Form.Control type="text" name="service_name" onChange={HandleChange} placeholder="Enter Service Name" value={data.service_name} />
+                            <Form.Control autoFocus={true} type="text" name="service_name" onChange={HandleChange} placeholder="Enter Service Name" value={data.service_name} />
                             <div style={{ color: '#f50000' }}>{services.errors.service_name}</div>
                         </Form.Group>
                         <Form.Group>

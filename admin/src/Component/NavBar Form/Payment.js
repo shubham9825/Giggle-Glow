@@ -1,9 +1,9 @@
+/* eslint-disable */
 import React, { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { createPayment } from '../../actions/Payment.action'
 import TimePicker from 'react-time-picker';
-
 
 function Payment(props) {
     const [payments, setpayments] = useState({
