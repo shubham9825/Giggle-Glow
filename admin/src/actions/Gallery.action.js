@@ -93,14 +93,13 @@ export const DelGallary=(Data)=>{
     }
     return async(dispatch)=>{
         dispatch(delrequest())
-        
         try {
             const response = await axios.delete(`${process.env.REACT_APP_SERVER_URL}upload/${Data._id}`)
             console.log(response)
 
             if (response.status === 200) {
                 dispatch(delsuccess(response.data))
-                dispatch(GetGallery())
+                dispatch(GetGallery(Data.owner))
             } else {
                 dispatch(delfail('Sorry We Failed to Delete Image!!!'))
             }

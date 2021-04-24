@@ -27,7 +27,6 @@ function Gallery(props) {
     }, [])
     //delete
     const deleteData = (theData) => {
-        console.log(theData)
         props.deleteImage(theData)
         setshow(true)
         MessageTime()
