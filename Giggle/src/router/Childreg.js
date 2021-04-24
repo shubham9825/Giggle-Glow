@@ -3,10 +3,17 @@ const Registration=require('../model/childreg')
 const nodemailer = require('nodemailer')
 const router=new express.Router()
 
-router.get('/registrations',async(req,res)=>{
+router.get('/registrations/:id',async(req,res)=>{
+    
+    const _id = req.params.id
+    
     try{
-        const registrations=await Registration.find()
-        res.status(200).send(registrations)
+        // const registrations=await Registration.find()
+        const registrations=await Registration.findById(_id)
+        await user.populate({  //we use populate mathod 
+            path:"payments"
+        }).execPopulate()
+        res.status(200).send({registrations,payments:registrations.payments})
     }catch(error){
         res.status(400).send(error)
     }

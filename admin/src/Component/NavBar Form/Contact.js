@@ -23,11 +23,9 @@ function Contact(props) {
 
     //delete data
     const onDeleteData = (theContact) => {
-        if(confirm('Are you sure you want to Delete Record')){
-            props.deleteContactData(theContact)
-            setShow(true)
-            MessageTime()
-        }
+        props.deleteContactData(theContact)
+        setShow(true)
+        MessageTime()
     }
 
     //api calling state
@@ -44,6 +42,11 @@ function Contact(props) {
         let name = e.target.name
         let value = e.target.value
         let errors = Submit.errors
+
+        setdata({
+            ...data,
+            [name]: value
+        })
 
         switch (name) {
             case 'address':
@@ -80,11 +83,6 @@ function Contact(props) {
                 errors.email = ''
                 break
         }
-        setdata({
-            ...data,
-            [name]: value
-        })
-        
         SetSubmit({
             ...Submit,
             [name]: value,
@@ -104,6 +102,7 @@ function Contact(props) {
         e.preventDefault()
         if (validationForm(Submit.errors)) {
             alert("Form Submitted")
+            //update
             if (data._id === 0) {
                 // insert
                 delete data._id
@@ -129,6 +128,7 @@ function Contact(props) {
     //edit user
     const EditUser = (tempUser) => {
         console.log(tempUser)
+        Submit.errors = {}  //when data set in form then ir remove require word in form
         setdata(tempUser)
     }
 
@@ -140,14 +140,9 @@ function Contact(props) {
             setShow(false)
         }, 4000)
     }
-
-    //reset button
-    const HandleReset = () => {
-        setdata(initialdata)
-    }
     return (
-        <div className="position-relative" style={{marginTop:'60px'}}>
-            {show && <Alert className='pb-0 position-absolute w-100' style={{ "top": "0", "left": "0" }} variant="danger" onClose={() => setShow(false)} dismissible>
+        <div className="position-relative">
+            {show && <Alert className='pb-0 position-absolute w-100' style={{ "top": "0", "left": "5px" }} variant="danger" onClose={() => setShow(false)} dismissible>
                 <p>{props.createContact.msg}{props.createContact.error}</p>
             </Alert>
             }<br />
@@ -158,7 +153,7 @@ function Contact(props) {
                     <br />
                     <Form.Group>
                         <Form.Label>Address</Form.Label>
-                        <Form.Control autoFocus={true} value={data.address} as="textarea" name="address" placeholder="Enter your daycare Address." rows={2} onChange={HandleChange} />
+                        <Form.Control value={data.address} as="textarea" name="address" placeholder="Enter your daycare Address." rows={2} onChange={HandleChange} />
                         <div style={{ color: '#f50000' }} >{Submit.errors.address}</div>
                     </Form.Group>
                     <Form.Group>
@@ -171,8 +166,7 @@ function Contact(props) {
                         <Form.Control type="email" value={data.email} name="email" placeholder="Enter your Email." onChange={HandleChange} />
                         <div style={{ color: '#f50000' }} >{Submit.errors.email}</div>
                     </Form.Group>
-                    <Button variant="primary" type="submit">Submit</Button>&nbsp;&nbsp;
-                    <Button variant="primary" type="reset" onClick={HandleReset}>Reset</Button>
+                    <Button variant="primary" type="submit">Submit</Button>
                 </fieldset>
             </Form><br /><br />
 
@@ -182,7 +176,7 @@ function Contact(props) {
                 <div className="card-body">
                     <div className="table-responsive">
                         {props.createContact.getData.length > 0 &&
-                            <Table striped hover responsive className='table table-bordered'>
+                            <Table striped hover className='container'>
                                 <thead>
                                     <tr>
                                         <th>Address</th>

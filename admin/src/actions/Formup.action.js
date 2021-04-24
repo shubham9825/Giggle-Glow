@@ -28,7 +28,7 @@ export const createFormup = (Data) => {
 
             if (response.status === 201) {
                 dispatch(createDataSuccess(response.data))
-                dispatch(GetFormup())
+                dispatch(GetFormup(Data.owner))
             } else {
                 dispatch(createDataFail('Sorry We Failed to Submit Data!!! Try Again...'))
             }
@@ -40,7 +40,7 @@ export const createFormup = (Data) => {
 }
 
 //Get request
-export const GetFormup = (Data) => {
+export const GetFormup = (owner) => {
     const getDataRequest = () => {
         return {
             type: GET_FORMUP_REQUEST
@@ -60,9 +60,8 @@ export const GetFormup = (Data) => {
     }
     return async (dispatch) => {
         dispatch(getDataRequest())
-        console.log(Data)
         try {
-            const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}formups/${Data.owner}`)
+            const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}formups/${owner}`)
             console.log(response)
 
             if (response.status === 200) {
@@ -103,7 +102,7 @@ export const DelFormup = (theformup) => {
             console.log(response)
             if (response.status === 200) {
                 dispatch(delDataSuccess(response.data))
-                //dispatch(GetFormup())
+                dispatch(GetFormup(theformup.owner))
             } else {
                 dispatch(delDataFail('Sorry We Failed to Delete Data!!! Try Again...'))
             }
@@ -135,17 +134,20 @@ export const UpdateFormup =(Data)=>{
     }
     return async(dispatch)=>{
         dispatch(updateDataRequest())
+        console.log(Data)
         try{
+            let owner=Data.owner
             let _id = Data._id
             delete Data._id 
             delete Data.updatedAt //old data's field can't enter because we set only response field so it edit only that field not other so it will deleted to puting and this field is automatically changed when data update it will be same for above and belove delete operation's.
             delete Data.createdAt
+            delete Data.owner
             console.log(Data)    
             const response= await axios.put(`${process.env.REACT_APP_SERVER_URL}formups/${_id}`,Data)
             console.log(response)
             if(response.status===200){
                 dispatch(updateDataSuccess(response.data))
-                dispatch(GetFormup())
+                 dispatch(GetFormup(owner))
             }else{
                 dispatch(updateDataFail('Sorry We Failed to Update Data!!! Try Again...'))
             }

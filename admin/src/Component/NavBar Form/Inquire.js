@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import { Form, Button, Col, Table, ButtonGroup, Alert } from 'react-bootstrap'
 import { connect } from 'react-redux';
-import { createInquiry, GetInquiry, DeleteInquiry, UpdateInquiry } from '../../actions/Inquiry.action'
+import { createInquiry } from '../../actions/Inquiry.action'
 
 function Inqurie(props) {
     const [inquirys, setinquirys] = useState({
@@ -12,11 +12,11 @@ function Inqurie(props) {
         phone: null,
         message: null,
         errors: {
-            fname: ' ',
-            lname: ' ',
-            email: ' ',
-            phone: ' ',
-            message: ' '
+            fname: '*Required',
+            lname: '*Required',
+            email: '*Required',
+            phone: '*Required',
+            message: '*Required'
         }
     })
     const validEmailRegex = RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
@@ -129,7 +129,7 @@ function Inqurie(props) {
             MessageTime()
             setdata(initialdata)
         } else {
-            alert('Please Fill Proper Form!!!')
+            alert("Form Not Submitted")
         }
 
     }
@@ -143,9 +143,9 @@ function Inqurie(props) {
         }, 4000)
     }
     return (
-        <div className="position-relative" style={{marginTop:'60px'}}>
+        <div className="position-relative">
             {show && <Alert className='pb-0 position-absolute w-100' style={{ "top": "0", "left": "0px" }} variant="danger" onClose={() => setShow(false)} dismissible>
-            <p>{props.createInquiry.msg}{props.createInquiry.error}</p>
+                <p>{props.createInquiry.msg}{props.createInquiry.error}</p>
             </Alert>
             }<br />
             <Form className="container mt-5" onSubmit={HandleSubmit}>
@@ -156,7 +156,7 @@ function Inqurie(props) {
                     <Form.Row>
                         <Form.Group as={Col}>
                             <Form.Label>FirstName</Form.Label>
-                            <Form.Control autoFocus={true} type="text" value={data.fname} onChange={HandleChange} name="fname" placeholder="Enter your First name." />
+                            <Form.Control type="text" value={data.fname} onChange={HandleChange} name="fname" placeholder="Enter your First name." />
                             <div style={{ color: '#f50000' }}>{inquirys.errors.fname}</div>
                         </Form.Group>
                         <Form.Group as={Col}>
@@ -182,7 +182,7 @@ function Inqurie(props) {
                     </Form.Group>
                     <Button variant="primary" type="submit">Submit</Button>
                 </fieldset>
-            </Form>
+            </Form><br /><br />
         </div>
     )
 }

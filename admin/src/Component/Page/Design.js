@@ -1,4 +1,6 @@
 import React from 'react'
+import { BrowserRouter as Router,Link } from 'react-router-dom'
+import logo from '../images/logo.jpeg'
 
 function Design() {
   return (
@@ -13,9 +15,9 @@ function Design() {
                   {/* logo begin */}
                   {/* logo begin */}
                   <div id="logo">
-                    <a href="index.html">
-                      <img alt src="images/logo-1.png" />
-                    </a>
+                    <Link to='/'>
+                      <img alt src={logo} style={{height:'80px',width:'80px'}} />
+                    </Link>
                   </div>
                   {/* logo close */}
                   {/* logo close */}
@@ -54,17 +56,19 @@ function Design() {
                         <li><a href="pricing-plans.html">Pricing Plans</a></li>
                       </ul>
                     </li>
+                    <Router>
                     <li>
                       <a href="#">Pages</a>
-                      <ul>
+                      <ul>                    
                         <li><a href="news.html">News</a></li>
                         <li><a href="gallery.html">Gallery</a></li>
                         <li><a href="login.html">Login</a></li>
                         <li><a href="login-2.html">Login 2</a></li>
                         <li><a href="register.html">Register</a></li>
-                        <li><a href="contact-us.html">Contact Us</a></li>
+                        <li><a href="/contactus">Contact Us</a></li>
                       </ul>
                     </li>
+                    </Router>
                     <li>
                       <a href="#">Elements</a>
                       <ul>
@@ -83,7 +87,7 @@ function Design() {
                   </ul>
                 </div>
                 <div className="align-self-center ml-auto header-col-right">
-                  {/* <a className="btn-custom" href="#"><i className="fa fa-arrow-down" /> Buy Now</a> */}
+                  <Link to='/main' className="btn-custom" ><i className="fa fa-sign-in" /> Login</Link>
                   <span id="menu-btn" />
                 </div>
                 <div className="clearfix" />
@@ -383,13 +387,6 @@ function Design() {
         </div>
       </footer>
       {/* footer close */}
-      <div id="preloader">
-        <div className="spinner">
-          <div className="bounce1" />
-          <div className="bounce2" />
-          <div className="bounce3" />
-        </div>
-      </div>
     </div>
   )
 }

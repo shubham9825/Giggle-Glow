@@ -45,7 +45,7 @@ const RegistrationSchema=new mongoose.Schema({
         trim:true
     },
     phonenum:{
-        type:String,
+        type:Number ,
         required:true,
         trim:true,
         minimum:10,
@@ -70,7 +70,7 @@ const RegistrationSchema=new mongoose.Schema({
         trim:true
     },
     drphonenum:{
-        type:String,
+        type:Number,
         required:true,
         trim:true,
         minimum:10,
@@ -90,6 +90,14 @@ const RegistrationSchema=new mongoose.Schema({
 },{
     timestamps:true
 })
+
+//create a virtual method 
+RegistrationSchema.virtual('payments',{
+    ref:'Payment',
+    localField:'_id',
+    foreignField:'owner'
+})
+
 
 const Registration=mongoose.model('Registration',RegistrationSchema)
 module.exports=Registration

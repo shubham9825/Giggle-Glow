@@ -1,8 +1,7 @@
-/* eslint-disable */
 import React, { useEffect, useState } from 'react'
 import {Form,Button, Table, ButtonGroup} from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { createAlbum, DeleteAlbum, GetAlbum ,UpdateAlbum} from '../../actions/Album.action'
+import { createAlbum, GetAlbum } from '../../actions/Album.action'
 
 function Album(props) {
 
@@ -20,23 +19,9 @@ function Album(props) {
 
     //api calling state
     const initialdata = {
-         _id: 0,
         album:''
     }
     const [data, setdata] = useState(initialdata)
-
-    //edit user
-    const EditUser = (tempUser) => {
-        console.log(tempUser)
-        setdata(tempUser)
-    }
-
-    //delete data
-    const onDeleteData = (theData) => {
-        if(confirm('Are you sure you want to Delete Record')){
-            props.DeleteAlbum(theData)
-        }
-    }
 
     const HandleChange=(e)=>{
         let name = e.target.name
@@ -79,17 +64,7 @@ function Album(props) {
         e.preventDefault()
         if (validationForm(albumdata.errors)) {
             alert("Form Submitted")
-            if (data._id === 0) {
-                // insert
-                delete data._id
-                props.PostAlbum(data)
-            } else {
-                // update
-                let tempUser = {}
-                tempUser._id = data._id
-                tempUser.album = data.album
-                props.UpdateAlbum(tempUser)
-            }
+            props.PostAlbum(data)
             setdata(initialdata)
         } else {
             alert('Please Fill Proper Form!!!')
@@ -121,7 +96,8 @@ function Album(props) {
                                 <thead>
                                     <tr>
                                         <th>Album</th>
-                                        <th>Edit | Delete</th>
+                                        
+                                        {/* <th>Edit | Delete</th> */}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -130,8 +106,8 @@ function Album(props) {
                                             <td>{theData.album}</td>
                                             <td>
                                                 <ButtonGroup>
-                                                    <Button variant="success" onClick={() => EditUser(theData)}>Edit</Button>&nbsp;&nbsp;
-                                                    <Button variant="danger" onClick={() => onDeleteData(theData)}>Delete</Button>
+                                                    {/* <Button variant="success" onClick={() => EditUser(theData)}>Edit</Button>&nbsp;&nbsp;
+                                                    <Button variant="danger" onClick={() => onDeleteData(theData)}>Delete</Button> */}
                                                 </ButtonGroup>
                                             </td>
                                         </tr>
@@ -155,9 +131,7 @@ const mapStateToProps = (store) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         PostAlbum: (data) => dispatch(createAlbum(data)),
-        GetAlbum:()=>dispatch(GetAlbum()),
-        UpdateAlbum:(data)=>dispatch(UpdateAlbum(data)),
-        DeleteAlbum:(data)=>dispatch(DeleteAlbum(data))
+        GetAlbum:()=>dispatch(GetAlbum())
     }
 }
 

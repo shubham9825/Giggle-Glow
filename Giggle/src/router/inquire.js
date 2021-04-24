@@ -3,41 +3,45 @@ const Inquire = require('../model/inqurie')
 
 const router = new express.Router
 
-router.get('/inquires', async(req,res)=>{
+router.get('/inquires', async (req, res) => {
+
+    const _id = req.params.id
     try {
         const inquires = await Inquire.find()
+        // await inquires.populate({
+        //     path: "formups"
+        // }).execPopulate()
+
         res.status(200).send(inquires)
     } catch (error) {
         res.status(400).send(error)
     }
 })
 
-router.post('/inquires',async(req,res)=>{
+router.post('/inquires', async (req, res) => {
     try {
-       // console.log(req.body)
         const inquires = new Inquire(req.body)
         await inquires.save()
         res.status(201).send(inquires)
     } catch (error) {
-       // console.log(error)
         res.status(400).send(error)
 
     }
 })
 
-router.put('/inquires/:id',async(req,res)=>{
+router.put('/inquires/:id', async (req, res) => {
     const update = Object.keys(req.body)
-    const allowedUpdates = ['fname','lname','email','phone','message']
-    const isValidOperation= update.every((update)=> allowedUpdates.includes(update))
+    const allowedUpdates = ['fname', 'lname', 'email', 'phone', 'message']
+    const isValidOperation = update.every((update) => allowedUpdates.includes(update))
 
-    if(!isValidOperation){
-        return res.status(400).send({error:'Invalid operation.'})
+    if (!isValidOperation) {
+        return res.status(400).send({ error: 'Invalid operation.' })
     }
 
     try {
         const id = req.params.id
         const inquires = await Inquire.findById(id)
-        update.forEach((update)=> inquires[update] = req.body[update])
+        update.forEach((update) => inquires[update] = req.body[update])
         await inquires.save()
         res.status(200).send(inquires)
     } catch (error) {
@@ -45,7 +49,7 @@ router.put('/inquires/:id',async(req,res)=>{
     }
 })
 
-router.delete('/inquires/:id',async(req,res)=>{
+router.delete('/inquires/:id', async (req, res) => {
     try {
         const id = req.params.id
         const inquires = await Inquire.findById(id)
@@ -55,4 +59,4 @@ router.delete('/inquires/:id',async(req,res)=>{
         res.status(400).send(error)
     }
 })
- module.exports = router
+module.exports = router

@@ -10,6 +10,13 @@ const albumSchema=new mongoose.Schema({
     timestamps:true
 })
 
+//create a virtual method 
+albumSchema.virtual('gallary',{
+    ref:'Gallery',
+    localField:'_id',
+    foreignField:'owner'
+})
+
 const album=mongoose.model('album',albumSchema)
 
 module.exports=album

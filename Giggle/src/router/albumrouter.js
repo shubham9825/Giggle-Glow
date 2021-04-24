@@ -5,7 +5,6 @@ const router=new express.Router()
 
 router.post('/albums',async(req,res)=>{
     console.log(req.body)
-
     try{
         const albums=new Album(req.body)
         await albums.save()
@@ -16,6 +15,8 @@ router.post('/albums',async(req,res)=>{
 })
 
 router.get('/albums',async(req,res)=>{
+    
+    //res.send("Read User")
     try{
         const albums=await Album.find()
         res.status(200).send(albums)
@@ -56,3 +57,4 @@ router.delete('/albums/:id',async(req,res)=>{
 })
 
 module.exports=router
+

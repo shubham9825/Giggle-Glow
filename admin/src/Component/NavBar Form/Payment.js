@@ -1,13 +1,13 @@
 /* eslint-disable */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import { connect } from 'react-redux'
+import { getChild } from '../../actions/child.action'
 import { createPayment } from '../../actions/Payment.action'
-import TimePicker from 'react-time-picker';
 
 function Payment(props) {
     const [payments, setpayments] = useState({
-        t_date: null,
+        t_date: new Date(),
         entry_time: null,
         exit_time: null,
         total_time: null,
@@ -16,18 +16,17 @@ function Payment(props) {
             t_date: '*Required',
             entry_time: '*Required',
             exit_time: '*Required',
-            total_time: '*Required',
-            fees: '*Required'
+            total_time: '*Required'
         }
     })
 
-     //use in api calling 
-     const initialdata = {
-         t_date:'',
-         entry_time:'',
-         exit_time:'',
-         total_time:'',
-        fees:''
+    //use in api calling 
+    const initialdata = {
+        t_date: new Date().toString(),
+        entry_time: '',
+        exit_time: '',
+        total_time: '',
+        owner:''
     }
     const [data, setdata] = useState(initialdata)
 
@@ -35,6 +34,7 @@ function Payment(props) {
         let name = e.target.name
         let value = e.target.value
         let errors = payments.errors
+        let total="00:00"
 
         switch (name) {
             case 't_date':
@@ -51,31 +51,44 @@ function Payment(props) {
 
             case 'exit_time':
                 errors.exit_time = ''
+                var date1 = new Date("08/05/2015 "+data.entry_time);
+                var date2 = new Date("08/05/2015 "+value);
+
+                var diff = date2.getTime() - date1.getTime();
+
+                if(diff<0){
+                    alert('Exit Time Not Valid')
+                }
+
+                console.log(`Diff : ${diff}`)    
+                var msec = diff;
+                var hh = Math.floor(msec / 1000 / 60 / 60);
+                msec -= hh * 1000 * 60 * 60;
+                var mm = Math.floor(msec / 1000 / 60);
+                total=`${hh}:${mm}`
                 break
 
             case 'total_time':
                 errors.total_time = ''
                 break
-
-            case 'fees':
-                if (!(/^[0-9]*$/g).test(value)) {
-                    errors.fees = 'Enter Alphabets only!'
-                    break
-                }
-                errors.fees = ''
-                break
-
         }
 
+        if(mm>30){
+            hh = hh+1            
+        }
+
+        console.log(hh)
         setpayments({
             ...payments,
             [name]: value,
+            total_time:total,
             errors
         })
 
         setdata({
             ...data,
-            [name]: value
+            [name]: value,
+            total_time:total
         })
     }
 
@@ -98,25 +111,51 @@ function Payment(props) {
             alert("Form Not Submitted")
         }
     }
-    
-    const [value, onChange] = useState('10:00');
+    //get request
+    useEffect(() => {
+        props.getAllRegister()
+    }, [])
 
+    const Handlekey = (e) => {
+        const owner = e.target.value
+
+        setdata({
+            ...data,
+            owner
+        })
+    }
+    console.log(data)
     return (
-        <div style={{marginTop:"100px"}}>
-        <p>{props.CratePayment.error}</p>
+        <>
+            <p>{props.CratePayment.error}</p>
             <Form className="container mt-5" onSubmit={HandleSubmit}>
                 <fieldset>
-                    <legend>Payment / Fees</legend>
-                
+                    <legend>Child Attandance</legend>
+                    <Form.Group>
+                    {props.createChild.getData.length > 0 &&
+                        <div>
+                            <Form.Label>Select list Name</Form.Label><br />
+                            <select onChange={Handlekey}>
+                                <option hidden>Select Name</option>
+                                {props.createChild.getData.map(theData =>
+                                    <option value={theData._id}>{theData.fname}</option>
+                                )}
+                                <br />
+                            </select>
+                        </div>
+                    }
+                    </Form.Group>
                     <Form.Group>
                         <Form.Label>Date</Form.Label>
-                        <Form.Control type="date" name="t_date" data-date="" data-date-format="YYYY-MM-DD" onChange={HandleChange} placeholder="Enter Date." />
+                        <Form.Control type="date" name="t_date" data-date=""  
+                        onChange={HandleChange} placeholder="Enter Date." />
                         <div style={{ color: '#f50000' }}>{payments.errors.t_date}</div>
                         {/* <input type="date" data-date="" data-date-format="YYYY-MM-DD"  ></input> */}
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Entry Time</Form.Label>
-                        <Form.Control pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]" type="text" name="entry_time" onChange={HandleChange} placeholder="Enter Entry Time." />
+                        <Form.Control type="time" name="entry_time" onChange={HandleChange} 
+                        placeholder="Enter Entry Time." />
                         <div style={{ color: '#f50000' }}>{payments.errors.entry_time}</div>
                     </Form.Group>
                     <Form.Group>
@@ -126,32 +165,32 @@ function Payment(props) {
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Total Time</Form.Label>
-                        <Form.Control type="time" name="total_time" onChange={HandleChange} placeholder="Enter Total Time." />
+                        <Form.Control type="text"  name="total_time" onChange={HandleChange} 
+                        placeholder="Enter Total Time." value={data.total_time} readOnly/>
                         <div style={{ color: '#f50000' }}>{payments.errors.total_time}</div>
-                    </Form.Group>
-                    <Form.Group>
-                        <Form.Label>Fee's</Form.Label>
-                        <Form.Control type="text" name="fees" onChange={HandleChange} placeholder="Enter Instalment Number." />
-                        <div style={{ color: '#f50000' }}>{payments.errors.fees}</div>
                     </Form.Group>
                     <Button variant="primary" type="submit">Submit</Button>
                 </fieldset>
             </Form>
-        </div>
+
+            <br /><br /><br />
+        </>
     )
 }
 
 
 const mapStateToProps = (store) => {
     return {
-        CratePayment: store.CratePayment
+        CratePayment: store.CratePayment,
+        createChild: store.createChild
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         postPayment: (data) => dispatch(createPayment(data)),
+        getAllRegister: () => dispatch(getChild())
     }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(Payment)
+export default connect(mapStateToProps, mapDispatchToProps)(Payment)

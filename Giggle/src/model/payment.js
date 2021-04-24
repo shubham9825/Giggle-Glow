@@ -21,10 +21,10 @@ const paymentSchema = new mongoose.Schema({
         trim:true,
         required:true
     },
-    fees:{
-        type:Number,
-        trim:true,
-        required:true 
+    owner:{
+        type:mongoose.Schema.Types.ObjectId,
+        required:true,
+        ref:'Registration'
     }
 },{
     timestamps:true

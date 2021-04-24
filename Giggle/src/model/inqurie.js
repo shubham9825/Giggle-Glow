@@ -34,6 +34,14 @@ const inqurieSchema = new mongoose.Schema({
     timestamps:true
 })
 
+//create a virtual method 
+inqurieSchema.virtual('formups',{
+    ref:'FormUp',
+    localField:'_id',
+    foreignField:'owner'
+})
+
+
 const Inquire = mongoose.model('Inquire',inqurieSchema)
 
 module.exports = Inquire

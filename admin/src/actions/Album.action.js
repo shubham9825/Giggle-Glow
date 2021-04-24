@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {CREATE_ALBUM_FAIL, CREATE_ALBUM_REQUEST, CREATE_ALBUM_SUCCESS, DELETE_ALBUM_FAIL, DELETE_ALBUM_REQUEST, DELETE_ALBUM_SUCCESS, GET_ALBUM_FAIL, GET_ALBUM_REQUEST, GET_ALBUM_SUCCESS, UPDATE_ALBUM_FAIL, UPDATE_ALBUM_REQUEST, UPDATE_ALBUM_SUCCESS} from '../constant/album.constant'
+import {CREATE_ALBUM_FAIL, CREATE_ALBUM_REQUEST, CREATE_ALBUM_SUCCESS, GET_ALBUM_FAIL, GET_ALBUM_REQUEST, GET_ALBUM_SUCCESS} from '../constant/album.constant'
 
 //post Request
 export const createAlbum=(Data)=>{
@@ -62,6 +62,7 @@ export const GetAlbum=()=>{
         dispatch(GetUserRequest())
         try{
             const response=await axios.get(`${process.env.REACT_APP_SERVER_URL}albums`)
+            console.log(response)
             if(response.status===200){
                 dispatch(GetUserSuccess(response.data))
             }else{
@@ -74,83 +75,83 @@ export const GetAlbum=()=>{
     }
 }
 
-//DELETE Request
-export const DeleteAlbum=(Data)=>{
-    const userrequest=()=>{
-        return{
-            type:DELETE_ALBUM_REQUEST
-        }
-    }
-    const usersuccess=(Data)=>{
-        return{
-            type:DELETE_ALBUM_SUCCESS,
-            payload:Data
-        }
-    }
-    const userfail=(error)=>{
-        return{
-            type:DELETE_ALBUM_FAIL,
-            error
-        }
-    }
-    return async(dispatch)=>{
-        dispatch(userrequest())
-        try{
-            const response=await axios.delete(`${process.env.REACT_APP_SERVER_URL}albums/${Data._id}`)
-            console.log(response)
+// //DELETE Request
+// export const DeleteAbout=(theAbout)=>{
+//     const deleteaboutRequest=()=>{
+//         return{
+//             type:DELETE_ABOUT_REQUEST
+//         }
+//     }
+//     const deleteaboutuccess=(Data)=>{
+//         return{
+//             type:DELETE_ABOUT_SUCCESS,
+//             payload:Data
+//         }
+//     }
+//     const deleteaboutFail=(error)=>{
+//         return{
+//             type:DELETE_ABOUT_FAIL,
+//             error
+//         }
+//     }
+//     return async(dispatch)=>{
+//         dispatch(deleteaboutRequest())
+//         try{
+//             const response=await axios.delete(`${process.env.REACT_APP_SERVER_URL}abouts/${theAbout._id}`)
+//             console.log(response)
 
-            if(response.status===200){
-                dispatch(usersuccess(response.data))
-                dispatch(GetAlbum())
-            }else{
-                dispatch(userfail('Sorry We Failed to Delete Data!!! Try Again...'))
-            }
-        }catch(error){
-            console.log(error)
-            dispatch(userfail('Sorry We Failed to Delete Data!!! Try Again...'))
-        }
-    }
-}
+//             if(response.status===200){
+//                 dispatch(deleteaboutuccess(response.data))
+//                 dispatch(GetAbout())
+//             }else{
+//                 dispatch(deleteaboutFail('Sorry We Failed to Delete Data!!! Try Again...'))
+//             }
+//         }catch(error){
+//             console.log(error)
+//             dispatch(deleteaboutFail('Sorry We Failed to Delete Data!!! Try Again...'))
+//         }
+//     }
+// }
 
-//UPDATE Request
-export const UpdateAlbum=(Data)=>{
-    const userRequest=()=>{
-        return{
-            type:UPDATE_ALBUM_REQUEST
-        }
-    }
-    const userSuccess=(Data)=>{
-        return{
-            type:UPDATE_ALBUM_SUCCESS,
-            payload:Data
-        }
-    }
-    const userFail=(error)=>{
-        return{
-            type:UPDATE_ALBUM_FAIL,
-            error
-        }
-    }
-    return async(dispatch)=>{
-        dispatch(userRequest())
-        try{
-            let _id=Data._id
-            delete Data._id
-            delete Data.updatedAt  
-            delete Data.createdAt
-            //console.log(Data)
-            const response=await axios.put(`${process.env.REACT_APP_SERVER_URL}albums/${_id}`,Data)
-            console.log(response)
+// //UPDATE Request
+// export const UpdateAbout=(Data)=>{
+//     const updateaboutRequest=()=>{
+//         return{
+//             type:UPDATE_ABOUT_REQUEST
+//         }
+//     }
+//     const updateaboutuccess=(Data)=>{
+//         return{
+//             type:UPDATE_ABOUT_SUCCESS,
+//             payload:Data
+//         }
+//     }
+//     const updateaboutFail=(error)=>{
+//         return{
+//             type:UPDATE_ABOUT_FAIL,
+//             error
+//         }
+//     }
+//     return async(dispatch)=>{
+//         dispatch(updateaboutRequest())
+//         try{
+//             let _id=Data._id
+//             delete Data._id
+//             delete Data.updatedAt  
+//             delete Data.createdAt
+//             //console.log(Data)
+//             const response=await axios.put(`${process.env.REACT_APP_SERVER_URL}abouts/${_id}`,Data)
+//             console.log(response)
 
-            if(response.status===200){
-                dispatch(userSuccess(response.data))
-                dispatch(GetAlbum())
-            }else{
-                dispatch(userFail('Sorry We Failed to Update Data!!! Try Again...'))
-            }
-        }catch(error){
-            console.log(error)
-            dispatch(userFail('Sorry We Failed to Update Data!!! Try Again...'))
-        }
-    }
-}
+//             if(response.status===200){
+//                 dispatch(updateaboutuccess(response.data))
+//                 dispatch(GetAbout())
+//             }else{
+//                 dispatch(updateaboutFail('Sorry We Failed to Update Data!!! Try Again...'))
+//             }
+//         }catch(error){
+//             console.log(error)
+//             dispatch(updateaboutFail('Sorry We Failed to Update Data!!! Try Again...'))
+//         }
+//     }
+// }

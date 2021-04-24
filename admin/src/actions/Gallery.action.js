@@ -35,7 +35,7 @@ export const CreateGallery=(Data)=>{
 }
 
 //Get Request
-export const GetGallery=()=>{
+export const GetGallery=(owner)=>{
     const getrequest=()=>{
         return{
             type:GET_FILE_REQUEST
@@ -56,8 +56,9 @@ export const GetGallery=()=>{
     return async(dispatch)=>{
         dispatch(getrequest())
         try {
-            const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}upload`)
-            console.log(response)
+            console.log(owner)
+            const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}upload/${owner}`)
+            console.log(response.data)
 
             if (response.status === 200) {
                 dispatch(getsuccess(response.data))
