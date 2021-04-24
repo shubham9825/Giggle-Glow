@@ -131,7 +131,7 @@ function About(props) {
         }
     }
 
-    //edit user
+    //edit user 
     const EditUser = (tempUser) => {
         Submition.errors = {}
         console.log(tempUser)
@@ -154,7 +154,7 @@ function About(props) {
 
     return (
         <>
-            <div className="position-relative">
+            <div className="position-relative" style={{marginTop:'60px'}} >
                 {show && <Alert className='pb-0 position-absolute w-100' style={{ "top": "0", "left": "0px" }} variant="danger" onClose={() => setShow(false)} dismissible>
                     <p>{props.createAbout.msg}{props.createAbout.error}</p>
                 </Alert>

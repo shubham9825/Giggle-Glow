@@ -1,7 +1,4 @@
-import {CREATE_USER_REQUEST,CREATE_USER_SUCCESS,CREATE_USER_FAIL, GET_USER_REQUEST, 
-    GET_USER_SUCCESS, GET_USER_FAIL, 
-    FDELETE_USER_REQUEST, FDELETE_USER_SUCCESS, FDELETE_USER_FAIL, 
-    UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS, UPDATE_USER_FAIL} from '../constant/formup.constant'
+import { CREATE_FORMUP_FAIL, CREATE_FORMUP_REQUEST, CREATE_FORMUP_SUCCESS, FDELETE_FORMUP_FAIL, FDELETE_FORMUP_REQUEST, FDELETE_FORMUP_SUCCESS, GET_FORMUP_FAIL, GET_FORMUP_REQUEST, GET_FORMUP_SUCCESS, UPDATE_FORMUP_FAIL, UPDATE_FORMUP_REQUEST, UPDATE_FORMUP_SUCCESS } from '../constant/formup.constant'
 
 const initialstate={
     isLoading:false,
@@ -15,14 +12,14 @@ const initialstate={
 
 export const FormupReducer=(state=initialstate,action)=>{
     switch(action.type){
-        case CREATE_USER_REQUEST:
+        case CREATE_FORMUP_REQUEST:
             return{
                 ...state,
                 isLoading:true,
                 newData:null,
                 error:''
             }
-        case CREATE_USER_SUCCESS:
+        case CREATE_FORMUP_SUCCESS:
             return{
                 ...state,
                 isLoading:false,
@@ -30,7 +27,7 @@ export const FormupReducer=(state=initialstate,action)=>{
                 newData:action.payload,
                 msg:'Form Created Successfully...'
             }
-        case CREATE_USER_FAIL:
+        case CREATE_FORMUP_FAIL:
             return{
                 ...state,
                 isLoading:false,
@@ -38,54 +35,54 @@ export const FormupReducer=(state=initialstate,action)=>{
                 error:action.error
             }
         //get data
-        case GET_USER_REQUEST:
+        case GET_FORMUP_REQUEST:
             return{
                 ...state,
                 isLoading:true,
                 error:''
             }
-        case GET_USER_SUCCESS:
+        case GET_FORMUP_SUCCESS:
             return{
                 ...state,
                 isLoading:false,
                 error:'',
                 getData:action.payload
             }
-        case GET_USER_FAIL:
+        case GET_FORMUP_FAIL:
             return{
                 ...state,
                 isLoading:false,
                 error:action.error
             }
         //delete
-        case FDELETE_USER_REQUEST:
+        case FDELETE_FORMUP_REQUEST:
             return{
                 ...state,
                 isLoading:true,
                 error:''
             }
-        case FDELETE_USER_SUCCESS:
+        case FDELETE_FORMUP_SUCCESS:
             return{
                 ...state,
                 isLoading:false,
                 delData:action.payload,
                 msg:'Data Deleted SuccessFully...'          
             }
-        case FDELETE_USER_FAIL:
+        case FDELETE_FORMUP_FAIL:
             return{
                 ...state,
                 isLoading:false,
                 error:action.error                
             }
         //put data
-        case UPDATE_USER_REQUEST:
+        case UPDATE_FORMUP_REQUEST:
             return{
                 ...state,
                 isLoading:true,
                 error:'',
                 editData:null
             }
-        case UPDATE_USER_SUCCESS:
+        case UPDATE_FORMUP_SUCCESS:
             return{
                 ...state,
                 isLoading:false,
@@ -93,7 +90,7 @@ export const FormupReducer=(state=initialstate,action)=>{
                 error:'',
                 msg:'Your Data Successfully Updated...'
             }
-        case UPDATE_USER_FAIL:
+        case UPDATE_FORMUP_FAIL:
             return{
                 ...state,
                 isLoading:false,

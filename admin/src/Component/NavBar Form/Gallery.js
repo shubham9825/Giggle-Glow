@@ -37,7 +37,7 @@ function Gallery(props) {
         if (data.name == null) {
             alert('Please Fill Proper Form!!!')
         } else {
-            if (!data.name.match(/\.(jpg|jpeg|png|gif)$/)) {
+            if (!data.name.match(/\.(jpg|jpeg|png|gif|PNG|JPG|JPEG|GIF)$/)) {
                 alert('Only Jpg , Jpeg , Png , Gif File Allowed!!!')
                 e.target.reset() //reset image and Clear Message
             } else {
@@ -103,7 +103,7 @@ function Gallery(props) {
     }
 
     return (
-        <div className="position-relative">
+        <div className="position-relative" style={{marginTop:'60px'}}>
             {show && <Alert className='pb-0 position-absolute w-100' style={{ "top": "0", "left": "0px" }} variant="danger" onClose={() => setshow(false)} dismissible>
                 <p>{msg}{props.creategallery.message}{props.creategallery.error}</p>
             </Alert>
@@ -115,7 +115,7 @@ function Gallery(props) {
                     <hr className='m-0' style={{ background: 'rgb(148, 141, 141)' }}></hr>
                     <br/>
                     <Form.Group>
-                        <Form.File autoFocus={true} name='UploadImg' onChange={handleChange} label="Enter Image"></Form.File>
+                        <Form.File name='UploadImg' onChange={handleChange} label="Enter Image"></Form.File>
                     </Form.Group>
                     <Progress percentage={uploadPercentage} /><br />
                     <Button variant="primary" type="submit">Submit</Button>

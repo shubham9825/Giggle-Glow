@@ -1,4 +1,4 @@
-import { CREATE_USER_FAIL, CREATE_USER_REQUEST, CREATE_USER_SUCCESS, DELETE_USER_FAIL, DELETE_USER_REQUEST, DELETE_USER_SUCCESS, GET_USER_FAIL, GET_USER_REQUEST, GET_USER_SUCCESS, UPDATE_USER_FAIL, UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS } from "../constant/lunch.constant"
+import { CREATE_LUNCH_FAIL, CREATE_LUNCH_REQUEST, CREATE_LUNCH_SUCCESS, DELETE_LUNCH_FAIL, DELETE_LUNCH_REQUEST, DELETE_LUNCH_SUCCESS, GET_LUNCH_FAIL, GET_LUNCH_REQUEST, GET_LUNCH_SUCCESS, UPDATE_LUNCH_FAIL, UPDATE_LUNCH_REQUEST, UPDATE_LUNCH_SUCCESS } from "../constant/lunch.constant"
 
 const initialstate={
     isLoading:false,
@@ -12,14 +12,14 @@ const initialstate={
 
 export const LunchReducer=(state=initialstate,action)=>{
     switch(action.type){
-        case CREATE_USER_REQUEST:
+        case CREATE_LUNCH_REQUEST:
             return{
                 ...state,
                 isLoading:true,
                 newData:null,
                 error:''
             }
-        case CREATE_USER_SUCCESS:
+        case CREATE_LUNCH_SUCCESS:
             return{
                 ...state,
                 isLoading:false,
@@ -27,39 +27,39 @@ export const LunchReducer=(state=initialstate,action)=>{
                 error:'',
                 msg:'Form Created SuccessFully...'
             }
-        case CREATE_USER_FAIL:
+        case CREATE_LUNCH_FAIL:
             return{
                 ...state,
                 isLoading:false,
                 newData:'',
                 error:action.error                
             }
-        case GET_USER_REQUEST:
+        case GET_LUNCH_REQUEST:
             return{
                 ...state,
                 isLoading:true,
                 error:''
             }
-        case GET_USER_SUCCESS:
+        case GET_LUNCH_SUCCESS:
             return{
                 ...state,
                 isLoading:false,
                 getData:action.payload,
                 error:''
             }
-        case GET_USER_FAIL:
+        case GET_LUNCH_FAIL:
             return{
                 ...state,
                 isLoading:false,
                 error:action.error                
             }
-        case DELETE_USER_REQUEST:
+        case DELETE_LUNCH_REQUEST:
             return{
                 ...state,
                 isLoading:true,
                 error:''
             }
-        case DELETE_USER_SUCCESS:
+        case DELETE_LUNCH_SUCCESS:
             return{
                 ...state,
                 isLoading:false,
@@ -67,19 +67,19 @@ export const LunchReducer=(state=initialstate,action)=>{
                 error:'',
                 msg:'Data Delete SuccessFully...'
             }
-        case DELETE_USER_FAIL:
+        case DELETE_LUNCH_FAIL:
             return{
                 ...state,
                 isLoading:false,
                 error:action.error                
             }
-        case UPDATE_USER_REQUEST:
+        case UPDATE_LUNCH_REQUEST:
             return{
                 ...state,
                 isLoading:true,
                 error:''
             }
-        case UPDATE_USER_SUCCESS:
+        case UPDATE_LUNCH_SUCCESS:
             return{
                 ...state,
                 isLoading:false,
@@ -87,7 +87,7 @@ export const LunchReducer=(state=initialstate,action)=>{
                 error:'',
                 msg:'Your Data SuccessFully Updated'
             }
-        case UPDATE_USER_FAIL:
+        case UPDATE_LUNCH_FAIL:
             return{
                 ...state,
                 isLoading:false,

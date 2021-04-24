@@ -11,7 +11,7 @@ function Pnotice(props) {
     }, [])
 
     return (
-        <>
+        <div style={{marginTop:'60px'}}>
             <br /><br /><br />
             {/* Get Table Data */}
             <div className='container card-header'>
@@ -39,7 +39,7 @@ function Pnotice(props) {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 

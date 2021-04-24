@@ -2,7 +2,7 @@ import React from 'react'
 
 function Home() {
     return (
-        <div>
+        <div style={{marginTop:'60px'}}>
             <h1 style={{textAlign:'center'}}>Welcome To Home</h1>
         </div>
     )

@@ -1,22 +1,22 @@
 import axios from 'axios'
-import { CREATE_USER_FAIL, CREATE_USER_REQUEST, CREATE_USER_SUCCESS, DELETE_USER_FAIL, DELETE_USER_REQUEST, DELETE_USER_SUCCESS, GET_USER_FAIL, GET_USER_REQUEST, GET_USER_SUCCESS, UPDATE_USER_FAIL, UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS } from '../constant/service.constant'
+import { CREATE_SERVICE_FAIL, CREATE_SERVICE_REQUEST, CREATE_SERVICE_SUCCESS, DELETE_SERVICE_FAIL, DELETE_SERVICE_REQUEST, DELETE_SERVICE_SUCCESS, GET_SERVICE_FAIL, GET_SERVICE_REQUEST, GET_SERVICE_SUCCESS, UPDATE_SERVICE_FAIL, UPDATE_SERVICE_REQUEST, UPDATE_SERVICE_SUCCESS } from '../constant/service.constant'
 
 //Post Request
 export const CreateService = (Data) => {    
     const createDataRequest = () => {
         return {
-            type: CREATE_USER_REQUEST
+            type: CREATE_SERVICE_REQUEST
         }
     }
     const createDataSuccess = (newData) => {
         return {
-            type: CREATE_USER_SUCCESS,
+            type: CREATE_SERVICE_SUCCESS,
             payload:newData
         }
     }
     const createDataFail = () => {
         return {
-            type: CREATE_USER_FAIL
+            type: CREATE_SERVICE_FAIL
         }
     }
 
@@ -40,18 +40,18 @@ export const CreateService = (Data) => {
 export const GetService = () => {
     const getDataRequest = () => {
         return {
-            type: GET_USER_REQUEST
+            type: GET_SERVICE_REQUEST
         }
     }
     const getDataSuccess = (getData) => {
         return {
-            type: GET_USER_SUCCESS,
+            type: GET_SERVICE_SUCCESS,
             payload: getData
         }
     }
     const getDataFail = (error) => {
         return {
-            type: GET_USER_FAIL,
+            type: GET_SERVICE_FAIL,
             error
         }
     }
@@ -59,7 +59,7 @@ export const GetService = () => {
     return async (dispatch) => {
         dispatch(getDataRequest())
         try {
-            const response = await axios.get('http://localhost:3001/services')
+            const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}services`)
             console.log(response)
             if (response.status === 200) {
                 dispatch(getDataSuccess(response.data))
@@ -77,25 +77,25 @@ export const GetService = () => {
 export const DelService = (theService) => {
     const delDataRequest = () => {
         return {
-            type: DELETE_USER_REQUEST
+            type: DELETE_SERVICE_REQUEST
         }
     }
     const delDataSuccess = (delData) => {
         return {
-            type: DELETE_USER_SUCCESS,
+            type: DELETE_SERVICE_SUCCESS,
             payload: delData
         }
     }
     const delDataFail = (error) => {
         return {
-            type: DELETE_USER_FAIL,
+            type: DELETE_SERVICE_FAIL,
             error
         }
     }
     return async (dispatch) => {
         dispatch(delDataRequest())
         try {
-            const response = await axios.delete(`http://localhost:3001/services/${theService._id}`)
+            const response = await axios.delete(`${process.env.REACT_APP_SERVER_URL}services/${theService._id}`)
             console.log(response)
             if (response.status === 200) {
                 dispatch(delDataSuccess(response.data))
@@ -114,18 +114,18 @@ export const DelService = (theService) => {
 export const UpdateService =(Data)=>{
     const updateDataRequest=()=>{
         return{
-            type:UPDATE_USER_REQUEST
+            type:UPDATE_SERVICE_REQUEST
         }
     }
     const updateDataSuccess=(editData)=>{
         return{
-            type:UPDATE_USER_SUCCESS,
+            type:UPDATE_SERVICE_SUCCESS,
             payload:editData
         }
     }
     const updateDataFail=(error)=>{
         return{
-            type:UPDATE_USER_FAIL,
+            type:UPDATE_SERVICE_FAIL,
             error
         }
     }
@@ -138,7 +138,7 @@ export const UpdateService =(Data)=>{
             delete Data.createdAt
             console.log(Data)
             console.log(_id)
-            const response = await axios.put(`http://localhost:3001/services/${_id}`,Data)
+            const response = await axios.put(`${process.env.REACT_APP_SERVER_URL}services/${_id}`,Data)
             console.log(response.data)
             if(response.status===200){
                 dispatch(updateDataSuccess(response.data))

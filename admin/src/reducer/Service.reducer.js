@@ -1,4 +1,4 @@
-import { CREATE_USER_FAIL, CREATE_USER_REQUEST, CREATE_USER_SUCCESS, DELETE_USER_FAIL, DELETE_USER_REQUEST, DELETE_USER_SUCCESS, GET_USER_FAIL, GET_USER_REQUEST, GET_USER_SUCCESS, UPDATE_USER_FAIL, UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS } from '../constant/service.constant'
+import { CREATE_SERVICE_FAIL, CREATE_SERVICE_REQUEST, CREATE_SERVICE_SUCCESS, DELETE_SERVICE_FAIL, DELETE_SERVICE_REQUEST, DELETE_SERVICE_SUCCESS, GET_SERVICE_FAIL, GET_SERVICE_REQUEST, GET_SERVICE_SUCCESS, UPDATE_SERVICE_FAIL, UPDATE_SERVICE_REQUEST, UPDATE_SERVICE_SUCCESS } from '../constant/service.constant'
 
 const initialstate ={
     isLoading :false,
@@ -12,14 +12,14 @@ const initialstate ={
 
 export const serviceReducer = (state = initialstate,action) =>{
     switch(action.type){
-        case CREATE_USER_REQUEST:
+        case CREATE_SERVICE_REQUEST:
             return{
                 ...state,
                 isLoading:true,
                 newData:null,
                 error:''
             }
-        case CREATE_USER_SUCCESS:
+        case CREATE_SERVICE_SUCCESS:
             return{
                 ...state,
                 isLoading:false,
@@ -27,7 +27,7 @@ export const serviceReducer = (state = initialstate,action) =>{
                 error:'',
                 msg:'Form Created Successfully...'
             }
-        case CREATE_USER_FAIL:
+        case CREATE_SERVICE_FAIL:
             return{
                 ...state,
                 isLoading:false,
@@ -35,34 +35,34 @@ export const serviceReducer = (state = initialstate,action) =>{
                 error:action.error
             }
         //getdata
-        case GET_USER_REQUEST:
+        case GET_SERVICE_REQUEST:
             return{
                 ...state,
                 isLoading:true,
                 error:''
             }
-        case GET_USER_SUCCESS:
+        case GET_SERVICE_SUCCESS:
             return{
                 ...state,
                 isLoading:false,
                 error:'',
                 getData:action.payload
             }
-        case GET_USER_FAIL:
+        case GET_SERVICE_FAIL:
             return{
                 ...state,
                 isLoading:false,
                 error:action.error
             }
         //delete
-        case DELETE_USER_REQUEST:
+        case DELETE_SERVICE_REQUEST:
             return{
                 ...state,
                 isLoading:true,
                 error:'',
                 delData:null
             }
-        case DELETE_USER_SUCCESS:
+        case DELETE_SERVICE_SUCCESS:
             return{
                 ...state,
                 isLoading:false,
@@ -70,7 +70,7 @@ export const serviceReducer = (state = initialstate,action) =>{
                 error:'',
                 msg:'Data Delete SuccessFully...'
             }
-        case DELETE_USER_FAIL:
+        case DELETE_SERVICE_FAIL:
             return{
                 ...state,
                 isLoading:false,
@@ -78,14 +78,14 @@ export const serviceReducer = (state = initialstate,action) =>{
                 error:action.error
             }
         //edit
-        case UPDATE_USER_REQUEST:
+        case UPDATE_SERVICE_REQUEST:
             return{
                 ...state,
                 isLoading:true,
                 editData:null,
                 error:''
             }
-        case UPDATE_USER_SUCCESS:
+        case UPDATE_SERVICE_SUCCESS:
             return{
                 ...state,
                 isLoading:false,
@@ -93,7 +93,7 @@ export const serviceReducer = (state = initialstate,action) =>{
                 error:'',
                 msg:'Your Data Updated SuccessFully...'
             }
-        case UPDATE_USER_FAIL:
+        case UPDATE_SERVICE_FAIL:
             return{
                 ...state,
                 isLoading:false,

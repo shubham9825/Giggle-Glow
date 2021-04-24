@@ -1,4 +1,4 @@
-import { CREATE_USER_FAIL, CREATE_USER_REQUEST, CREATE_USER_SUCCESS, DELETE_USER_FAIL, DELETE_USER_REQUEST, DELETE_USER_SUCCESS, GET_USER_FAIL, GET_USER_REQUEST, GET_USER_SUCCESS } from "../constant/signup.constant"
+import { CREATE_SINGUP_FAIL, CREATE_SINGUP_REQUEST, CREATE_SINGUP_SUCCESS, DELETE_SINGUP_FAIL, DELETE_SINGUP_REQUEST, DELETE_SINGUP_SUCCESS, GET_SINGUP_FAIL, GET_SINGUP_REQUEST, GET_SINGUP_SUCCESS } from "../constant/signup.constant"
 
 const initialstate={
     isLoading:false,
@@ -10,14 +10,14 @@ const initialstate={
 }
 export const SignupReducer=(state=initialstate,action)=>{
     switch(action.type){
-        case CREATE_USER_REQUEST:
+        case CREATE_SINGUP_REQUEST:
             return{
                 ...state,
                 isLoading:true,
                 error:'',
                 newData:null
             }
-        case CREATE_USER_SUCCESS:
+        case CREATE_SINGUP_SUCCESS:
             return{
                 ...state,
                 isLoading:false,
@@ -25,39 +25,39 @@ export const SignupReducer=(state=initialstate,action)=>{
                 newData:action.payload,
                 msg:'Form Created Successfully...'
             }
-        case CREATE_USER_FAIL:
+        case CREATE_SINGUP_FAIL:
             return{
                 ...state,
                 isLoading:false,
                 newData:null,
                 error:action.error
             }
-        case GET_USER_REQUEST:
+        case GET_SINGUP_REQUEST:
             return{
                 ...state,
                 isLoading:true,
                 error:'',
             }
-        case GET_USER_SUCCESS:
+        case GET_SINGUP_SUCCESS:
             return{
                 ...state,
                 isLoading:false,
                 error:'',
                 getData:action.payload
             }
-        case GET_USER_FAIL:
+        case GET_SINGUP_FAIL:
             return{
                 ...state,
                 isLoading:false,
                 error:action.error
             }
-        case DELETE_USER_REQUEST:
+        case DELETE_SINGUP_REQUEST:
             return{
                 ...state,
                 isLoading:true,
                 error:'',
             }
-        case DELETE_USER_SUCCESS:
+        case DELETE_SINGUP_SUCCESS:
             return{
                 ...state,
                 isLoading:false,
@@ -65,7 +65,7 @@ export const SignupReducer=(state=initialstate,action)=>{
                 delData:action.payload,
                 msg:'Data Deleted SuccessFully...'
             }
-        case DELETE_USER_FAIL:
+        case DELETE_SINGUP_FAIL:
             return{
                 ...state,
                 isLoading:false,

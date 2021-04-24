@@ -30,7 +30,7 @@ export const CreateLogin=(Data)=>{
     return async(dispatch)=>{
         dispatch(createuserrequest())
         try{
-            const response=await axios.post('http://localhost:3001/login',Data)
+            const response=await axios.post(`${process.env.REACT_APP_SERVER_URL}login`,Data)
             console.log(response)
 
             if(response.status===200){

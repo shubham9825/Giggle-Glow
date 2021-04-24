@@ -1,5 +1,4 @@
-import {CREATE_USER_REQUEST,CREATE_USER_SUCCESS,CREATE_USER_FAIL,GET_USER_REQUEST,GET_USER_FAIL, GET_USER_SUCCESS,DELETE_USER_FAIL, DELETE_USER_REQUEST, DELETE_USER_SUCCESS} from '../constant'
-import { UPDATE_USER_FAIL, UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS } from '../constant/contact.constant'
+import { CREATE_CONTACT_FAIL, CREATE_CONTACT_REQUEST, CREATE_CONTACT_SUCCESS, DELETE_CONTACT_FAIL, DELETE_CONTACT_REQUEST, DELETE_CONTACT_SUCCESS, GET_CONTACT_FAIL, GET_CONTACT_REQUEST, GET_CONTACT_SUCCESS, UPDATE_CONTACT_FAIL, UPDATE_CONTACT_REQUEST, UPDATE_CONTACT_SUCCESS } from '../constant/contact.constant'
 
 const initialstate={
     isLoading:false,
@@ -13,14 +12,14 @@ const initialstate={
 
 export const ContactReducer=(state=initialstate,action)=>{
     switch(action.type){
-        case CREATE_USER_REQUEST:
+        case CREATE_CONTACT_REQUEST:
             return{
                 ...state,
                 isLoading:true,
                 error:'',
                 newData:null
             }
-        case CREATE_USER_SUCCESS:
+        case CREATE_CONTACT_SUCCESS:
             return{
                 ...state,
                 isLoading:false,
@@ -28,39 +27,39 @@ export const ContactReducer=(state=initialstate,action)=>{
                 newData:action.payload,
                 msg:'Form Created Successfully...'
             }
-        case CREATE_USER_FAIL:
+        case CREATE_CONTACT_FAIL:
             return{
                 ...state,
                 isLoading:false,
                 error:action.error,
                 newData:null
             }
-        case GET_USER_REQUEST:
+        case GET_CONTACT_REQUEST:
             return{
                 ...state,
                 isLoading:true,
                 error:''
             }
-        case GET_USER_SUCCESS:
+        case GET_CONTACT_SUCCESS:
             return{
                 ...state,
                 isLoading:false,
                 error:'',
                 getData:action.payload
             }
-        case GET_USER_FAIL:
+        case GET_CONTACT_FAIL:
             return{
                 ...state,
                 isLoading:false,
                 error:action.error,
             }
-        case DELETE_USER_REQUEST:
+        case DELETE_CONTACT_REQUEST:
             return{
                 ...state,
                 isLoading:true,
                 error:''
             }
-        case DELETE_USER_SUCCESS:
+        case DELETE_CONTACT_SUCCESS:
             return{
                 ...state,
                 isLoading:false,
@@ -68,19 +67,19 @@ export const ContactReducer=(state=initialstate,action)=>{
                 theContact:action.payload,
                 msg:'Data Deleted SuccessFully...'
             }
-        case DELETE_USER_FAIL:
+        case DELETE_CONTACT_FAIL:
             return{
                 ...state,
                 isLoading:false,
                 error:action.error
             }
-        case UPDATE_USER_REQUEST:
+        case UPDATE_CONTACT_REQUEST:
             return{
                 ...state,
                 isLoading:true,
                 error:''
             }
-        case UPDATE_USER_SUCCESS:
+        case UPDATE_CONTACT_SUCCESS:
             return{
                 ...state,
                 isLoading:false,
@@ -88,7 +87,7 @@ export const ContactReducer=(state=initialstate,action)=>{
                 contactData:action.payload,
                 msg:'Your Data Successfully Updated...'
             }
-        case UPDATE_USER_FAIL:
+        case UPDATE_CONTACT_FAIL:
             return{
                 ...state,
                 isLoading:false,

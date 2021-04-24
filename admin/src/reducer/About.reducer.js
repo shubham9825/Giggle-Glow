@@ -1,5 +1,4 @@
-import { GET_USER_FAIL, GET_USER_REQUEST, GET_USER_SUCCESS,DELETE_USER_FAIL, DELETE_USER_REQUEST, DELETE_USER_SUCCESS} from '../constant'
-import { CREATE_ABOUT_FAIL, CREATE_ABOUT_REQUEST, CREATE_ABOUT_SUCCESS, UPDATE_USER_FAIL, UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS } from '../constant/about.constant'
+import { CREATE_ABOUT_FAIL, CREATE_ABOUT_REQUEST, CREATE_ABOUT_SUCCESS, DELETE_ABOUT_FAIL, DELETE_ABOUT_REQUEST, DELETE_ABOUT_SUCCESS, GET_ABOUT_FAIL, GET_ABOUT_REQUEST, GET_ABOUT_SUCCESS, UPDATE_ABOUT_FAIL, UPDATE_ABOUT_REQUEST, UPDATE_ABOUT_SUCCESS } from '../constant/about.constant'
 
 const initialstate={
     isLoading:false,
@@ -35,32 +34,32 @@ export const AboutReducer=(state=initialstate,action)=>{
                 error:action.error,
                 newData:null
             }
-         case GET_USER_REQUEST:
+         case GET_ABOUT_REQUEST:
             return{
                 ...state,
                 isLoading:true,
                 error:'',
             }
-        case GET_USER_SUCCESS:
+        case GET_ABOUT_SUCCESS:
             return{
                 ...state,
                 isLoading:false,
                 error:'',
                 getData:action.payload
             }
-        case GET_USER_FAIL:
+        case GET_ABOUT_FAIL:
             return{
                 ...state,
                 isLoading:false,
                 error:action.error,
             }
-        case DELETE_USER_REQUEST:
+        case DELETE_ABOUT_REQUEST:
             return{
                 ...state,
                 isLoading:true,
                 error:'',
             }
-        case DELETE_USER_SUCCESS:
+        case DELETE_ABOUT_SUCCESS:
             return{
                 ...state,
                 isLoading:false,
@@ -68,19 +67,19 @@ export const AboutReducer=(state=initialstate,action)=>{
                 theAbout:action.payload,
                 msg:'Data Deleted SuccessFully...'
             }
-        case DELETE_USER_FAIL:
+        case DELETE_ABOUT_FAIL:
             return{
                 ...state,
                 isLoading:false,
                 error:action.error
             }
-        case UPDATE_USER_REQUEST:
+        case UPDATE_ABOUT_REQUEST:
             return{
                 ...state,
                 isLoading:true,
                 error:'',
             }
-        case UPDATE_USER_SUCCESS:
+        case UPDATE_ABOUT_SUCCESS:
             return{
                 ...state,
                 isLoading:false,
@@ -88,7 +87,7 @@ export const AboutReducer=(state=initialstate,action)=>{
                 AboutData:action.payload,
                 msg:'Your Data Successfully Updated...'
             }
-        case UPDATE_USER_FAIL:
+        case UPDATE_ABOUT_FAIL:
             return{
                 ...state,
                 isLoading:false,

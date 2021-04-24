@@ -1,29 +1,29 @@
-import { CREATE_USER_FAIL, CREATE_USER_REQUEST, CREATE_USER_SUCCESS, DELETE_USER_FAIL, DELETE_USER_REQUEST, DELETE_USER_SUCCESS, GET_USER_FAIL, GET_USER_REQUEST, GET_USER_SUCCESS, UPDATE_USER_FAIL, UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS } from '../constant/childRegister.constant'
+import { CREATE_CHILD_FAIL, CREATE_CHILD_REQUEST, CREATE_CHILD_SUCCESS, DELETE_CHILD_FAIL, DELETE_CHILD_REQUEST, DELETE_CHILD_SUCCESS, GET_CHILD_FAIL, GET_CHILD_REQUEST, GET_CHILD_SUCCESS, UPDATE_CHILD_FAIL, UPDATE_CHILD_REQUEST, UPDATE_CHILD_SUCCESS } from '../constant/childRegister.constant'
 import axios from 'axios'
 
 //post Request
 export const createChild = (Data)=>{
     const createDataRequest = ()=>{
         return{
-            type:CREATE_USER_REQUEST
+            type:CREATE_CHILD_REQUEST
         }
     }
     const createDataSuccess = (newData)=>{
         return{
-            type:CREATE_USER_SUCCESS,
+            type:CREATE_CHILD_SUCCESS,
             payload:newData
         }
     }
     const createDataFail = (error)=>{
         return{
-            type:CREATE_USER_FAIL,
+            type:CREATE_CHILD_FAIL,
             error
         }
     }
     return async(dispatch)=>{
         dispatch(createDataRequest())
         try {
-            const response = await axios.post('http://localhost:3001/registrations',Data)
+            const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}registrations`,Data)
             console.log(response)
     
             if(response.status===201){
@@ -43,25 +43,25 @@ export const createChild = (Data)=>{
 export const getChild = ()=>{
     const getDataRequest = ()=>{
         return{
-            type:GET_USER_REQUEST
+            type:GET_CHILD_REQUEST
         }
     }
     const getDataSuccess = (getData)=>{
         return{
-            type:GET_USER_SUCCESS,
+            type:GET_CHILD_SUCCESS,
             payload:getData
         }
     }
     const getDataFail =(error)=>{
         return{
-            type:GET_USER_FAIL,
+            type:GET_CHILD_FAIL,
             error
         }
     }
     return async(dispatch)=>{
         dispatch(getDataRequest())
         try{
-            const response = await axios.get('http://localhost:3001/registrations')
+            const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}registrations`)
             console.log(response)
             
             if(response.status===200){
@@ -80,25 +80,25 @@ export const getChild = ()=>{
 export const DelRegistartion = (thechild)=>{
     const delDataRequest =()=>{
         return{
-            type:DELETE_USER_REQUEST
+            type:DELETE_CHILD_REQUEST
         }
     }
     const delDataSuccess =(delData)=>{
         return{
-            type:DELETE_USER_SUCCESS,
+            type:DELETE_CHILD_SUCCESS,
             payload:delData
         }
     }
     const delDataFail =(error)=>{
         return{
-            type:DELETE_USER_FAIL,
+            type:DELETE_CHILD_FAIL,
             error
         }
     }
     return async(dispatch)=>{
         dispatch(delDataRequest())
         try{
-            const response = await axios.delete(`http://localhost:3001/registrations/${thechild._id}`)
+            const response = await axios.delete(`${process.env.REACT_APP_SERVER_URL}registrations/${thechild._id}`)
             console.log(response)
 
             if(response.status === 200){
@@ -118,18 +118,18 @@ export const DelRegistartion = (thechild)=>{
 export const UpdateRegistraton =(Data)=>{
     const updateDataRequest =()=>{
         return{
-            type:UPDATE_USER_REQUEST
+            type:UPDATE_CHILD_REQUEST
         }
     }
     const updateDataSuccess =(editData)=>{
         return{
-            type:UPDATE_USER_SUCCESS,
+            type:UPDATE_CHILD_SUCCESS,
             payload:editData
         }
     }
     const updateDataFail =(error)=>{
         return{
-            type:UPDATE_USER_FAIL,
+            type:UPDATE_CHILD_FAIL,
             error
         }
     }
@@ -141,7 +141,7 @@ export const UpdateRegistraton =(Data)=>{
             delete Data.updatedAt //old data's field can't enter because we set only response field so it edit only that field not other so it will deleted to puting and this field is automatically changed when data update it will be same for above and belove delete operation's.
             delete Data.createdAt
             console.log(Data)
-            const response = await axios.put(`http://localhost:3001/registrations/${_id}`,Data)
+            const response = await axios.put(`${process.env.REACT_APP_SERVER_URL}registrations/${_id}`,Data)
             console.log(response)
             if(response.status===200){
                 dispatch(updateDataSuccess(response.data))

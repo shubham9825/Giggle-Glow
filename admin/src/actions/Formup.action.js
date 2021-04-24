@@ -1,32 +1,29 @@
-import { CREATE_USER_REQUEST, CREATE_USER_SUCCESS, CREATE_USER_FAIL,
-     GET_USER_REQUEST, GET_USER_SUCCESS, GET_USER_FAIL, 
-     FDELETE_USER_REQUEST, FDELETE_USER_SUCCESS, FDELETE_USER_FAIL, 
-     UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS, UPDATE_USER_FAIL } from "../constant/formup.constant"
+import { CREATE_FORMUP_FAIL, CREATE_FORMUP_REQUEST, CREATE_FORMUP_SUCCESS, FDELETE_FORMUP_FAIL, FDELETE_FORMUP_REQUEST, FDELETE_FORMUP_SUCCESS, GET_FORMUP_FAIL, GET_FORMUP_REQUEST, GET_FORMUP_SUCCESS, UPDATE_FORMUP_FAIL, UPDATE_FORMUP_REQUEST, UPDATE_FORMUP_SUCCESS } from "../constant/formup.constant"
 import axios from 'axios'
 
 //Post Request
 export const createFormup = (Data) => {
     const createDataRequest = () => {
         return {
-            type: CREATE_USER_REQUEST
+            type: CREATE_FORMUP_REQUEST
         }
     }
     const createDataSuccess = (newData) => {
         return {
-            type: CREATE_USER_SUCCESS,
+            type: CREATE_FORMUP_SUCCESS,
             payload: newData
         }
     }
     const createDataFail = (error) => {
         return {
-            type: CREATE_USER_FAIL,
+            type: CREATE_FORMUP_FAIL,
             error
         }
     }
     return async (dispatch) => {
         dispatch(createDataRequest())
         try {
-            const response = await axios.post('http://localhost:3001/formups',Data)
+            const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}formups`,Data)
             console.log(response)
 
             if (response.status === 201) {
@@ -43,28 +40,29 @@ export const createFormup = (Data) => {
 }
 
 //Get request
-export const GetFormup = () => {
+export const GetFormup = (Data) => {
     const getDataRequest = () => {
         return {
-            type: GET_USER_REQUEST
+            type: GET_FORMUP_REQUEST
         }
     }
     const getDataSuccess = (getData) => {
         return {
-            type: GET_USER_SUCCESS,
+            type: GET_FORMUP_SUCCESS,
             payload: getData
         }
     }
     const getDataFail = (error) => {
         return {
-            type: GET_USER_FAIL,
+            type: GET_FORMUP_FAIL,
             error
         }
     }
     return async (dispatch) => {
         dispatch(getDataRequest())
+        console.log(Data)
         try {
-            const response = await axios.get('http://localhost:3001/formups')
+            const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}formups/${Data.owner}`)
             console.log(response)
 
             if (response.status === 200) {
@@ -83,29 +81,29 @@ export const GetFormup = () => {
 export const DelFormup = (theformup) => {
     const delDataRequest = () => {
         return {
-            type: FDELETE_USER_REQUEST
+            type: FDELETE_FORMUP_REQUEST
         }
     }
     const delDataSuccess = (delData) => {
         return {
-            type: FDELETE_USER_SUCCESS,
+            type: FDELETE_FORMUP_SUCCESS,
             payload: delData
         }
     }
     const delDataFail = (error) => {
         return {
-            type: FDELETE_USER_FAIL,
+            type: FDELETE_FORMUP_FAIL,
             error
         }
     }
     return async (dispatch) => {
         dispatch(delDataRequest())
         try {
-            const response = await axios.delete(`http://localhost:3001/formups/${theformup._id}`)
+            const response = await axios.delete(`${process.env.REACT_APP_SERVER_URL}formups/${theformup._id}`)
             console.log(response)
             if (response.status === 200) {
                 dispatch(delDataSuccess(response.data))
-                dispatch(GetFormup())
+                //dispatch(GetFormup())
             } else {
                 dispatch(delDataFail('Sorry We Failed to Delete Data!!! Try Again...'))
             }
@@ -120,18 +118,18 @@ export const DelFormup = (theformup) => {
 export const UpdateFormup =(Data)=>{
     const updateDataRequest =()=>{
         return{
-            type:UPDATE_USER_REQUEST
+            type:UPDATE_FORMUP_REQUEST
         }
     }
     const updateDataSuccess =(editData)=>{
         return{
-            type:UPDATE_USER_SUCCESS,
+            type:UPDATE_FORMUP_SUCCESS,
             payload:editData
         }
     }
     const updateDataFail = (error)=>{
         return{
-            type:UPDATE_USER_FAIL,
+            type:UPDATE_FORMUP_FAIL,
             error
         }
     }
@@ -143,7 +141,7 @@ export const UpdateFormup =(Data)=>{
             delete Data.updatedAt //old data's field can't enter because we set only response field so it edit only that field not other so it will deleted to puting and this field is automatically changed when data update it will be same for above and belove delete operation's.
             delete Data.createdAt
             console.log(Data)    
-            const response= await axios.put(`http://localhost:3001/formups/${_id}`,Data)
+            const response= await axios.put(`${process.env.REACT_APP_SERVER_URL}formups/${_id}`,Data)
             console.log(response)
             if(response.status===200){
                 dispatch(updateDataSuccess(response.data))

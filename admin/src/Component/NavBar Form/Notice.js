@@ -126,7 +126,7 @@ export function Notice(props) {
     }
     return (
         <>
-            <div className="position-relative">
+            <div className="position-relative" style={{marginTop:'60px'}}>
              {show && <Alert className='pb-0 position-absolute w-100' style={{ "top": "0", "left": "0px" }} variant="danger" onClose={() => setShow(false)} dismissible>
                  <p>{props.createNotice.msg}{props.createNotice.error}</p>
             </Alert>

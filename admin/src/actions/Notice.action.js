@@ -1,29 +1,29 @@
 import axios from 'axios'
-import { CREATE_USER_FAIL, CREATE_USER_REQUEST, CREATE_USER_SUCCESS, DELETE_USER_FAIL, DELETE_USER_REQUEST, DELETE_USER_SUCCESS, GET_USER_FAIL, GET_USER_REQUEST, GET_USER_SUCCESS, UPDATE_USER_FAIL, UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS } from '../constant/notice.constant'
+import { CREATE_NOTICE_FAIL, CREATE_NOTICE_REQUEST, CREATE_NOTICE_SUCCESS, DELETE_NOTICE_FAIL, DELETE_NOTICE_REQUEST, DELETE_NOTICE_SUCCESS, GET_NOTICE_FAIL, GET_NOTICE_REQUEST, GET_NOTICE_SUCCESS, UPDATE_NOTICE_FAIL, UPDATE_NOTICE_REQUEST, UPDATE_NOTICE_SUCCESS } from '../constant/notice.constant'
 
 //POST Request
 export const createNotice = (Data)=>{
     const createDataRequest =()=>{
         return{
-            type:CREATE_USER_REQUEST
+            type:CREATE_NOTICE_REQUEST
         }
     }
     const createDataSuccess = (newData)=>{
         return{
-            type:CREATE_USER_SUCCESS,
+            type:CREATE_NOTICE_SUCCESS,
             payload:newData
         }
     }
     const createDataFail = (error)=>{
         return{
-            type:CREATE_USER_FAIL,
+            type:CREATE_NOTICE_FAIL,
             error
         }
     }
     return async(dispatch)=>{
         dispatch(createDataRequest())
         try{
-            const response = await axios.post('http://localhost:3001/notices',Data)
+            const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}notices`,Data)
             console.log(response)
 
             if(response.status===201){
@@ -43,25 +43,25 @@ export const createNotice = (Data)=>{
 export const getNotice =()=>{
     const getDataRequest =()=>{
         return{
-            type:GET_USER_REQUEST
+            type:GET_NOTICE_REQUEST
         }
     }
     const getDataSuccess =(getData)=>{
         return{
-            type:GET_USER_SUCCESS,
+            type:GET_NOTICE_SUCCESS,
             payload:getData
         }
     }
     const getDataFail =(error)=>{
         return{
-            type:GET_USER_FAIL,
+            type:GET_NOTICE_FAIL,
             error
         }
     }
     return async(dispatch)=>{
         dispatch(getDataRequest())
         try{
-            const response = await axios.get('http://localhost:3001/notices')
+            const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}notices`)
             console.log(response)
             if(response.status===200){
                 dispatch(getDataSuccess(response.data))
@@ -79,25 +79,25 @@ export const getNotice =()=>{
 export const DelNotice=(thenotice)=>{
     const delDataRequest =()=>{
         return{
-            type:DELETE_USER_REQUEST
+            type:DELETE_NOTICE_REQUEST
         }
     }
     const delDataSuccess = (delData)=>{
         return{
-            type:DELETE_USER_SUCCESS,
+            type:DELETE_NOTICE_SUCCESS,
             payload:delData
         }
     }
     const delDataFail =(error)=>{
         return{
-            type:DELETE_USER_FAIL,
+            type:DELETE_NOTICE_FAIL,
             error
         }
     }
     return async(dispatch)=>{
         dispatch(delDataRequest())
         try{
-            const response = await axios.delete(`http://localhost:3001/notices/${thenotice._id}`)
+            const response = await axios.delete(`${process.env.REACT_APP_SERVER_URL}notices/${thenotice._id}`)
             console.log(response)
 
             if(response.status===200){
@@ -117,18 +117,18 @@ export const DelNotice=(thenotice)=>{
 export const UpdateNotice =(Data)=>{
     const updateDataRequest=()=>{
         return{
-            type:UPDATE_USER_REQUEST
+            type:UPDATE_NOTICE_REQUEST
         }
     }
     const updateDataSuccess=(editData)=>{
         return{
-            type:UPDATE_USER_SUCCESS,
+            type:UPDATE_NOTICE_SUCCESS,
             payload:editData
         }
     }
     const updateDataFail =(error)=>{
         return{
-            type:UPDATE_USER_FAIL,
+            type:UPDATE_NOTICE_FAIL,
             error
         }
     }
@@ -140,7 +140,7 @@ export const UpdateNotice =(Data)=>{
             delete Data.updatedAt //old data's field can't enter because we set only response field so it edit only that field not other so it will deleted to puting and this field is automatically changed when data update it will be same for above and belove delete operation's.
             delete Data.createdAt
             console.log(Data)
-            const response = await axios.put(`http://localhost:3001/notices/${_id}`,Data)
+            const response = await axios.put(`${process.env.REACT_APP_SERVER_URL}notices/${_id}`,Data)
             console.log(response)
             if(response.status===200){
                 dispatch(updateDataSuccess(response.data))

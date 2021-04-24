@@ -117,7 +117,7 @@ function Suggestion(props) {
         }, 4000)
     }
     return (
-        <>
+        <div style={{marginTop:'60px'}}>
 
             {show && <Alert className='pb-0' variant="danger" onClose={() => setShow(false)} dismissible>
                 <p>{props.CreateSuggestion.msg}{props.CreateSuggestion.error}</p>
@@ -161,7 +161,7 @@ function Suggestion(props) {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 

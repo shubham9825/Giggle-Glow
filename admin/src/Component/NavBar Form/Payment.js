@@ -102,15 +102,12 @@ function Payment(props) {
     const [value, onChange] = useState('10:00');
 
     return (
-        <>
+        <div style={{marginTop:"100px"}}>
         <p>{props.CratePayment.error}</p>
             <Form className="container mt-5" onSubmit={HandleSubmit}>
                 <fieldset>
                     <legend>Payment / Fees</legend>
-                    <TimePicker
-        onChange={onChange}
-        value={value}
-      />
+                
                     <Form.Group>
                         <Form.Label>Date</Form.Label>
                         <Form.Control type="date" name="t_date" data-date="" data-date-format="YYYY-MM-DD" onChange={HandleChange} placeholder="Enter Date." />
@@ -140,7 +137,7 @@ function Payment(props) {
                     <Button variant="primary" type="submit">Submit</Button>
                 </fieldset>
             </Form>
-        </>
+        </div>
     )
 }
 

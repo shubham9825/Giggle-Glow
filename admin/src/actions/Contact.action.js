@@ -1,23 +1,22 @@
-import {CREATE_USER_REQUEST,CREATE_USER_SUCCESS,CREATE_USER_FAIL,GET_USER_REQUEST,GET_USER_FAIL, GET_USER_SUCCESS} from '../constant'
 import axios from 'axios'
-import { DELETE_USER_FAIL, DELETE_USER_REQUEST, DELETE_USER_SUCCESS, UPDATE_USER_FAIL, UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS } from '../constant/contact.constant'
+import { CREATE_CONTACT_FAIL, CREATE_CONTACT_REQUEST, CREATE_CONTACT_SUCCESS, DELETE_CONTACT_FAIL, DELETE_CONTACT_REQUEST, DELETE_CONTACT_SUCCESS, GET_CONTACT_FAIL, GET_CONTACT_REQUEST, GET_CONTACT_SUCCESS, UPDATE_CONTACT_FAIL, UPDATE_CONTACT_REQUEST, UPDATE_CONTACT_SUCCESS } from '../constant/contact.constant'
 
 //post request
 export const createContact=(Data)=>{
     const createDataRequest=()=>{
         return{
-            type:CREATE_USER_REQUEST
+            type:CREATE_CONTACT_REQUEST
         }
     }
     const createDataSuccess=(newData)=>{
         return{
-            type:CREATE_USER_SUCCESS,
+            type:CREATE_CONTACT_SUCCESS,
             payload:newData
         }
     }
     const createDataFail=(error)=>{
         return{
-            type:CREATE_USER_FAIL,
+            type:CREATE_CONTACT_FAIL,
             error 
         }
     }
@@ -25,7 +24,7 @@ export const createContact=(Data)=>{
     return async(dispatch)=>{
         dispatch(createDataRequest())
         try{
-            const response=await axios.post('http://localhost:3001/contacts',Data)
+            const response=await axios.post(`${process.env.REACT_APP_SERVER_URL}contacts`,Data)
             console.log(response)
             
             if(response.status===201){
@@ -45,18 +44,18 @@ export const createContact=(Data)=>{
 export const GetContact=()=>{
     const getcontactrequest=()=>{
         return{
-            type:GET_USER_REQUEST
+            type:GET_CONTACT_REQUEST
         }
     }
     const getcontactsuccess=(Data)=>{
         return{
-            type:GET_USER_SUCCESS,
+            type:GET_CONTACT_SUCCESS,
             payload:Data
         }
     }
     const getcontactfail=(error)=>{
         return{
-            type:GET_USER_FAIL,
+            type:GET_CONTACT_FAIL,
             error
         }
     }
@@ -64,7 +63,7 @@ export const GetContact=()=>{
     return async(dispatch)=>{
         dispatch(getcontactrequest())
         try{
-            const response=await axios.get('http://localhost:3001/contacts')
+            const response=await axios.get(`${process.env.REACT_APP_SERVER_URL}contacts`)
             console.log(response)
             if(response.status===200){
                 dispatch(getcontactsuccess(response.data))
@@ -83,18 +82,18 @@ export const GetContact=()=>{
 export const DeleteContact=(theContact)=>{
     const deletecontactrequest=()=>{
         return{
-            type:DELETE_USER_REQUEST
+            type:DELETE_CONTACT_REQUEST
         }
     }
     const deletecontactsuccess=(Data)=>{
         return{
-            type:DELETE_USER_SUCCESS,
+            type:DELETE_CONTACT_SUCCESS,
             payload:Data
         }
     }
     const deletecontactfail=(error)=>{
         return{
-            type:DELETE_USER_FAIL,
+            type:DELETE_CONTACT_FAIL,
             error
         }
     }
@@ -102,7 +101,7 @@ export const DeleteContact=(theContact)=>{
     return async(dispatch)=>{
         dispatch(deletecontactrequest())
         try{
-            const response=await axios.delete(`http://localhost:3001/contacts/${theContact._id}`)
+            const response=await axios.delete(`${process.env.REACT_APP_SERVER_URL}contacts/${theContact._id}`)
             console.log(response)
             if(response.status===200){
                 dispatch(deletecontactsuccess(response.data))
@@ -121,18 +120,18 @@ export const DeleteContact=(theContact)=>{
 export const UpdateContact=(Data)=>{
     const updatecontactrequest=()=>{
         return{
-            type:UPDATE_USER_REQUEST
+            type:UPDATE_CONTACT_REQUEST
         }
     }
     const updatecontactsuccess=(Data)=>{
         return{
-            type:UPDATE_USER_SUCCESS,
+            type:UPDATE_CONTACT_SUCCESS,
             payload:Data
         }
     }
     const updatecontactfail=(error)=>{
         return{
-            type:UPDATE_USER_FAIL,
+            type:UPDATE_CONTACT_FAIL,
             error
         }
     }
@@ -144,7 +143,7 @@ export const UpdateContact=(Data)=>{
             delete Data.updatedAt  
             delete Data.createdAt
             console.log(Data)
-            const response=await axios.put(`http://localhost:3001/contacts/${_id}`,Data)
+            const response=await axios.put(`${process.env.REACT_APP_SERVER_URL}contacts/${_id}`,Data)
             console.log(response)
             if(response.status===200){
                 dispatch(updatecontactsuccess(response.data))

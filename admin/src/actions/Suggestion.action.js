@@ -1,31 +1,31 @@
-import { CREATE_USER_FAIL, CREATE_USER_REQUEST, CREATE_USER_SUCCESS, DELETE_USER_FAIL, DELETE_USER_REQUEST, DELETE_USER_SUCCESS, GET_USER_FAIL, GET_USER_REQUEST, GET_USER_SUCCESS, UPDATE_USER_FAIL, UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS } from "../constant/suggestion.constant"
+import { CREATE_SUGGESTION_FAIL, CREATE_SUGGESTION_REQUEST, CREATE_SUGGESTION_SUCCESS, DELETE_SUGGESTION_FAIL, DELETE_SUGGESTION_REQUEST, DELETE_SUGGESTION_SUCCESS, GET_SUGGESTION_FAIL, GET_SUGGESTION_REQUEST, GET_SUGGESTION_SUCCESS, UPDATE_SUGGESTION_FAIL, UPDATE_SUGGESTION_REQUEST, UPDATE_SUGGESTION_SUCCESS } from "../constant/suggestion.constant"
 import axios from 'axios'
 
 //post Request
 export const CreateSuggestion=(Data)=>{
    const createDataRequest=()=>{
        return{
-           type:CREATE_USER_REQUEST
+           type:CREATE_SUGGESTION_REQUEST
        }
    }
 
    const createDataSuccess=(newData)=>{
        return{
-           type:CREATE_USER_SUCCESS,
+           type:CREATE_SUGGESTION_SUCCESS,
            payload:newData
        }
    }
 
    const createDataFail=(error)=>{
        return{
-           type:CREATE_USER_FAIL,
+           type:CREATE_SUGGESTION_FAIL,
            error
        }
    }
     return async(dispatch)=>{
         dispatch(createDataRequest())
         try{
-            const response=await axios.post('http://localhost:3001/suggestions',Data)
+            const response=await axios.post(`${process.env.REACT_APP_SERVER_URL}suggestions`,Data)
             console.log(response)
 
             if(response.status===201){
@@ -45,27 +45,27 @@ export const CreateSuggestion=(Data)=>{
 export const GetSuggestion=()=>{
     const getDataRequest=()=>{
         return{
-            type:GET_USER_REQUEST
+            type:GET_SUGGESTION_REQUEST
         }
     }
  
     const getDataSuccess=(getData)=>{
         return{
-            type:GET_USER_SUCCESS,
+            type:GET_SUGGESTION_SUCCESS,
             payload:getData
         }
     }
  
     const getDataFail=(error)=>{
         return{
-            type:GET_USER_FAIL,
+            type:GET_SUGGESTION_FAIL,
             error
         }
     }
     return async(dispatch)=>{
          dispatch(getDataRequest())
          try{
-             const response=await axios.get('http://localhost:3001/suggestions')
+             const response=await axios.get(`${process.env.REACT_APP_SERVER_URL}suggestions`)
              console.log(` response ::: ${response}`)
  
              if(response.status===200){
@@ -84,27 +84,27 @@ export const GetSuggestion=()=>{
 export const DeleteSuggestion=(theSuggest)=>{
     const deleteDataRequest=()=>{
         return{
-            type:DELETE_USER_REQUEST
+            type:DELETE_SUGGESTION_REQUEST
         }
     }
  
     const deleteDataSuccess=(Data)=>{
         return{
-            type:DELETE_USER_SUCCESS,
+            type:DELETE_SUGGESTION_SUCCESS,
             payload:Data
         }
     }
  
     const deleteDataFail=(error)=>{
         return{
-            type:DELETE_USER_FAIL,
+            type:DELETE_SUGGESTION_FAIL,
             error
         }
     }
      return async(dispatch)=>{
          dispatch(deleteDataRequest())
          try{
-             const response=await axios.delete(`http://localhost:3001/suggestions/${theSuggest._id}`)
+             const response=await axios.delete(`${process.env.REACT_APP_SERVER_URL}suggestions/${theSuggest._id}`)
              console.log(response)
  
              if(response.status===200){
@@ -124,20 +124,20 @@ export const DeleteSuggestion=(theSuggest)=>{
 export const UpdateSuggestion=(Data)=>{
     const updateDataRequest=()=>{
         return{
-            type:UPDATE_USER_REQUEST
+            type:UPDATE_SUGGESTION_REQUEST
         }
     }
  
     const updateDataSuccess=(Data)=>{
         return{
-            type:UPDATE_USER_SUCCESS,
+            type:UPDATE_SUGGESTION_SUCCESS,
             payload:Data
         }
     }
  
     const updateDataFail=(error)=>{
         return{
-            type:UPDATE_USER_FAIL,
+            type:UPDATE_SUGGESTION_FAIL,
             error
         }
     }
@@ -149,7 +149,7 @@ export const UpdateSuggestion=(Data)=>{
             delete Data.updatedAt  
             delete Data.createdAt
             //console.log(Data)
-             const response=await axios.put(`http://localhost:3001/suggestions/${_id}`,Data)
+             const response=await axios.put(`${process.env.REACT_APP_SERVER_URL}suggestions/${_id}`,Data)
              console.log(response)
  
              if(response.status===200){

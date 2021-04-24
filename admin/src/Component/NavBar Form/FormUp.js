@@ -121,7 +121,7 @@ function FormUp(props) {
     }
     return (
         <>
-            <div className="position-relative">
+            <div className="position-relative" style={{marginTop:'60px'}}>
                 {show && <Alert className='pb-0 position-absolute  w-100' style={{ "top": "0", "left": "0" }} variant="danger" onClose={() => setShow(false)} dismissible>
                     <p>{props.createFormup.msg}{props.createFormup.error}</p>
                 </Alert>

@@ -45,11 +45,6 @@ function Contact(props) {
         let value = e.target.value
         let errors = Submit.errors
 
-        setdata({
-            ...data,
-            [name]: value
-        })
-
         switch (name) {
             case 'address':
                 if (value.trim() == '') {
@@ -85,6 +80,11 @@ function Contact(props) {
                 errors.email = ''
                 break
         }
+        setdata({
+            ...data,
+            [name]: value
+        })
+        
         SetSubmit({
             ...Submit,
             [name]: value,
@@ -104,7 +104,6 @@ function Contact(props) {
         e.preventDefault()
         if (validationForm(Submit.errors)) {
             alert("Form Submitted")
-            //update
             if (data._id === 0) {
                 // insert
                 delete data._id
@@ -130,7 +129,6 @@ function Contact(props) {
     //edit user
     const EditUser = (tempUser) => {
         console.log(tempUser)
-        Submit.errors = {}  //when data set in form then ir remove require word in form
         setdata(tempUser)
     }
 
@@ -148,7 +146,7 @@ function Contact(props) {
         setdata(initialdata)
     }
     return (
-        <div className="position-relative">
+        <div className="position-relative" style={{marginTop:'60px'}}>
             {show && <Alert className='pb-0 position-absolute w-100' style={{ "top": "0", "left": "0" }} variant="danger" onClose={() => setShow(false)} dismissible>
                 <p>{props.createContact.msg}{props.createContact.error}</p>
             </Alert>

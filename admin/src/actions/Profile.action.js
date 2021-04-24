@@ -24,7 +24,7 @@ export const getProfile =(Data)=>{
         console.log(Data)
         dispatch(getDataRequest())
         try{
-            const response = await axios.get('http://localhost:3001/profiles',Data)
+            const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}profiles`,Data)
             console.log('running')
             console.log(response)
             if(response.status===200){

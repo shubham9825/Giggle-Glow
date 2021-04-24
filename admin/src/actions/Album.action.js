@@ -1,34 +1,34 @@
 import axios from 'axios'
-import { CREATE_ABOUT_FAIL, CREATE_ABOUT_REQUEST, CREATE_ABOUT_SUCCESS, DELETE_ABOUT_FAIL, DELETE_ABOUT_REQUEST, DELETE_ABOUT_SUCCESS, GET_ABOUT_FAIL, GET_ABOUT_REQUEST, GET_ABOUT_SUCCESS, UPDATE_ABOUT_FAIL, UPDATE_ABOUT_REQUEST, UPDATE_ABOUT_SUCCESS} from '../constant/about.constant'
- 
+import {CREATE_ALBUM_FAIL, CREATE_ALBUM_REQUEST, CREATE_ALBUM_SUCCESS, DELETE_ALBUM_FAIL, DELETE_ALBUM_REQUEST, DELETE_ALBUM_SUCCESS, GET_ALBUM_FAIL, GET_ALBUM_REQUEST, GET_ALBUM_SUCCESS, UPDATE_ALBUM_FAIL, UPDATE_ALBUM_REQUEST, UPDATE_ALBUM_SUCCESS} from '../constant/album.constant'
+
 //post Request
-export const createAbout=(Data)=>{
+export const createAlbum=(Data)=>{
     const createDataRequest=()=>{
         return{
-            type:CREATE_ABOUT_REQUEST
+            type:CREATE_ALBUM_REQUEST
         }
     }
     const createDataSuccess=(newData)=>{
         return{
-            type:CREATE_ABOUT_SUCCESS,
+            type:CREATE_ALBUM_SUCCESS,
             payload:newData
         }
     }
     const createDataFail=(error)=>{
         return{
-            type:CREATE_ABOUT_FAIL,
+            type:CREATE_ALBUM_FAIL,
             error
         }
     }
     return async(dispatch)=>{
         dispatch(createDataRequest())
         try{
-            const response=await axios.post(`${process.env.REACT_APP_SERVER_URL}abouts`,Data)
+            const response=await axios.post(`${process.env.REACT_APP_SERVER_URL}albums`,Data)
             console.log(response)
 
             if(response.status===201){
                 dispatch(createDataSuccess(response.data))
-                dispatch(GetAbout())
+                dispatch(GetAlbum())
             }else{
                 dispatch(createDataFail('Sorry We Failed to Submit Data!!! Try Again....'))
             }
@@ -40,28 +40,28 @@ export const createAbout=(Data)=>{
 } 
 
 //GET Request
-export const GetAbout=()=>{   
+export const GetAlbum=()=>{   
     const GetUserRequest=()=>{
         return{
-            type:GET_ABOUT_REQUEST
+            type:GET_ALBUM_REQUEST
         }
     }
     const GetUserSuccess=(getData)=>{
         return{
-            type:GET_ABOUT_SUCCESS,
+            type:GET_ALBUM_SUCCESS,
             payload:getData
         }
     }
     const GetUserFail=(error)=>{
         return{
-            type:GET_ABOUT_FAIL,
+            type:GET_ALBUM_FAIL,
             error
         }
     }
     return async(dispatch)=>{
         dispatch(GetUserRequest())
         try{
-            const response=await axios.get(`${process.env.REACT_APP_SERVER_URL}abouts`)
+            const response=await axios.get(`${process.env.REACT_APP_SERVER_URL}albums`)
             if(response.status===200){
                 dispatch(GetUserSuccess(response.data))
             }else{
@@ -75,82 +75,82 @@ export const GetAbout=()=>{
 }
 
 //DELETE Request
-export const DeleteAbout=(theAbout)=>{
-    const deleteaboutRequest=()=>{
+export const DeleteAlbum=(Data)=>{
+    const userrequest=()=>{
         return{
-            type:DELETE_ABOUT_REQUEST
+            type:DELETE_ALBUM_REQUEST
         }
     }
-    const deleteaboutuccess=(Data)=>{
+    const usersuccess=(Data)=>{
         return{
-            type:DELETE_ABOUT_SUCCESS,
+            type:DELETE_ALBUM_SUCCESS,
             payload:Data
         }
     }
-    const deleteaboutFail=(error)=>{
+    const userfail=(error)=>{
         return{
-            type:DELETE_ABOUT_FAIL,
+            type:DELETE_ALBUM_FAIL,
             error
         }
     }
     return async(dispatch)=>{
-        dispatch(deleteaboutRequest())
+        dispatch(userrequest())
         try{
-            const response=await axios.delete(`${process.env.REACT_APP_SERVER_URL}abouts/${theAbout._id}`)
+            const response=await axios.delete(`${process.env.REACT_APP_SERVER_URL}albums/${Data._id}`)
             console.log(response)
 
             if(response.status===200){
-                dispatch(deleteaboutuccess(response.data))
-                dispatch(GetAbout())
+                dispatch(usersuccess(response.data))
+                dispatch(GetAlbum())
             }else{
-                dispatch(deleteaboutFail('Sorry We Failed to Delete Data!!! Try Again...'))
+                dispatch(userfail('Sorry We Failed to Delete Data!!! Try Again...'))
             }
         }catch(error){
             console.log(error)
-            dispatch(deleteaboutFail('Sorry We Failed to Delete Data!!! Try Again...'))
+            dispatch(userfail('Sorry We Failed to Delete Data!!! Try Again...'))
         }
     }
 }
 
 //UPDATE Request
-export const UpdateAbout=(Data)=>{
-    const updateaboutRequest=()=>{
+export const UpdateAlbum=(Data)=>{
+    const userRequest=()=>{
         return{
-            type:UPDATE_ABOUT_REQUEST
+            type:UPDATE_ALBUM_REQUEST
         }
     }
-    const updateaboutuccess=(Data)=>{
+    const userSuccess=(Data)=>{
         return{
-            type:UPDATE_ABOUT_SUCCESS,
+            type:UPDATE_ALBUM_SUCCESS,
             payload:Data
         }
     }
-    const updateaboutFail=(error)=>{
+    const userFail=(error)=>{
         return{
-            type:UPDATE_ABOUT_FAIL,
+            type:UPDATE_ALBUM_FAIL,
             error
         }
     }
     return async(dispatch)=>{
-        dispatch(updateaboutRequest())
+        dispatch(userRequest())
         try{
             let _id=Data._id
             delete Data._id
             delete Data.updatedAt  
             delete Data.createdAt
             //console.log(Data)
-            const response=await axios.put(`${process.env.REACT_APP_SERVER_URL}abouts/${_id}`,Data)
+            const response=await axios.put(`${process.env.REACT_APP_SERVER_URL}albums/${_id}`,Data)
             console.log(response)
 
             if(response.status===200){
-                dispatch(updateaboutuccess(response.data))
-                dispatch(GetAbout())
+                dispatch(userSuccess(response.data))
+                dispatch(GetAlbum())
             }else{
-                dispatch(updateaboutFail('Sorry We Failed to Update Data!!! Try Again...'))
+                dispatch(userFail('Sorry We Failed to Update Data!!! Try Again...'))
             }
         }catch(error){
             console.log(error)
-            dispatch(updateaboutFail('Sorry We Failed to Update Data!!! Try Again...'))
+            dispatch(userFail('Sorry We Failed to Update Data!!! Try Again...'))
         }
     }
 }

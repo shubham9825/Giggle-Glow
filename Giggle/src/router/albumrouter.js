@@ -4,6 +4,8 @@ const Album=require('../model/album')
 const router=new express.Router()
 
 router.post('/albums',async(req,res)=>{
+    console.log(req.body)
+
     try{
         const albums=new Album(req.body)
         await albums.save()
@@ -24,7 +26,7 @@ router.get('/albums',async(req,res)=>{
 
 router.put('/albums/:id', async (req,res)=>{
     const update = Object.keys(req.body)
-    const allowedUpdates = ['album_name']
+    const allowedUpdates = ['album']
     const isValidOperation = update.every((update) => allowedUpdates.includes(update))
 
     if(!isValidOperation){

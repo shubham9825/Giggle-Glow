@@ -143,7 +143,7 @@ function Inqurie(props) {
         }, 4000)
     }
     return (
-        <div className="position-relative">
+        <div className="position-relative" style={{marginTop:'60px'}}>
             {show && <Alert className='pb-0 position-absolute w-100' style={{ "top": "0", "left": "0px" }} variant="danger" onClose={() => setShow(false)} dismissible>
             <p>{props.createInquiry.msg}{props.createInquiry.error}</p>
             </Alert>

@@ -1,14 +1,15 @@
   /* sidebar */
  .navbar {
   background-color: #3f4079;
+  width: 100%;
   height: 60px;
   display: flex;
   justify-content: start;
   align-items: center;
-  /* position: sticky;
+  position: fixed;
   top: 0;
   overflow: hidden;
-  z-index: 1; */
+  z-index: 100000;
   }
 
   

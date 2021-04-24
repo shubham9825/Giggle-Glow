@@ -13,6 +13,7 @@ import Pforgot from './Component/NavBar Form/Pforgot'
 import Main from './Component/NavBar Form/Main'
 import Navbar from './Component/SideNav/Navbar';
 import Design from './Component/Page/Design';
+// import Practice from './Component/NavBar Form/Practice';
  
 function App() {
   return (
@@ -21,10 +22,10 @@ function App() {
         <Router>
               {/* <Design></Design> */}
           <Switch>
-            <Route path='/' component={Main} exact={true}></Route> 
             {/* <Practice></Practice> */}
+            <Route path='/' component={Main} exact={true}></Route> 
             <Route path='/login' component={Login}></Route>
-             <Route path='/signup' component={SignUp}></Route>
+            <Route path='/signup' component={SignUp}></Route>
             <Route path='/forgot' component={Forgot}></Route>
             <Route path='/plogin' component={Plogin}></Route>
             <Route path='/pforgot' component={Pforgot}></Route>  

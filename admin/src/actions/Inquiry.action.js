@@ -1,30 +1,30 @@
-import {CREATE_USER_REQUEST,CREATE_USER_SUCCESS,CREATE_USER_FAIL,GET_USER_FAIL, GET_USER_REQUEST, GET_USER_SUCCESS,DELETE_USER_FAIL, DELETE_USER_REQUEST, DELETE_USER_SUCCESS} from '../constant'
 import axios from 'axios' 
-import { UPDATE_USER_FAIL, UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS } from '../constant/inquiry.constant'
+import { CREATE_INQUIRY_FAIL, CREATE_INQUIRY_REQUEST, CREATE_INQUIRY_SUCCESS, DELETE_INQUIRY_FAIL, DELETE_INQUIRY_REQUEST, DELETE_INQUIRY_SUCCESS, GET_INQUIRY_FAIL, GET_INQUIRY_REQUEST, GET_INQUIRY_SUCCESS, UPDATE_INQUIRY_FAIL, UPDATE_INQUIRY_REQUEST, UPDATE_INQUIRY_SUCCESS } from '../constant/inquiry.constant'
  
 //post Request
 export const createInquiry=(Data)=>{
     const createDataRequest =()=>{
         return{
-            type:CREATE_USER_REQUEST
+            type:CREATE_INQUIRY_REQUEST
         }
     }
     const createDataSuccess=(newData)=>{
         return{
-            type:CREATE_USER_SUCCESS,
+            type:CREATE_INQUIRY_SUCCESS,
             payload:newData
         }
     }
     const createDataFail=(error)=>{
         return{
-            type:CREATE_USER_FAIL,
+            type:CREATE_INQUIRY_FAIL,
             error
         }
     }
     return async(dispatch)=>{
         dispatch(createDataRequest())
+        console.log(Data)
         try{
-            const response=await axios.post('http://localhost:3001/inquires',Data)
+            const response=await axios.post(`${process.env.REACT_APP_SERVER_URL}inquires`,Data)
             console.log(response)
 
             if(response.status===201){
@@ -44,25 +44,25 @@ export const createInquiry=(Data)=>{
 export const GetInquiry=()=>{
     const getDataRequest=()=>{
         return{
-            type:GET_USER_REQUEST
+            type:GET_INQUIRY_REQUEST
         }
     }
     const getDataSuccess=(data)=>{
         return{ 
-            type:GET_USER_SUCCESS,
+            type:GET_INQUIRY_SUCCESS,
             payload:data
         }
     }
     const getDataFail=(error)=>{
         return{
-            type:GET_USER_FAIL,
+            type:GET_INQUIRY_FAIL,
             error
         }
     }
     return async(dispatch)=>{
         dispatch(getDataRequest())
         try{
-            const response=await axios.get('http://localhost:3001/inquires')
+            const response=await axios.get(`${process.env.REACT_APP_SERVER_URL}inquires`)
 
             if(response.status===200){
                 dispatch(getDataSuccess(response.data))
@@ -80,25 +80,25 @@ export const GetInquiry=()=>{
 export const DeleteInquiry=(theInquiry)=>{
     const DeleteDataRequest=()=>{
         return{
-            type:DELETE_USER_REQUEST
+            type:DELETE_INQUIRY_REQUEST
         }
     }
     const DeleteDataSuccess=(data)=>{
         return{ 
-            type:DELETE_USER_SUCCESS,
+            type:DELETE_INQUIRY_SUCCESS,
             payload:data
         }
     }
     const DeleteDataFail=(error)=>{
         return{
-            type:DELETE_USER_FAIL,
+            type:DELETE_INQUIRY_FAIL,
             error
         }
     }
     return async(dispatch)=>{
         dispatch(DeleteDataRequest())
         try{
-            const response=await axios.delete(`http://localhost:3001/inquires/${theInquiry._id}`)
+            const response=await axios.delete(`${process.env.REACT_APP_SERVER_URL}inquires/${theInquiry._id}`)
 
             if(response.status===200){
                 dispatch(DeleteDataSuccess(response.data))
@@ -117,18 +117,18 @@ export const DeleteInquiry=(theInquiry)=>{
 export const UpdateInquiry=(Data)=>{
     const updateDataRequest =()=>{
         return{
-            type:UPDATE_USER_REQUEST
+            type:UPDATE_INQUIRY_REQUEST
         }
     }
     const udateDataSuccess=(Data)=>{
         return{
-            type:UPDATE_USER_SUCCESS,
+            type:UPDATE_INQUIRY_SUCCESS,
             payload:Data
         }
     }
     const updateDataFail=(error)=>{
         return{
-            type:UPDATE_USER_FAIL,
+            type:UPDATE_INQUIRY_FAIL,
             error
         }
     }
@@ -140,7 +140,7 @@ export const UpdateInquiry=(Data)=>{
             delete Data.updatedAt  
             delete Data.createdAt
             //console.log(Data)
-            const response=await axios.put(`http://localhost:3001/inquires/${_id}`,Data)
+            const response=await axios.put(`${process.env.REACT_APP_SERVER_URL}inquires/${_id}`,Data)
             console.log(response)
 
             if(response.status===200){

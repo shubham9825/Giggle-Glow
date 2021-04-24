@@ -56,7 +56,7 @@ export const GetGallery=()=>{
     return async(dispatch)=>{
         dispatch(getrequest())
         try {
-            const response = await axios.get('http://localhost:3001/upload')
+            const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}upload`)
             console.log(response)
 
             if (response.status === 200) {
@@ -94,7 +94,7 @@ export const DelGallary=(Data)=>{
         dispatch(delrequest())
         
         try {
-            const response = await axios.delete(`http://localhost:3001/upload/${Data._id}`)
+            const response = await axios.delete(`${process.env.REACT_APP_SERVER_URL}upload/${Data._id}`)
             console.log(response)
 
             if (response.status === 200) {

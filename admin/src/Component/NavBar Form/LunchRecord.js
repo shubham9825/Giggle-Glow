@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Button, Table } from 'react-bootstrap'
+import { Table } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { GetLunch } from '../../actions/Lunch.action'
 
@@ -10,10 +10,10 @@ function LunchRecord(props) {
         props.getLunch()
     }, [])
 
-    return (
+    return (    
         <>
             {/* Get Table Data */}<br /><br />
-            <div className='container card-header'>
+            <div className='container card-header' style={{marginTop:'60px'}}>
                 <h3 className="fa fa-table" style={{ fontSize: "20px" }}> Lunch Details</h3><br />
                 <div className="card-body">
                     <div className="table-responsive">

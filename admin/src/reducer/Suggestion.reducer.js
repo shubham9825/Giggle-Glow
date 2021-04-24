@@ -1,4 +1,4 @@
-import { CREATE_USER_FAIL, CREATE_USER_REQUEST, CREATE_USER_SUCCESS, DELETE_USER_FAIL, DELETE_USER_REQUEST, DELETE_USER_SUCCESS, GET_USER_FAIL, GET_USER_REQUEST, GET_USER_SUCCESS, UPDATE_USER_FAIL, UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS } from "../constant/suggestion.constant"
+import { CREATE_SUGGESTION_FAIL, CREATE_SUGGESTION_REQUEST, CREATE_SUGGESTION_SUCCESS, DELETE_SUGGESTION_FAIL, DELETE_SUGGESTION_REQUEST, DELETE_SUGGESTION_SUCCESS, GET_SUGGESTION_FAIL, GET_SUGGESTION_REQUEST, GET_SUGGESTION_SUCCESS, UPDATE_SUGGESTION_FAIL, UPDATE_SUGGESTION_REQUEST, UPDATE_SUGGESTION_SUCCESS } from "../constant/suggestion.constant"
 
 const initialstate={
     isLoading:false,
@@ -11,14 +11,14 @@ const initialstate={
 }
 export const SuggestReducer=(state=initialstate,action)=>{
     switch(action.type){
-        case CREATE_USER_REQUEST:
+        case CREATE_SUGGESTION_REQUEST:
             return{
                 ...state,
                 isLoading:true,
                 newData:null,
                 error:''
             }
-        case CREATE_USER_SUCCESS:
+        case CREATE_SUGGESTION_SUCCESS:
             return{
                 ...state,
                 isLoading:false,
@@ -26,39 +26,39 @@ export const SuggestReducer=(state=initialstate,action)=>{
                 error:'',
                 msg:'Form Created Successfully...'
             }
-        case CREATE_USER_FAIL:
+        case CREATE_SUGGESTION_FAIL:
             return{
                 ...state,
                 isLoading:false,
                 newData:null,
                 error:action.error
             }
-        case GET_USER_REQUEST:
+        case GET_SUGGESTION_REQUEST:
             return{
                 ...state,
                 isLoading:true,
                 error:''
             }
-        case GET_USER_SUCCESS:
+        case GET_SUGGESTION_SUCCESS:
             return{
                 ...state,
                 isLoading:false,
                 getData:action.payload,
                 error:''
             }
-        case GET_USER_FAIL:
+        case GET_SUGGESTION_FAIL:
             return{
                 ...state,
                 isLoading:false,
                 error:action.error
             }
-        case DELETE_USER_REQUEST:
+        case DELETE_SUGGESTION_REQUEST:
             return{
                 ...state,
                 isLoading:true,
                 error:''
             }
-        case DELETE_USER_SUCCESS:
+        case DELETE_SUGGESTION_SUCCESS:
             return{
                 ...state,
                 isLoading:false,
@@ -66,19 +66,19 @@ export const SuggestReducer=(state=initialstate,action)=>{
                 error:'',
                 msg:'Data Deleted SuccessFully...'
             }
-        case DELETE_USER_FAIL:
+        case DELETE_SUGGESTION_FAIL:
             return{
                 ...state,
                 isLoading:false,
                 error:action.error
             }
-        case UPDATE_USER_REQUEST:
+        case UPDATE_SUGGESTION_REQUEST:
             return{
                 ...state,
                 isLoading:true,
                 error:''
             }
-        case UPDATE_USER_SUCCESS:
+        case UPDATE_SUGGESTION_SUCCESS:
             return{
                 ...state,
                 isLoading:false,
@@ -86,7 +86,7 @@ export const SuggestReducer=(state=initialstate,action)=>{
                 error:'',
                 msg:'Your Data Updated Successfully...'
             }
-        case UPDATE_USER_FAIL:
+        case UPDATE_SUGGESTION_FAIL:
             return{
                 ...state,
                 isLoading:false,

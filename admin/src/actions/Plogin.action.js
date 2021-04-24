@@ -30,7 +30,7 @@ export const CreatePlogin=(Data)=>{
     return async(dispatch)=>{
         dispatch(createuserrequest())
         try{
-            const response=await axios.post('http://localhost:3001/plogin',Data)
+            const response=await axios.post(`${process.env.REACT_APP_SERVER_URL}plogin`,Data)
             console.log(response)
 
             if(response.status===200){

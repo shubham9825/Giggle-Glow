@@ -25,7 +25,7 @@ function Home() {
             <Container>
                 <br />
                 <Row>
-                    <Col lg="6">
+                    <Col md='6'>
                         <Card border="primary" bg="warning" text="light">
                             <Card.Header align="center"><h3>ADMIN</h3></Card.Header>
                             <div className="admin logo" align="center">
@@ -41,7 +41,7 @@ function Home() {
                         <br /><br />
                     </Col>
 
-                    <Col>
+                    <Col  md='6'>
                         <Card border="primary" bg="info" text="dark">
                             <Card.Header align="center"><h3>PARENT'S</h3></Card.Header>
 

@@ -23,7 +23,7 @@ export const CreateForgot=(Data)=>{
     return async(dispatch)=>{ 
         dispatch(createforgotrequest())
         try{   
-            const response=await axios.post('http://localhost:3001/forgot',Data) 
+            const response=await axios.post(`${process.env.REACT_APP_SERVER_URL}forgot`,Data) 
             console.log(response)
             if(response.status===200){
                 dispatch(createforgotsuccess(response.data))
@@ -61,7 +61,7 @@ export const UpdateForgot=(Data)=>{
         console.log(Data.password,Data.email)
         const email=Data.email
         try{   
-            const response=await axios.put(`http://localhost:3001/forgot/${email}`,Data) 
+            const response=await axios.put(`${process.env.REACT_APP_SERVER_URL}forgot/${email}`,Data) 
             console.log(response)
             if(response.status===200){
                 dispatch(updateforgotsuccess(response.data))

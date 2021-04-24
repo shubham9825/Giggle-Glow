@@ -1,7 +1,7 @@
 const mongoose =require('mongoose')
 
 const albumSchema=new mongoose.Schema({
-    album_name:{
+    album:{
         type:String,
         required:true,
         trim:true

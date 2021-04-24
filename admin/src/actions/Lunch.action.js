@@ -1,29 +1,29 @@
-import { CREATE_USER_FAIL, CREATE_USER_REQUEST, CREATE_USER_SUCCESS, DELETE_USER_FAIL, DELETE_USER_REQUEST, DELETE_USER_SUCCESS, GET_USER_FAIL, GET_USER_REQUEST, GET_USER_SUCCESS, UPDATE_USER_FAIL, UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS } from '../constant/lunch.constant'
+import { CREATE_LUNCH_FAIL, CREATE_LUNCH_REQUEST, CREATE_LUNCH_SUCCESS, DELETE_LUNCH_FAIL, DELETE_LUNCH_REQUEST, GET_LUNCH_FAIL, GET_LUNCH_REQUEST, GET_LUNCH_SUCCESS, UPDATE_LUNCH_FAIL, UPDATE_LUNCH_REQUEST, UPDATE_LUNCH_SUCCESS } from '../constant/lunch.constant'
 import axios from 'axios'
 
 //POST Request
 export const CreateLunch=(Data)=>{
     const createDataRequest=()=>{
         return{
-            type:CREATE_USER_REQUEST
+            type:CREATE_LUNCH_REQUEST
         }
     }
     const createDataSuccess=(newData)=>{
         return{
-            type:CREATE_USER_SUCCESS,
+            type:CREATE_LUNCH_SUCCESS,
             payload:newData
         }
     }
     const createDataFail=(error)=>{
         return{
-            type:CREATE_USER_FAIL,
+            type:CREATE_LUNCH_FAIL,
             error
         }
     }
     return async(dispatch)=>{
         dispatch(createDataRequest())
         try{
-            const response=await axios.post('http://localhost:3001/lunchs',Data)
+            const response=await axios.post(`${process.env.REACT_APP_SERVER_URL}lunchs`,Data)
             console.log(response)
 
             if(response.status===201){
@@ -42,25 +42,25 @@ export const CreateLunch=(Data)=>{
 export const GetLunch=()=>{
     const getuserRequest=()=>{
         return{
-            type:GET_USER_REQUEST
+            type:GET_LUNCH_REQUEST
         }
     }
     const getUserSuccess=(Data)=>{
         return{
-            type:GET_USER_SUCCESS,
+            type:GET_LUNCH_SUCCESS,
             payload:Data
         }
     }
     const getUserFail=(error)=>{
         return{
-            type:GET_USER_FAIL,
+            type:GET_LUNCH_FAIL,
             error
         }
     }
     return async(dispatch)=>{
         dispatch(getuserRequest())
         try{
-            const response=await axios.get('http://localhost:3001/lunchs')
+            const response=await axios.get(`${process.env.REACT_APP_SERVER_URL}lunchs`)
             console.log(response)
             if(response.status===200){
                 dispatch(getUserSuccess(response.data))
@@ -78,25 +78,25 @@ export const DeleteLunch=(theLunch)=>{
     
     const deleteuserRequest=()=>{
         return{
-            type:DELETE_USER_REQUEST
+            type:DELETE_LUNCH_REQUEST
         }
     }
     const deleteUserSuccess=(Data)=>{
         return{
-            type:DELETE_USER_SUCCESS,
+            type:DELETE_LUNCH_REQUEST,
             payload:Data
         }
     }
     const deleteUserFail=(error)=>{
         return{
-            type:DELETE_USER_FAIL,
+            type:DELETE_LUNCH_FAIL,
             error
         }
     }
     return async(dispatch)=>{
         dispatch(deleteuserRequest())
         try{
-            const response=await axios.delete(`http://localhost:3001/lunchs/${theLunch._id}`)
+            const response=await axios.delete(`${process.env.REACT_APP_SERVER_URL}lunchs/${theLunch._id}`)
             console.log(response)
             if(response.status===200){
                 dispatch(deleteUserSuccess(response.data))
@@ -114,18 +114,18 @@ export const DeleteLunch=(theLunch)=>{
 export const UpdateLunch=(Data)=>{
     const updateuserRequest=()=>{
         return{
-            type:UPDATE_USER_REQUEST
+            type:UPDATE_LUNCH_REQUEST
         }
     }
     const updateUserSuccess=(Data)=>{
         return{
-            type:UPDATE_USER_SUCCESS,
+            type:UPDATE_LUNCH_SUCCESS,
             payload:Data
         }
     }
     const updateUserFail=(error)=>{
         return{
-            type:UPDATE_USER_FAIL,
+            type:UPDATE_LUNCH_FAIL,
             error
         }
     }
@@ -137,7 +137,7 @@ export const UpdateLunch=(Data)=>{
             delete Data.updatedAt  
             delete Data.createdAt
             //console.log(Data)
-            const response=await axios.put(`http://localhost:3001/lunchs/${_id}`,Data)
+            const response=await axios.put(`${process.env.REACT_APP_SERVER_URL}lunchs/${_id}`,Data)
             console.log(response)
             if(response.status===200){
                 dispatch(updateUserSuccess(response.data))

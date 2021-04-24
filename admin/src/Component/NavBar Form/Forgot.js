@@ -220,7 +220,7 @@ function Forgot(props) {
 
     return (
         <>
-            <div>
+            <div >
                 {show && <Alert className='pb-0 position-absolute  w-100' style={{ "top": "0", "left": "0" }} variant="danger" onClose={() => setShow(false)} dismissible>
                                 <p>{props.createForgot.msg}{props.createForgot.error}</p>
                          </Alert>

@@ -25,7 +25,7 @@ export const createPayment = (Data)=>{
         dispatch(createDataRequest())
         console.log(Data)
         try{
-            const response = await axios.post('http://localhost:3001/payments',Data)
+            const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}payments`,Data)
             console.log(response)
 
             if(response.status===201){
