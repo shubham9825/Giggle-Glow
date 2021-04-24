@@ -20,6 +20,8 @@ function Payment(props) {
         }
     })
 
+    const [show,setshow]=useState(false)
+
     //use in api calling 
     const initialdata = {
         t_date: new Date().toString(),
@@ -106,6 +108,7 @@ function Payment(props) {
         if (validateForm(payments.errors)) {
             alert("Form Submitted")
             props.postPayment(data)
+            setshow(true)
             e.target.reset()
         } else {
             alert("Form Not Submitted")
@@ -126,11 +129,16 @@ function Payment(props) {
     }
     console.log(data)
     return (
-        <>
-            <p>{props.CratePayment.error}</p>
+        <div style={{marginTop:'60px'}} className="position-relative"> 
+            {show && <Alert className='pb-0 position-absolute  w-100' style={{ "top": "0", "left": "0" }} variant="danger" onClose={() => setShow(false)} dismissible>
+                         <p>{props.CratePayment.error}</p>
+                     </Alert>}
+                <br />
             <Form className="container mt-5" onSubmit={HandleSubmit}>
                 <fieldset>
                     <legend>Child Attandance</legend>
+                    <hr className='m-0' style={{ background: 'rgb(148, 141, 141)' }}></hr>
+                        <br />
                     <Form.Group>
                     {props.createChild.getData.length > 0 &&
                         <div>
@@ -174,7 +182,7 @@ function Payment(props) {
             </Form>
 
             <br /><br /><br />
-        </>
+        </div>
     )
 }
 

@@ -117,7 +117,7 @@ function Gallery(props) {
         props.getimage(test)
     }
     return (
-        <div className="position-relative">
+        <div className="position-relative" style={{marginTop:'60px'}}>
             {show && <Alert className='pb-0 position-absolute w-100' style={{ "top": "0", "left": "0px" }} variant="danger" onClose={() => setshow(false)} dismissible>
                 <p>{msg}{props.creategallery.message}{props.creategallery.error}</p>
             </Alert>
