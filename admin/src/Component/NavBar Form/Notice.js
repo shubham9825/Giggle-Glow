@@ -22,8 +22,8 @@ export function Notice(props) {
         title: null,
         description: null,
         errors: {
-            title: '*Required',
-            description: '*Required'
+            title: ' ',
+            description: ' '
         }
     })
 

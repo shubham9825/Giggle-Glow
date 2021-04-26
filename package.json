@@ -1,0 +1,29 @@
+{
+  "name": "daycare",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express-fileupload": "^1.2.1",
+    "express": "^4.17.1",
+    "mongodb": "^3.6.4",
+    "mongoose": "^5.11.19",
+    "nodemailer": "^6.5.0",
+    "react-router-dom": "^5.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shubham9825/Giggle-Glow-.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shubham9825/Giggle-Glow-/issues"
+  },
+  "homepage": "https://github.com/shubham9825/Giggle-Glow-#readme"
+}

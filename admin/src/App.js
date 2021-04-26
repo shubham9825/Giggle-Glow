@@ -16,6 +16,7 @@ import Plogout from './Component/NavBar Form/Plogout';
 import Navbar from './Component/SideNav/Navbar';
 import Design from './Component/Page/Design';
 import Contact_us from './Component/Page/Contact_us'
+// import Practice from './Component/NavBar Form/Practice'
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
       <Provider store={store}>
          <Router>
           <Switch>
+            {/* <Practice></Practice> */}
             <Route path='/' component={Design} exact={true}></Route> 
             <Route path='/main' component={Main}></Route> 
             <Route path='/login' component={Login}></Route>

@@ -167,17 +167,17 @@ function Inqurie(props) {
                     <div className="container">
                         <div className="row">
                             <div className="col-lg-8 offset-md-2 mb-sm-30">
-                                <h3>Do you have any question?</h3> <br/>
+                                <h3>Do you have any question?</h3>
                                 <form name="contactForm" id="contact_form" className="form-border" onSubmit={HandleSubmit}>
 
                                     <div className="field-set">
-                                        <input type="text" autoFocus={true} name="fname" id="name" className="form-control" value={data.fname} onChange={HandleChange} placeholder="Your First Name" />
-                                        <div style={{ color: '#f50000'}} >{inquirys.errors.fname}</div>
+                                        <input type="text" name="fname" id="name" className="form-control" value={data.fname} onChange={HandleChange} placeholder="Your First Name" />
+                                        <div style={{ color: '#f50000' }}>{inquirys.errors.fname}</div>
                                     </div>
                                     <br />
                                     <div className="field-set">
                                         <input type="text" name="lname" id="name" className="form-control" value={data.lname} onChange={HandleChange} placeholder="Your Last Name" />
-                                        <div style={{ color: '#f50000'}}>{inquirys.errors.lname}</div>
+                                        <div style={{ color: '#f50000' }}>{inquirys.errors.lname}</div>
                                     </div>
                                     <br />
                                     <div className="field-set">

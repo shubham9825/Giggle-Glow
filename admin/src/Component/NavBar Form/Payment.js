@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React, { useEffect, useState } from 'react'
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Alert } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { getChild } from '../../actions/child.action'
 import { createPayment } from '../../actions/Payment.action'
@@ -9,18 +9,17 @@ function Payment(props) {
     const [payments, setpayments] = useState({
         t_date: new Date(),
         entry_time: null,
-        exit_time: null,
-        total_time: null,
-        fees: null,
+        exit_time: null,        
         errors: {
-            t_date: '*Required',
-            entry_time: '*Required',
-            exit_time: '*Required',
-            total_time: '*Required'
+            t_date: ' ',
+            entry_time: ' ',
+            exit_time: ' '
         }
     })
 
     const [show,setshow]=useState(false)
+
+    const [totalShow,setTotalShow]=useState('')
 
     //use in api calling 
     const initialdata = {
@@ -68,29 +67,25 @@ function Payment(props) {
                 msec -= hh * 1000 * 60 * 60;
                 var mm = Math.floor(msec / 1000 / 60);
                 total=`${hh}:${mm}`
+                setTotalShow(total)
+                console.log(total)
                 break
-
-            case 'total_time':
-                errors.total_time = ''
-                break
-        }
-
-        if(mm>30){
-            hh = hh+1            
-        }
-
-        console.log(hh)
+        }   
+           
+            if(mm>30){
+                hh = hh+1          
+            }
+            console.log(hh)
         setpayments({
             ...payments,
             [name]: value,
-            total_time:total,
             errors
         })
 
         setdata({
             ...data,
             [name]: value,
-            total_time:total
+            total_time:hh
         })
     }
 
@@ -109,6 +104,7 @@ function Payment(props) {
             alert("Form Submitted")
             props.postPayment(data)
             setshow(true)
+            setTotalShow('')
             e.target.reset()
         } else {
             alert("Form Not Submitted")
@@ -174,7 +170,7 @@ function Payment(props) {
                     <Form.Group>
                         <Form.Label>Total Time</Form.Label>
                         <Form.Control type="text"  name="total_time" onChange={HandleChange} 
-                        placeholder="Enter Total Time." value={data.total_time} readOnly/>
+                        placeholder="Enter Total Time." value={totalShow} readOnly/>
                         <div style={{ color: '#f50000' }}>{payments.errors.total_time}</div>
                     </Form.Group>
                     <Button variant="primary" type="submit">Submit</Button>

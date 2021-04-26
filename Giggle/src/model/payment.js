@@ -17,7 +17,7 @@ const paymentSchema = new mongoose.Schema({
         required:true
     },
     total_time:{
-        type:String,
+        type:Number,
         trim:true,
         required:true
     },
