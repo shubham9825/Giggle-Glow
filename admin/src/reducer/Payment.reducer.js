@@ -1,9 +1,10 @@
-import {   CREATE_PAYMENT_FAIL, CREATE_PAYMENT_REQUEST, CREATE_PAYMENT_SUCCESS } from '../constant/payment.constant'
+import {CREATE_PAYMENT_FAIL, CREATE_PAYMENT_REQUEST, CREATE_PAYMENT_SUCCESS , GET_REPORT_FAIL, GET_REPORT_REQUEST, GET_REPORT_SUCCESS } from '../constant/payment.constant'
 
 const initialstate = {
     isLoading: false,
     error: '',
     newData: null, //post 
+    getReport:null, //to get report
 }
 
 export const PaymentReducer = (state = initialstate, action) => {
@@ -28,6 +29,25 @@ export const PaymentReducer = (state = initialstate, action) => {
                 ...state,
                 isLoading: false,
                 newData: null,
+                error: action.error
+            }
+        case GET_REPORT_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+                getReport: null
+            }
+        case GET_REPORT_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                getReport: action.payload,
+                msg:'Form Created Successfully...'
+            }
+        case GET_REPORT_FAIL:
+            return {
+                ...state,
+                isLoading: false,
                 error: action.error
             }
         default:

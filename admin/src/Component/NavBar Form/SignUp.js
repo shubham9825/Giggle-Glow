@@ -1,9 +1,9 @@
 /* eslint-disable */
-import React, {useState } from 'react'
-import {Alert, Form} from 'react-bootstrap'
+import React, { useState } from 'react'
+import { Alert, Form } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { Link  } from 'react-router-dom'
-import {CreateSignup} from '../../actions/Signup.action'
+import { Link } from 'react-router-dom'
+import { CreateSignup } from '../../actions/Signup.action'
 
 function SignUp(props) {
     const [signup, setSignup] = useState({
@@ -11,7 +11,7 @@ function SignUp(props) {
         lname: null,
         email: null,
         password: null,
-        cpassword:null,
+        cpassword: null,
         errors: {
             fname: ' ',
             lname: ' ',
@@ -21,13 +21,13 @@ function SignUp(props) {
         }
     })
     //  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 
-        
-     //use in api calling 
-     const initialdata = {
+
+    //use in api calling 
+    const initialdata = {
         fname: '',
-        lname:'',
-        email:'',
-        password:''
+        lname: '',
+        email: '',
+        password: ''
     }
     const [data, setdata] = useState(initialdata)
 
@@ -71,7 +71,7 @@ function SignUp(props) {
                 }
                 errors.email = ''
                 break
-            case 'password': 
+            case 'password':
                 if (value.trim() == '') {
                     errors.password = '*Required'
                     break
@@ -91,13 +91,13 @@ function SignUp(props) {
                     errors.cpassword = 'Password is To Short...!'
                     break
                 }
-                if(value!==signup.password){
+                if (value !== signup.password) {
                     errors.cpassword = 'Password Not Match...!'
                     break
                 }
                 errors.cpassword = ''
-                break     
-        }   
+                break
+        }
         setSignup({
             ...signup,
             [name]: value,
@@ -120,7 +120,7 @@ function SignUp(props) {
 
     const HandleSubmit = (e) => {
         e.preventDefault()
-        if (validateForm(signup.errors)) {         
+        if (validateForm(signup.errors)) {
             alert("Form Submitted")
             props.postSignup(data)
             setShow(true)
@@ -131,24 +131,35 @@ function SignUp(props) {
         }
     }
 
-     //Message State
-     const [show, setShow] = useState(false);
-    
-     //Alert Message timing 
-     const MessageTime=()=>{
-             setTimeout(() => {
-                 setShow(false)
-               }, 5000)
-     }
+    //Message State
+    const [show, setShow] = useState(false);
+
+    //Alert Message timing 
+    const MessageTime = () => {
+        setTimeout(() => {
+            setShow(false)
+        }, 5000)
+    }
+
+    //  Hide and Show Password
+    const [isPasswordShown, setisPasswordShown] = useState(false)
+    const togglePasswordVisiblity = () => {
+        setisPasswordShown(!isPasswordShown);
+    }
+     
+    const [isPasswordShow, setisPasswordShow] = useState(false)
+    const togglePasswordVisible = () => {
+        setisPasswordShow(!isPasswordShow);
+    }
     return (
         <div>
-             {show && <Alert className='pb-0' variant="danger" onClose={() => setShow(false)} dismissible>
-                        <p>{props.createSignup.msg}{props.createSignup.error}</p>
-                    </Alert>
-             }
-              
+            {show && <Alert className='pb-0' variant="danger" onClose={() => setShow(false)} dismissible>
+                <p>{props.createSignup.msg}{props.createSignup.error}</p>
+            </Alert>
+            }
+
             <div className="auth-wrapper " >
-                <div className="auth-inner" style={{paddingBottom:'0px'}}>
+                <div className="auth-inner" style={{ paddingBottom: '0px' }}>
                     <Form onSubmit={HandleSubmit}>
                         <h3>Sign Up</h3>
                         <div className="form-group">
@@ -171,37 +182,49 @@ function SignUp(props) {
 
                         <div className="form-group">
                             <label>Password</label>
-                            <input type="password" value={data.password} name='password' onChange={HandleChange} className="form-control" placeholder="Enter password" />
+                            <div className='wrap-input100'>
+                                <input type={isPasswordShown ? "text" : "password"} value={data.password} name='password' onChange={HandleChange} className="form-control" placeholder="Enter password" />
+                                <i
+                                    className="fa fa-eye password-icon"
+                                    onClick={togglePasswordVisiblity}
+                                />
+                            </div>
                             <div style={{ color: '#f50000' }}>{signup.errors.password}</div>
                         </div>
 
                         <div className="form-group">
                             <label>Confirm Password</label>
-                            <input type="password" name='cpassword' onChange={HandleChange} className="form-control" placeholder="Enter Confirm password" />
+                            <div className='wrap-input100'>
+                                <input type={isPasswordShow ? "text" : "password"} name='cpassword' onChange={HandleChange} className="form-control" placeholder="Enter Confirm password" />
+                                <i
+                                    className="fa fa-eye password-icon"
+                                    onClick={togglePasswordVisible}
+                                />
+                            </div>
                             <div style={{ color: '#f50000' }}>{signup.errors.cpassword}</div>
                         </div>
-                        
+
                         <button type="submit" className="btn btn-primary btn-block">Sign Up</button>
                         <p className="forgot-password text-right"  >
                             Already registered <Link to='/login'>sign in?</Link>
                         </p>
-                        
-                    </Form><br/><br/>
+
+                    </Form><br /><br />
                 </div>
             </div>
         </div>
     )
 }
 
-const mapStateToProps=(store)=>{
-    return{
-        createSignup:store.createSignup
+const mapStateToProps = (store) => {
+    return {
+        createSignup: store.createSignup
     }
 }
-const mapDispatchToProps=(dispatch)=>{
-    return{
-        postSignup:(data)=>dispatch(CreateSignup(data))
+const mapDispatchToProps = (dispatch) => {
+    return {
+        postSignup: (data) => dispatch(CreateSignup(data))
     }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(SignUp)
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp)

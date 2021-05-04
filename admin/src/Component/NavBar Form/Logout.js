@@ -6,7 +6,7 @@ function Logout() {
     let history=useHistory()
 
     useEffect(()=>{
-        if(confirm('Are you sure you want to Delete Record')){
+        if(confirm('Select "OK" below if you are ready to end your current session.')){
              sessionStorage.removeItem('login')
              history.push('/')
         }else{

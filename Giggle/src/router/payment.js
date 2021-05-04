@@ -1,14 +1,19 @@
 const express = require('express')
 const Payment = require('../model/payment')
+const Registration = require('../model/childreg')
 
 const router = new express.Router
 
 router.post('/paymentreport',async (req, res)=>{
     try{
-        var payments = await Payment.find({})
-
-        var temp=await Payment.aggregate( [
-           // { "$match": { "$eq": [{ "$month": "$t_date" }, 4] } },
+            const Month=req.body.Month
+            const Year=req.body.Year
+            var temp=await Payment.aggregate( [
+            { "$match":{ "$and": [
+                    {"$expr": { "$eq": [{ "$month": "$t_date" },parseInt(Month)] } },
+                    {"$expr": { "$eq": [{ "$year": "$t_date" },parseInt(Year)] } }
+                ] } 
+            },  
             {
               $group: {
                 _id:  "$owner",
@@ -16,77 +21,12 @@ router.post('/paymentreport',async (req, res)=>{
               }
             }
           ]);
-          console.log(temp)
-        // const payments = await Payment.find()
-        //console.log(payments)
-        // Get Owner Details from task 
-        //const thePayment = await Payment.findOne({ owner: ownerId })
-
-        payments=payments.filter(thePayment=>{
-            //console.log(thePayment.t_date.getFullYear())
-            
-            return thePayment.t_date.getMonth()+1===req.body.month &&
-                            thePayment.t_date.getFullYear()===req.body.year 
-        })
-
-        // function groupBy(list, keyGetter) {
-        //     const map = new Map();
-        //     list.forEach((item) => {
-        //          const key = keyGetter(item);
-        //          const collection = map.get(key);
-        //          if (!collection) {
-        //              map.set(key, [item]);
-        //          } else {
-        //              collection.push(item);
-        //          }
-        //     });
-        //     return map;
-        // }
-          //console.log(groupBy(payments,pet => pet.owner));          
-        
-          const map=new Map()
-          map.set('12',"Hello")
-          map.set('13',"Hello")
-          map.set('12',"Hello")
-            console.log(map)
-
-          console.log(payments)
-        let groupOwner=[]
-        for(i=0;i<payments.length;i++){
-            let tempDatas=groupOwner.filter(theOwner=> {
-                console.log(theOwner.owner+"==="+payments[i].owner)
-                
-                return theOwner.owner==payments[i].owner
-            })
-            // console.log(payments[i].owner)
-            // console.log(groupOwner)
-            // console.log(tempDatas)
-            if(tempDatas.length>0){
-                let sum=payments[i].total_time
-                for(let p=0;p<tempDatas.length;p++){
-                    sum+=tempDatas[p].total_time
-                }
-                groupOwner=groupOwner.filter(theOwner=> theOwner.owner!==payments[i].owner)
-                groupOwner.push({
-                    owner : payments[i].owner,
-                    total_time : sum 
-                })
-                console.log(groupOwner)
-            }else{
-                groupOwner.push({
-                    owner : payments[i].owner,
-                    total_time : payments[i].total_time 
-                })
-            }
-        }
-        console.log(groupOwner)
-
-        for(let i=0;i<payments.length;i++){
-            await payments[i].populate({
-                path: "owner"
-            }).execPopulate()
+          console.log(temp)      
+        for(let i=0;i<temp.length;i++){
+            let owner = await Registration.findById(temp[i]._id)
+            temp[i].owner=owner 
         }        
-        res.status(200).send({ payments })
+        res.status(200).send(temp)
     }catch(error){
         res.status(400).send(error)
     }
@@ -114,7 +54,6 @@ router.get('/payments/:owner', async (req, res) => {
 
 router.post('/payments', async (req, res) => {
     console.log(req.body)
-    console.log(req.body.owner)
     try {
         // const thePayment = await Payment.findById(req.body.owner)
         // if (!thePayment) {

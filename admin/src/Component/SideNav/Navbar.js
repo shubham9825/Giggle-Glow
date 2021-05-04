@@ -30,12 +30,8 @@ function Navbar() {
         </div>
       
         <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
-          <ul className='nav-menu-items' onClick={showSidebar}>
-            {/* <li className='navbar-toggle'>
-              <Link to='#' className='menu-bars'>
-                <AiIcons.AiOutlineClose />
-              </Link>
-            </li> */}
+          <ul className='nav-menu-items' onClick={showSidebar} >
+            
             { user==='admin' && SidebarData.map((item, index) => {
               return (
                 <li key={index} className={item.cName}>
@@ -46,7 +42,7 @@ function Navbar() {
                 </li>
               );
             })
-            }
+            }  
 
           { user==='parent' && Psidebardata.map((item, index) => {
               return (

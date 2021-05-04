@@ -154,7 +154,7 @@ function Inqurie(props) {
                                     <form className="row" id="form_subscribe">
                                         <div className="col-md-12 text-center">
                                             <h1>Contact Us</h1>
-                                            <p>Awsome Page Teaser Here</p>
+                                            <p>Have some suggestions or just want to say hi? </p>
                                         </div>
                                         <div className="clearfix" />
                                     </form>
@@ -171,7 +171,7 @@ function Inqurie(props) {
                                 <form name="contactForm" id="contact_form" className="form-border" onSubmit={HandleSubmit}>
 
                                     <div className="field-set">
-                                        <input type="text" autoFocus={true} name="fname" id="name" className="form-control" value={data.fname} onChange={HandleChange} placeholder="Your First Name" />
+                                        <input type="text" name="fname" id="name" className="form-control" value={data.fname} onChange={HandleChange} placeholder="Your First Name" />
                                         <div style={{ color: '#f50000'}} >{inquirys.errors.fname}</div>
                                     </div>
                                     <br />

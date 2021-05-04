@@ -136,6 +136,8 @@ function FormUp(props) {
         props.GetAllFormup(owner)
     }
 
+    {console.log(props.createFormup.getData.formups)}
+
     return (
         <>
             <div className="position-relative" style={{marginTop:'60px'}}>
@@ -156,11 +158,8 @@ function FormUp(props) {
                                     <select onChange={Handlekey}>
                                         <option hidden>Select Name</option>
                                         {props.createInquiry.getData.map(theData =>
-                                            <>
-                                                <option value={theData._id}>{theData.fname}</option>
-                                            </>
+                                                <option value={theData._id} key={theData._id}>{theData.fname}</option>
                                         )}
-                                        <br />
                                     </select>
                                 </div>
                             }
@@ -180,6 +179,7 @@ function FormUp(props) {
                     <h3 className="fa fa-table" style={{ fontSize: "20px" }}> FormUp Details</h3><br />
                     <div className="card-body">
                         <div className="table-responsive">
+                            {console.log(props.createFormup.getData.formups)}
                             {props.createFormup.getData.formups &&
                                 <Table striped responsive hover className='table table-bordered'>
                                     <thead>

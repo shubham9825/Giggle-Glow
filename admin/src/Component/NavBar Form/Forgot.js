@@ -175,7 +175,7 @@ function Forgot(props) {
             alert("Please Fill Proper Form")
         }
     }
-   
+
     const OtpSubmit = (e) => {
         e.preventDefault()
         if (validationForm(validotp.errors)) {
@@ -218,13 +218,23 @@ function Forgot(props) {
         }, 10000)
     }
 
+    //  Hide and Show Password
+    const [isPasswordShown, setisPasswordShown] = useState(false)
+    const togglePasswordVisiblity = () => {
+        setisPasswordShown(!isPasswordShown);
+    }
+    const [isPasswordShow, setisPasswordShow] = useState(false)
+    const togglePasswordVisible = () => {
+        setisPasswordShow(!isPasswordShow);
+    }
+
     return (
         <>
             <div >
                 {show && <Alert className='pb-0 position-absolute  w-100' style={{ "top": "0", "left": "0" }} variant="danger" onClose={() => setShow(false)} dismissible>
-                                <p>{props.createForgot.msg}{props.createForgot.error}</p>
-                         </Alert>
-                }  
+                    <p>{props.createForgot.msg}{props.createForgot.error}</p>
+                </Alert>
+                }
                 <div className="auth-wrapper" >
                     <div className="auth-inner" >
                         <Form  >
@@ -246,17 +256,29 @@ function Forgot(props) {
                                     <div style={{ color: '#f50000' }}>{validotp.errors.otp}</div>
                                 </div><button type="submit" onClick={OtpSubmit} className="btn btn-primary btn-block mb-2">Submit</button>
                             </div>}
-                                
+
                             {pass && <div>
                                 <div className="form-group">
                                     <label>Password</label>
-                                    <input type="password" onChange={HandlePass} name='password' className="form-control" placeholder="Enter password" />
+                                    <div className='wrap-input100'>
+                                        <input type={isPasswordShown ? "text" : "password"} onChange={HandlePass} name='password' className="form-control" placeholder="Enter password" />
+                                        <i
+                                            className="fa fa-eye password-icon"
+                                            onClick={togglePasswordVisiblity}
+                                        />
+                                    </div>
                                     <div style={{ color: '#f50000' }}>{validpass.errors.password}</div>
                                 </div>
 
                                 <div className="form-group">
                                     <label>Confirm Password</label>
-                                    <input type="password" onChange={HandlePass} name='cpassword' className="form-control" placeholder="Enter Confirm password" />
+                                    <div className='wrap-input100'>
+                                        <input type={isPasswordShow ? "text" : "password"} onChange={HandlePass} name='cpassword' className="form-control" placeholder="Enter Confirm password" />
+                                        <i
+                                            className="fa fa-eye password-icon"
+                                            onClick={togglePasswordVisible}
+                                        />
+                                    </div>
                                     <div style={{ color: '#f50000' }}>{validpass.errors.cpassword}</div>
                                 </div>
                                 <button type="submit" onClick={PassSubmit} className="btn btn-primary btn-block mb-2">Submit</button>

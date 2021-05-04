@@ -122,6 +122,7 @@ export const UpdateRegistraton =(Data)=>{
         }
     }
     const updateDataSuccess =(editData)=>{
+        sessionStorage.login=JSON.stringify(editData)
         return{
             type:UPDATE_CHILD_SUCCESS,
             payload:editData

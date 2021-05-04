@@ -1,7 +1,5 @@
 const mongoose=require('mongoose')
 
-//service form schema 
-
 const serviceSchema=new mongoose.Schema({
     service_name:{
         type:String,
@@ -12,16 +10,6 @@ const serviceSchema=new mongoose.Schema({
         type:String,
         required:true,
         trim:true
-    },
-    tagline:{
-        type:String,
-        required:true,
-        trim:true 
-    },
-    long_question:{
-        type:String,
-        required:true,
-        trim:true 
     },
     image:{
         type:String,

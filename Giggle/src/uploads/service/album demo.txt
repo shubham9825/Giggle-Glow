@@ -1,0 +1,486 @@
+album Component 
+-----------------
+/* eslint-disable */
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import { Form, Button, Table, ButtonGroup, Alert } from 'react-bootstrap'
+import { connect } from 'react-redux'
+import { createAlbum, DeleteAlbum, GetAlbum, UpdateAlbum } from '../../actions/Album.action'
+import Pagination from "react-js-pagination"
+
+function Album(props) {
+    //get request 
+    useEffect(() => {
+        props.GetAlbum()
+    }, [])
+
+    const [albumdata, setAlbumdata] = useState({
+        album: null,
+        errors: {
+            album: ' '
+        }
+    })
+
+    //api calling state
+    const initialdata = {
+        _id: 0,
+        album: '',
+        image:''
+    }
+    const [data, setdata] = useState(initialdata)
+
+    //edit user
+    const EditUser = (tempUser) => {
+        console.log(tempUser)
+        setdata(tempUser)
+    }
+
+    //delete data
+    const onDeleteData = (theData) => {
+        if (confirm('Are you sure you want to Delete Record')) {
+            props.DeleteAlbum(theData)
+            setShow(true)
+            MessageTime()
+        }
+    }
+
+    const HandleChange = (e) => {
+        let name = e.target.name
+        let value = e.target.value
+        let errors = albumdata.errors
+        switch (name) {
+            case 'album':
+                if (value.trim() == '') {
+                    errors.album = '*Required'
+                    break
+                }
+                if (value.length < 3) {
+                    errors.album = 'To Short...!'
+                    break
+                }
+                errors.album = ''
+                break
+        }
+
+        setAlbumdata({
+            ...albumdata,
+            [name]: value,
+            errors
+        })
+        setdata({
+            ...data,
+            [name]: value
+        })
+    }
+
+    const validationForm = (errors) => {
+        let valid = true
+        Object.values(errors).forEach(
+            (val) => val.length > 0 && (valid = false)
+        )
+        return valid;
+    }
+
+    const HandleSubmit = async(e) => {
+        e.preventDefault()
+        if (validationForm(albumdata.errors)) {
+             if (data._id === 0) {
+                const formdata = new FormData()
+                formdata.append('file', dummy)
+                console.log(dummy)
+                 if (dummy == '') {
+                    alert('please Upload Image')
+                } else {
+                    if (!dummy.name.match(/\.(jpg|jpeg|png|gif|JPG|PNG|JPEG|GIF)$/)) {
+                        alert('Only Jpg , Jpeg , Png , Gif File Allowed!!!')
+                    } else {
+                        delete data._id
+                        const dummydata = JSON.stringify(data)
+                        formdata.append('data', dummydata)
+                        console.log(dummydata)
+                        const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}albums`, formdata, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
+                        })
+                        props.PostAlbum(data)
+                        // props.GetAlbum()
+                        setShow(true)
+                        MessageTime()
+                        e.target.reset()
+                        setdata(initialdata)
+                        // setdisplay(false)
+                    }
+                }
+            } else {
+                // update
+                let tempUser = {}
+                tempUser._id = data._id
+                tempUser.album = data.album
+                tempUser.image=data.image
+                console.log(tempUser)
+                props.UpdateAlbum(tempUser)
+                setShow(true)
+                MessageTime()
+                setdata(initialdata)
+            }
+        } else {
+            alert('Please Fill Proper Form!!!')
+        }
+    }
+
+    
+    //Message State
+    const [show, setShow] = useState(false)
+
+    //Alert Message timing 
+    const MessageTime = () => {
+        setTimeout(() => {
+            setShow(false)
+        }, 4000)
+    }
+
+      //for image(use for store image in object)
+      const [dummy, setdummy] = useState('')
+      const HandleImage = (e) => {
+          setdummy(e.target.files[0])
+          setdata({
+              ...data,
+              image: e.target.files[0].name
+          })
+      }
+
+      
+    //pagination
+    const [activePage, setCurrentPage] = useState(1)
+    const todosPerPage = 10
+    // Logic for displaying current  page
+    const indexOfLastTodo = activePage * todosPerPage;
+    const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
+    const currentTodos = props.albumstore.getData.slice(indexOfFirstTodo, indexOfLastTodo);
+
+    const handlePageChange = (pageNumber) => {
+        // console.log(`active page is ${pageNumber}`);
+        setCurrentPage(pageNumber)
+    }
+    return (
+        <div style={{ marginTop: '60px' }} className="position-relative">
+              {show && <Alert className='pb-0 position-absolute w-100' style={{ "top": "0", "left": "0px" }} variant="danger" onClose={() => setShow(false)} dismissible>
+                <p>{props.albumstore.errors}{props.albumstore.msg}</p>
+            </Alert>
+            }<br /> 
+            
+            <Form className="container mt-5" onSubmit={HandleSubmit}>
+                <fieldset>
+                    <legend>Album</legend>
+                    <Form.Group>
+                        <Form.Label>Album Name</Form.Label>
+                        <Form.Control autoFocus={true} type="text" onChange={HandleChange} value={data.album} placeholder="Enter Album Name" name='album' />
+                        <div style={{ color: '#f50000' }} >{albumdata.errors.album}</div>
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.File name="UploadImg" onChange={HandleImage} alt="Image Not Uploaded" label="Enter Image"></Form.File><br />
+                        {/* {display && <img style={{ width: '150px', height: '150px', cursor: 'pointer' }} onClick={() => window.open(`http://localhost:3001/service/${data.image}`, "_blank")} src={`http://localhost:3001/service/${data.image}`} alt='Image Not Load' />} */}
+                    </Form.Group>
+                    <Button variant="primary" type="submit">Submit</Button>
+                </fieldset>
+            </Form> <br /><br />
+
+            {/* Get Table Data */}
+            <div className='container card-header'>
+                <h3 className="fa fa-table" style={{ fontSize: "20px" }}> Album Details</h3><br />
+                <div className="card-body">
+                    <div className="table-responsive">
+                        {props.albumstore.getData.length > 0 &&
+                            <Table striped hover responsive className='table table-bordered'>
+                                <thead>
+                                    <tr>
+                                        <th>Album Name</th>
+                                        <th>Image</th>
+                                        <th>Edit | Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {currentTodos.map(theData =>
+                                        <tr key={theData._id}>
+                                            <td>{theData.album}</td>
+                                            <td style={{ cursor: 'pointer' }} onClick={() => window.open(`http://localhost:3001/Album/${theData.image}`, "_blank")}><img style={{ width: '150px', height: '150px', cursor: 'pointer' }} src={`http://localhost:3001/Album/${theData.image}`} alt='Image Not Found' /></td>
+                                            <td>
+                                                <ButtonGroup>
+                                                    <Button variant="success" onClick={() => EditUser(theData)}>Edit</Button>&nbsp;&nbsp;
+                                                    <Button variant="danger" onClick={() => onDeleteData(theData)}>Delete</Button>
+                                                </ButtonGroup>
+                                            </td>
+                                        </tr>
+                                    )}
+                                    <tr>
+                                        <td colSpan={3} className="text-center">
+                                            <Pagination
+                                                activePage={activePage}
+                                                itemsCountPerPage={todosPerPage}
+                                                totalItemsCount={props.albumstore.getData.length}
+                                                pageRangeDisplayed={3}
+                                                onChange={handlePageChange} />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </Table>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+const mapStateToProps = (store) => {
+    return {
+        albumstore: store.CreateAlbum
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        PostAlbum: (data) => dispatch(createAlbum(data)),
+        GetAlbum: () => dispatch(GetAlbum()),
+        UpdateAlbum: (data) => dispatch(UpdateAlbum(data)),
+        DeleteAlbum: (data) => dispatch(DeleteAlbum(data))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Album)
+
+
+---------------------------------------------------------------
+album router
+----------------------------
+const express=require('express')
+const Album=require('../model/album')
+
+const router=new express.Router()
+
+router.post('/albums',async(req,res)=>{
+    const file=req.files.file
+    try{
+        file.mv(`${__dirname}/../uploads/Album/${file.name}`,async err=>{
+            if(err){        
+                console.log(err)
+                res.status(500).send(err)
+            }
+            console.log('------insert-----'+file.name)
+            res.status(200).send({fileName:file.name,filePath:`service/${file.name}`})
+        })
+        const services = new Album(JSON.parse(req.body.data))
+        await services.save()
+    }catch(error){
+        res.status(400).send(error)
+    }
+})
+
+router.get('/albums',async(req,res)=>{
+    
+    //res.send("Read User")
+    try{
+        const albums=await Album.find()
+        res.status(200).send(albums)
+    }catch(error){
+        res.status(400).send(error)
+    }
+})
+
+router.put('/albums/:id', async (req,res)=>{
+       const update = Object.keys(req.body)
+    const allowedUpdates = ['album','image']
+    const isValidOperation = update.every((update) => allowedUpdates.includes(update))
+
+    console.log(req.body)
+    if(!isValidOperation){
+        return res.status(400).send({error: 'Invalid operation.'})
+    }
+    if(!req.params.id){
+        return res.status(400).send({error: 'Invalid operation.'})
+    }
+    console.log(req.params.id)
+    try {
+        const id=req.params.id
+        const albums = await Album.findById(id)
+        update.forEach((update)=> albums[update] = req.body[update])
+        await albums.save()
+        res.status(200).send(albums)
+    } catch (error) {
+        res.status(400).send(error)
+    }
+})
+
+router.delete('/albums/:id',async(req,res)=>{
+    try {
+        const id = req.params.id
+        const albums = await Album.findById(id)
+        await albums.delete()
+        res.status(200).send(albums)
+    } catch (error) {
+        res.status(400).send(error)
+    }
+})
+
+module.exports=router
+
+
+
+=========================================================
+album action 
+======================================================
+import axios from 'axios'
+import {CREATE_ALBUM_FAIL, CREATE_ALBUM_REQUEST, CREATE_ALBUM_SUCCESS, DELETE_ALBUM_FAIL, DELETE_ALBUM_REQUEST, DELETE_ALBUM_SUCCESS, GET_ALBUM_FAIL, GET_ALBUM_REQUEST, GET_ALBUM_SUCCESS, UPDATE_ALBUM_FAIL, UPDATE_ALBUM_REQUEST, UPDATE_ALBUM_SUCCESS} from '../constant/album.constant'
+
+//post Request
+export const createAlbum=(Data)=>{
+    const createDataRequest=()=>{
+        return{
+            type:CREATE_ALBUM_REQUEST
+        }
+    }
+    const createDataSuccess=(newData)=>{
+        return{
+            type:CREATE_ALBUM_SUCCESS,
+            payload:newData
+        }
+    }
+    const createDataFail=(error)=>{
+        return{
+            type:CREATE_ALBUM_FAIL,
+            error
+        }
+    }
+    return async(dispatch)=>{
+        dispatch(createDataRequest())
+        console.log(Data)
+        try{
+            if(Data !== null){
+                dispatch(createDataSuccess(Data))
+                dispatch(GetAlbum())
+            }else{
+                dispatch(createDataFail('Sorry We Failed to Submit Data!!! Try Again....'))
+            }
+        }catch(error){
+            console.log(error)
+            createDataFail('Sorry We Failed to Submit Data!!! Try Again...')
+        }
+    }
+} 
+
+//GET Request
+export const GetAlbum=()=>{   
+    const GetUserRequest=()=>{
+        return{
+            type:GET_ALBUM_REQUEST
+        }
+    }
+    const GetUserSuccess=(getData)=>{
+        return{
+            type:GET_ALBUM_SUCCESS,
+            payload:getData
+        }
+    }
+    const GetUserFail=(error)=>{
+        return{
+            type:GET_ALBUM_FAIL,
+            error
+        }
+    }
+    return async(dispatch)=>{
+        dispatch(GetUserRequest())
+        try{
+            const response=await axios.get(`${process.env.REACT_APP_SERVER_URL}albums`)
+            if(response.status===200){
+                dispatch(GetUserSuccess(response.data))
+            }else{
+                dispatch(GetUserFail('Sorry We Failed to Getting Data!!!'))
+            }
+        }catch(error){
+            console.log(error)
+            dispatch(GetUserFail('Sorry We Failed to Getting Data!!!'))
+        }
+    }
+}
+
+//DELETE Request
+export const DeleteAlbum=(Data)=>{
+    const userrequest=()=>{
+        return{
+            type:DELETE_ALBUM_REQUEST
+        }
+    }
+    const usersuccess=(Data)=>{
+        return{
+            type:DELETE_ALBUM_SUCCESS,
+            payload:Data
+        }
+    }
+    const userfail=(error)=>{
+        return{
+            type:DELETE_ALBUM_FAIL,
+            error
+        }
+    }
+    return async(dispatch)=>{
+        dispatch(userrequest())
+        try{
+            const response=await axios.delete(`${process.env.REACT_APP_SERVER_URL}albums/${Data._id}`)
+            console.log(response)
+
+            if(response.status===200){
+                dispatch(usersuccess(response.data))
+                dispatch(GetAlbum())
+            }else{
+                dispatch(userfail('Sorry We Failed to Delete Data!!! Try Again...'))
+            }
+        }catch(error){
+            console.log(error)
+            dispatch(userfail('Sorry We Failed to Delete Data!!! Try Again...'))
+        }
+    }
+}
+
+//UPDATE Request
+export const UpdateAlbum=(Data)=>{
+    const userRequest=()=>{
+        return{
+            type:UPDATE_ALBUM_REQUEST
+        }
+    }
+    const userSuccess=(Data)=>{
+        return{
+            type:UPDATE_ALBUM_SUCCESS,
+            payload:Data
+        }
+    }
+    const userFail=(error)=>{
+        return{
+            type:UPDATE_ALBUM_FAIL,
+            error
+        }
+    }
+    return async(dispatch)=>{
+        dispatch(userRequest())
+        try{
+            let _id=Data._id
+            delete Data._id
+            delete Data.updatedAt  
+            delete Data.createdAt
+            //console.log(Data)
+            const response=await axios.put(`${process.env.REACT_APP_SERVER_URL}albums/${_id}`,Data)
+            console.log(response)
+
+            if(response.status===200){
+                dispatch(userSuccess(response.data))
+                dispatch(GetAlbum())
+            }else{
+                dispatch(userFail('Sorry We Failed to Update Data!!! Try Again...'))
+            }
+        }catch(error){
+            console.log(error)
+            dispatch(userFail('Sorry We Failed to Update Data!!! Try Again...'))
+        }
+    }
+}

@@ -3,9 +3,8 @@ import React, { useState, useEffect } from 'react'
 import { Form, Button, Table, ButtonGroup, Alert } from 'react-bootstrap'
 import { createAbout, GetAbout, DeleteAbout, UpdateAbout } from '../../actions/About.action'
 import { connect } from 'react-redux'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
+import Pagination from "react-js-pagination"
+ 
 function About(props) {
     const [Submition, SetSubmition] = useState({
         about: null,
@@ -151,7 +150,19 @@ function About(props) {
     const HandleReset=()=>{
         setdata(initialdata)
     }
+   
+    //pagination
+    const [activePage, setCurrentPage] = useState(1)
+    const todosPerPage = 10
+    // Logic for displaying current  page
+    const indexOfLastTodo = activePage * todosPerPage;
+    const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
+    const currentTodos = props.createAbout.getData.slice(indexOfFirstTodo, indexOfLastTodo);
 
+    const handlePageChange = (pageNumber) => {
+        // console.log(`active page is ${pageNumber}`);
+        setCurrentPage(pageNumber)
+    }
     return (
         <>
             <div className="position-relative" style={{marginTop:'60px'}} >
@@ -202,7 +213,7 @@ function About(props) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {props.createAbout.getData.map(theData =>
+                                        {currentTodos.map(theData =>
                                             <tr key={theData._id}>
                                                 <td>{theData.about}</td>
                                                 <td>{theData.mission}</td>
@@ -215,6 +226,16 @@ function About(props) {
                                                 </td>
                                             </tr>
                                         )}
+                                        <tr>
+                                        <td colSpan={4} className="text-center">
+                                            <Pagination
+                                                activePage={activePage}
+                                                itemsCountPerPage={todosPerPage}
+                                                totalItemsCount={props.createAbout.getData.length}
+                                                pageRangeDisplayed={3}
+                                                onChange={handlePageChange} />
+                                        </td>
+                                    </tr>
                                     </tbody>
                                 </Table>
                             }

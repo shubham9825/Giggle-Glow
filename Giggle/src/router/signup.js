@@ -91,7 +91,7 @@ router.post('/forgot', async (req, res) => {
             secure: true, // true for 465, false for other ports
             auth: {
                 user: "shubhamsheliya9824@gmail.com",
-                pass: "Shubham@9090",
+                pass: "Shubham@1199",
             },
         });
 

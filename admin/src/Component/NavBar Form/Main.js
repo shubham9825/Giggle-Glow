@@ -3,8 +3,7 @@ import { Button, Card, Container, Row, Col } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
 import admin from '../images/admin.jpeg'
 import parent from '../images/parent.jpeg'
-import logo from '../images/logo1.jpeg'
-
+ 
 function Home() {
     const history = useHistory();
     const AdminSubmit = () => {
@@ -19,10 +18,12 @@ function Home() {
     return (
         <>
             <br />
-            <div className="child-care logo" align="center">
-                <img src={logo} width="500" height="250" />
+            <div className='navbar'>
+                <div className="align-self-center ml-auto header-col-right">
+                    <a href='/' className="btn-custom" style={{ textDecoration: 'none', backgroundColor: '#9ACD32', borderRadius: '9px', padding: '10px' }}><i className="fa fa-home" /> Go To Home</a>
+                </div>
             </div>
-            <Container>
+            <Container style={{marginTop:'190px'}}>
                 <br />
                 <Row>
                     <Col md='6'>
@@ -41,7 +42,7 @@ function Home() {
                         <br /><br />
                     </Col>
 
-                    <Col  md='6'>
+                    <Col md='6'>
                         <Card border="primary" bg="info" text="dark">
                             <Card.Header align="center"><h3>PARENT'S</h3></Card.Header>
 

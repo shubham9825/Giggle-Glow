@@ -106,6 +106,12 @@ export function Plogin(props) {
     }, 5000)
   }
 
+  //  Hide and Show Password
+  const [isPasswordShown, setisPasswordShown] = useState(false)
+  const togglePasswordVisiblity = () => {
+    setisPasswordShown(!isPasswordShown);
+  }
+
   return (
     <div>
       {show && <Alert className='pb-0 position-absolute w-100' style={{ "top": "0", "left": "0px" }} variant="danger" onClose={() => setShow(false)} dismissible>
@@ -125,7 +131,13 @@ export function Plogin(props) {
 
             <div className="form-group">
               <label>Password</label>
-              <input type="password" onChange={handleChange} className="form-control" name='password' placeholder="Enter password" />
+              <div className='wrap-input100'>
+                <input type={isPasswordShown ? "text" : "password"} onChange={handleChange} className="form-control" name='password' placeholder="Enter password" />
+                <i
+                  className="fa fa-eye password-icon"
+                  onClick={togglePasswordVisiblity}
+                />
+              </div>
               <div style={{ color: '#f50000' }}>{plogin.errors.password}</div>
             </div>
 
@@ -133,6 +145,9 @@ export function Plogin(props) {
 
             <p className="forgot-password text-right">
               Forgot <Link to='/pforgot'>password?</Link>
+            </p>
+            <p className="forgot-password text-right">
+              Back To <Link to='/'>Home ?</Link>
             </p>
           </Form>
         </div>

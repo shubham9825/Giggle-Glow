@@ -1,9 +1,9 @@
 /* eslint-disable */
-
 import React, { useEffect, useState } from 'react'
 import { Alert, Button, Table } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { DeleteSignup, GetSignup } from '../../actions/Signup.action'
+import Pagination from "react-js-pagination"
 
 function SignupRecord(props) {
     //get request
@@ -13,7 +13,7 @@ function SignupRecord(props) {
 
     //delete Request
     const onDeleteData = (theRecord) => {
-        if(confirm('Are you sure you want to Delete Record')){
+        if (confirm('Are you sure you want to Delete Record')) {
             props.deleteRecord(theRecord)
             setShow(true)
             MessageTime()
@@ -29,13 +29,26 @@ function SignupRecord(props) {
             setShow(false)
         }, 4000)
     }
+
+    //pagination
+    const [activePage, setCurrentPage] = useState(1)
+    const todosPerPage = 10
+    // Logic for displaying current  page
+    const indexOfLastTodo = activePage * todosPerPage;
+    const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
+    const currentTodos = props.createSignup.getData.slice(indexOfFirstTodo, indexOfLastTodo);
+
+    const handlePageChange = (pageNumber) => {
+        // console.log(`active page is ${pageNumber}`);
+        setCurrentPage(pageNumber)
+    }
     return (
         <>
-            <div className="position-relative" style={{marginTop:'60px'}}>
+            <div className="position-relative" style={{ marginTop: '60px' }}>
                 {show && <Alert className='pb-0 position-absolute w-100' style={{ "top": "0", "left": "0px" }} variant="danger" onClose={() => setShow(false)} dismissible>
                     <p>{props.createSignup.msg}{props.createSignup.error}</p>
                 </Alert>
-                } <br/>
+                } <br />
 
                 {/* Get Table Data */} <br /><br />
                 <div className='container card-header'>
@@ -53,7 +66,7 @@ function SignupRecord(props) {
                                         </tr>
                                     </thead>
                                     <tbody >
-                                        {props.createSignup.getData.map(theData =>
+                                        {currentTodos.map(theData =>
                                             <tr key={theData._id}>
                                                 <td>{theData.fname}</td>
                                                 <td>{theData.lname}</td>
@@ -61,6 +74,16 @@ function SignupRecord(props) {
                                                 <td><Button variant='danger' onClick={() => onDeleteData(theData)}>Delete</Button></td>
                                             </tr>
                                         )}
+                                        <tr>
+                                            <td colSpan={4} className="text-center">
+                                                <Pagination
+                                                    activePage={activePage}
+                                                    itemsCountPerPage={todosPerPage}
+                                                    totalItemsCount={props.createSignup.getData.length}
+                                                    pageRangeDisplayed={3}
+                                                    onChange={handlePageChange} />
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </Table>
                             }

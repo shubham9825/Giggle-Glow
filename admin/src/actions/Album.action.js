@@ -22,12 +22,10 @@ export const createAlbum=(Data)=>{
     }
     return async(dispatch)=>{
         dispatch(createDataRequest())
+        console.log(Data)
         try{
-            const response=await axios.post(`${process.env.REACT_APP_SERVER_URL}albums`,Data)
-            console.log(response)
-
-            if(response.status===201){
-                dispatch(createDataSuccess(response.data))
+            if(Data !== null){
+                dispatch(createDataSuccess(Data))
                 dispatch(GetAlbum())
             }else{
                 dispatch(createDataFail('Sorry We Failed to Submit Data!!! Try Again....'))
@@ -133,17 +131,11 @@ export const UpdateAlbum=(Data)=>{
     }
     return async(dispatch)=>{
         dispatch(userRequest())
+        console.log(Data)
         try{
-            let _id=Data._id
-            delete Data._id
-            delete Data.updatedAt  
-            delete Data.createdAt
-            //console.log(Data)
-            const response=await axios.put(`${process.env.REACT_APP_SERVER_URL}albums/${_id}`,Data)
-            console.log(response)
-
-            if(response.status===200){
-                dispatch(userSuccess(response.data))
+          
+            if(Data!==null){
+                dispatch(userSuccess(Data))
                 dispatch(GetAlbum())
             }else{
                 dispatch(userFail('Sorry We Failed to Update Data!!! Try Again...'))

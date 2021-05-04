@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Form, Button, Col, Table, ButtonGroup, Alert } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { createChild, DelRegistartion, getChild, UpdateRegistraton } from '../../actions/child.action'
+import Pagination from "react-js-pagination"
 
 function ChildRegister(props) {
 
@@ -335,6 +336,19 @@ function ChildRegister(props) {
     const HandleReset = () => {
         setdata(initialState)
     }
+    
+    //pagination
+    const [activePage, setCurrentPage] = useState(1)
+    const todosPerPage = 10
+    // Logic for displaying current  page
+    const indexOfLastTodo = activePage * todosPerPage;
+    const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
+    const currentTodos = props.createChild.getData.slice(indexOfFirstTodo, indexOfLastTodo);
+
+    const handlePageChange = (pageNumber) => {
+        // console.log(`active page is ${pageNumber}`);
+        setCurrentPage(pageNumber)
+    }
     return (
         <div className="position-relative" style={{marginTop:'60px'}}>
             {show && <Alert className='pb-0 position-absolute w-100' style={{ "top": "0", "left": "0" }} variant="danger" onClose={() => setShow(false)} dismissible>
@@ -483,7 +497,7 @@ function ChildRegister(props) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {props.createChild.getData.map(theData =>
+                                    {currentTodos.map(theData =>
                                         <tr key={theData._id}>
                                             <td>{theData.fname}</td>
                                             <td>{theData.lname}</td>
@@ -507,6 +521,16 @@ function ChildRegister(props) {
                                             </td>
                                         </tr>
                                     )}
+                                    <tr>
+                                        <td colSpan={15} className="text-center">
+                                            <Pagination
+                                                activePage={activePage}
+                                                itemsCountPerPage={todosPerPage}
+                                                totalItemsCount={props.createChild.getData.length}
+                                                pageRangeDisplayed={3}
+                                                onChange={handlePageChange} />
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </Table>
                         }

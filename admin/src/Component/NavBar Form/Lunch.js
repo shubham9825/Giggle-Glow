@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Form, Button, Table, ButtonGroup, Alert } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { CreateLunch, DeleteLunch, GetLunch, UpdateLunch } from '../../actions/Lunch.action'
+import Pagination from "react-js-pagination"
 
 function Lunch(props) {
     const [lunch, setlunch] = useState({
@@ -19,7 +20,7 @@ function Lunch(props) {
 
     //delete Request
     const onDeleteData = (theLunch) => {
-        if(confirm('Are you sure you want to Delete Record')){
+        if (confirm('Are you sure you want to Delete Record')) {
             props.deleteLunch(theLunch)
             setShow(true)
             MessageTime()
@@ -101,18 +102,31 @@ function Lunch(props) {
     const MessageTime = () => {
         setTimeout(() => {
             setShow(false)
-        }, 4000)
+        }, 5000)
     }
     //reset button
     const HandleReset = () => {
         setdata(initialdata)
     }
+    
+    //pagination
+    const [activePage, setCurrentPage] = useState(1)
+    const todosPerPage = 10
+    // Logic for displaying current  page
+    const indexOfLastTodo = activePage * todosPerPage;
+    const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
+    const currentTodos = props.CreateLunch.getData.slice(indexOfFirstTodo, indexOfLastTodo);
+
+    const handlePageChange = (pageNumber) => {
+        // console.log(`active page is ${pageNumber}`);
+        setCurrentPage(pageNumber)
+    }
     return (
-        <div className="position-relative" style={{marginTop:'60px'}}>
-             {show && <Alert className='pb-0 position-absolute w-100' style={{ "top": "0", "left": "0px" }} variant="danger" onClose={() => setShow(false)} dismissible>
-                     <p>{props.CreateLunch.msg}{props.CreateLunch.error}</p>
-                      </Alert>
-            }<br/>
+        <div className="position-relative" style={{ marginTop: '60px' }}>
+            {show && <Alert className='pb-0 position-absolute w-100' style={{ "top": "0", "left": "0px" }} variant="danger" onClose={() => setShow(false)} dismissible>
+                <p>{props.CreateLunch.msg}{props.CreateLunch.error}</p>
+            </Alert>
+            }<br />
 
             <Form className="container mt-5" onSubmit={HandleSubmit} >
                 <fieldset>
@@ -129,7 +143,7 @@ function Lunch(props) {
                 </fieldset>
             </Form><br /><br />
 
-            {/* Get Table Data */} 
+            {/* Get Table Data */}
             <div className='container card-header'>
                 <h3 className="fa fa-table" style={{ fontSize: "20px" }}> Lunch Details</h3><br />
                 <div className="card-body">
@@ -137,16 +151,16 @@ function Lunch(props) {
                         {props.CreateLunch.getData.length > 0 &&
                             <Table striped hover responsive className='table table-bordered'>
                                 <thead>
-                                    <tr>    
+                                    <tr>
                                         <th>Food</th>
                                         <th>Edit | Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {props.CreateLunch.getData.map(theData =>
+                                    {currentTodos.map(theData =>
                                         <tr key={theData._id}>
-                                            <td style={{width:'80%'}}>{theData.food}</td>
-                                            <td style={{width:'20%'}}>
+                                            <td style={{ width: '80%' }}>{theData.food}</td>
+                                            <td style={{ width: '20%' }}>
                                                 <ButtonGroup>
                                                     <Button variant="success" onClick={() => EditUser(theData)}>Edit</Button>&nbsp;&nbsp;
                                                    <Button variant="danger" onClick={() => onDeleteData(theData)}>Delete</Button>
@@ -154,6 +168,16 @@ function Lunch(props) {
                                             </td>
                                         </tr>
                                     )}
+                                    <tr>
+                                        <td colSpan={2} className="text-center">
+                                            <Pagination
+                                                activePage={activePage}
+                                                itemsCountPerPage={todosPerPage}
+                                                totalItemsCount={props.CreateLunch.getData.length}
+                                                pageRangeDisplayed={3}
+                                                onChange={handlePageChange} />
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </Table>
                         }

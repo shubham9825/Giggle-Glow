@@ -4,21 +4,27 @@ import React, { useEffect, useState } from 'react'
 import { Form, Button, Table, ButtonGroup, Alert } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { CreateService, DelService, GetService, UpdateService } from '../../actions/Service.action'
+import Pagination from "react-js-pagination"
 
 function Service(props) {
     //validation
     const [services, setservices] = useState({
         service_name: null,
         short_discription: null,
-        tagline: null,
-        long_question: null,
         errors: {
             service_name: ' ',
-            short_discription: ' ',
-            tagline: ' ',
-            long_question: ' '
+            short_discription: ' '
         }
     })
+
+    //api call
+    const initialdata = {
+        _id: 0,
+        service_name: '',
+        short_discription: '',
+        image: ''
+    }
+    const [data, setdata] = useState(initialdata)
 
     //getdata
     useEffect(() => {
@@ -31,28 +37,14 @@ function Service(props) {
         setdisplay(true)
         services.errors = {}
     }
-
     //deletedata
     const deleteData = (theService) => {
-        if(confirm('Are you sure you want to Delete Record')){
+        if (confirm('Are you sure you want to Delete Record')) {
             props.delServiceData(theService)
             setShow(true)
             MessageTime()
         }
     }
-
-    //api call
-    const initialdata = {
-        _id: 0,
-        service_name: '',
-        short_discription: '',
-        tagline: '',
-        long_question: '',
-        image: ''
-    }
-
-    //api call
-    const [data, setdata] = useState(initialdata)
 
     const HandleChange = (e) => {
         let name = e.target.name
@@ -86,36 +78,6 @@ function Service(props) {
                 }
                 errors.short_discription = ''
                 break
-            case 'tagline':
-                if (value.trim() == '') {
-                    errors.tagline = '*Required'
-                    break
-                }
-                if (value.length < 3) {
-                    errors.tagline = 'Tagline is Too Short!'
-                    break
-                }
-                if (!(/^[a-z A-Z]*$/g).test(value)) {
-                    errors.tagline = 'Enter Alphabets only!'
-                    break
-                }
-                errors.tagline = ''
-                break
-            case 'long_question':
-                if (value.length < 5) {
-                    errors.long_question = 'Tagline is Too Short!'
-                    break
-                }
-                if (!(/^[a-zA-Z0-9]*$/g).test(value)) {
-                    errors.long_question = 'Enter Alphabets only!'
-                    break
-                }
-                if (value.trim() == '') {
-                    errors.long_question = '*Required'
-                    break
-                }
-                errors.long_question = ''
-                break
         }
 
         setservices({
@@ -130,7 +92,6 @@ function Service(props) {
         })
     }
 
-
     const validateForm = (errors) => {
         let valid = true;
         Object.values(errors).forEach(
@@ -140,9 +101,9 @@ function Service(props) {
         return valid
     }
 
-    //display Previous updated Image
+    //display Previous updated Image name
     const [display, setdisplay] = useState(false)
-    //for image(use for store image object)
+    //for image(use for store image in object)
     const [dummy, setdummy] = useState('')
 
     const HandleImage = (e) => {
@@ -160,46 +121,75 @@ function Service(props) {
             if (data._id === 0) {
                 const formdata = new FormData()
                 formdata.append('file', dummy)
-
                 // Image upload condition
                 if (dummy == '') {
                     alert('please Upload Image')
                 } else {
-                    if (!dummy.name.match(/\.(jpg|jpeg|png|gif)$/)) {
+                    if (!dummy.name.match(/\.(jpg|jpeg|png|gif|JPG|PNG|JPEG|GIF)$/)) {
                         alert('Only Jpg , Jpeg , Png , Gif File Allowed!!!')
                     } else {
+                        console.log(data)
+                        console.log(dummy)
                         delete data._id
                         const dummydata = JSON.stringify(data)
                         formdata.append('data', dummydata)
-
+                        console.log(dummydata)
+                        console.log('insert --------------------------------')
                         const response = await axios.post('http://localhost:3001/services', formdata, {
                             headers: {
                                 'Content-Type': 'multipart/form-data'
                             }
                         })
                         props.createNewService(data)
-                        props.GetAllService()
                         setShow(true)
                         MessageTime()
                         e.target.reset()
                         setdata(initialdata)
-                        setdisplay(false)
-                    }
+                     }
                 }
             } else {
-                let tempUser = {}
-                tempUser._id = data._id
-                tempUser.service_name = data.service_name
-                tempUser.short_discription = data.short_discription
-                tempUser.tagline = data.tagline
-                tempUser.long_question = data.long_question
-                tempUser.image = data.image
-                props.updateSerivce(tempUser)
-                setShow(true)
-                MessageTime()
-                e.target.reset()
-                setdata(initialdata)
-                setdisplay(false)
+                const formdata = new FormData()
+                formdata.append('file', dummy)
+                if (dummy == '') {
+                    console.log(data)
+                    let id = data._id
+                    delete data._id
+                    delete data.createdAt
+                    delete data.updatedAt
+                    console.log(data)
+                    console.log(id)
+                    const response = await axios.put(`http://localhost:3001/servicedata/${id}`, data)
+
+                    props.updateSerivce(data)
+                    setShow(true)
+                    MessageTime()
+                    e.target.reset()
+                    setdata(initialdata)
+                 } else {
+                    if (!dummy.name.match(/\.(jpg|jpeg|png|gif|JPG|PNG|JPEG|GIF)$/)) {
+                        alert('Only Jpg , Jpeg , Png , Gif File Allowed!!!')
+                    } else {
+                        let id = data._id
+                        delete data._id
+                        delete data.createdAt
+                        delete data.updatedAt
+                        console.log(data)
+                        const dummydata = JSON.stringify(data)
+                        formdata.append('data', dummydata)
+                        console.log(dummydata)
+
+                        const response = await axios.put(`http://localhost:3001/services/${id}`, formdata, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
+                        })
+                        props.updateSerivce(data)
+                        setShow(true)
+                        MessageTime()
+                        e.target.reset()
+                        setdata(initialdata)
+                     }
+                }
             }
         } else {
             alert('Please Fill Proper Form!!!')
@@ -219,11 +209,23 @@ function Service(props) {
     //reset button
     const HandleReset = () => {
         setdata(initialdata)
-        setdisplay(false)
+     }
+
+    //pagination
+    const [activePage, setCurrentPage] = useState(1)
+    const todosPerPage = 10
+    // Logic for displaying current  page
+    const indexOfLastTodo = activePage * todosPerPage;
+    const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
+    const currentTodos = props.createService.getData.slice(indexOfFirstTodo, indexOfLastTodo);
+
+    const handlePageChange = (pageNumber) => {
+        // console.log(`active page is ${pageNumber}`);
+        setCurrentPage(pageNumber)
     }
     return (
         <>
-            <div className="position-relative" style={{marginTop:'60px'}}>
+            <div className="position-relative" style={{ marginTop: '60px' }}>
                 {show && <Alert className='pb-0 position-absolute w-100' style={{ "top": "0", "left": "0px" }} variant="danger" onClose={() => setShow(false)} dismissible>
                     <p>{props.createService.msg}{props.createService.error}</p>
                 </Alert>
@@ -245,20 +247,10 @@ function Service(props) {
                             <div style={{ color: '#f50000' }}>{services.errors.short_discription}</div>
                         </Form.Group>
                         <Form.Group>
-                            <Form.Label>TagLine</Form.Label>
-                            <Form.Control type="text" name="tagline" onChange={HandleChange} placeholder="Enter TagLine" value={data.tagline} />
-                            <div style={{ color: '#f50000' }}>{services.errors.tagline}</div>
-                        </Form.Group>
-                        <Form.Group>
-                            <Form.Label>Long Question</Form.Label>
-                            <Form.Control as="textarea" name="long_question" onChange={HandleChange} rows={2} placeholder="Enter Your Question" value={data.long_question} />
-                            <div style={{ color: '#f50000' }}>{services.errors.long_question}</div>
-                        </Form.Group>
-                        <Form.Group>
                             <Form.File name="UploadImg" onChange={HandleImage} alt="Image Not Uploaded" label="Enter Image"></Form.File><br />
-                            {display && <img style={{ width: '150px', height: '150px', cursor: 'pointer' }} onClick={() => window.open(`http://localhost:3001/service/${data.image}`, "_blank")} src={`http://localhost:3001/service/${data.image}`} alt='Image Not Found' />}
+                            {display && <p>{data.image}</p>}
                         </Form.Group>
-                        <Button   type="submit" >Submit</Button>&nbsp;&nbsp;
+                        <Button type="submit" >Submit</Button>&nbsp;&nbsp;
                         <Button variant="primary" type="reset" onClick={HandleReset}>Reset</Button>
                     </fieldset>
                 </Form><br /><br />
@@ -274,19 +266,15 @@ function Service(props) {
                                         <tr>
                                             <th>Service Name</th>
                                             <th>Service Discription</th>
-                                            <th>Service Tagline</th>
-                                            <th>Service Question</th>
                                             <th>Image</th>
                                             <th>Edit | Delete </th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {props.createService.getData.map(theData =>
-                                            <tr key={theData._id}>
+                                        {currentTodos.map(theData =>
+                                            <tr key={theData._id} >
                                                 <td>{theData.service_name}</td>
                                                 <td>{theData.short_discription}</td>
-                                                <td>{theData.tagline}</td>
-                                                <td>{theData.long_question}</td>
                                                 {/* When Click On Image Display Large Image */}
                                                 <td style={{ cursor: 'pointer' }} onClick={() => window.open(`http://localhost:3001/service/${theData.image}`, "_blank")}><img style={{ width: '150px', height: '150px', cursor: 'pointer' }} src={`http://localhost:3001/service/${theData.image}`} alt='Image Not Found' /></td>
                                                 <td>
@@ -297,6 +285,16 @@ function Service(props) {
                                                 </td>
                                             </tr>
                                         )}
+                                        <tr>
+                                            <td colSpan={6} className="text-center">
+                                                <Pagination
+                                                    activePage={activePage}
+                                                    itemsCountPerPage={todosPerPage}
+                                                    totalItemsCount={props.createService.getData.length}
+                                                    pageRangeDisplayed={3}
+                                                    onChange={handlePageChange} />
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </Table>
                             }

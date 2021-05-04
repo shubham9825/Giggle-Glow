@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { CreateGallery, DelGallary, GetGallery } from '../../actions/Gallery.action'
 import { GetAlbum } from '../../actions/Album.action'
 import Progress from './Progress'
+import Pagination from "react-js-pagination"
 
 function Gallery(props) {
 
@@ -15,11 +16,6 @@ function Gallery(props) {
     const [display, setdisplay] = useState(false)
     const [uploadPercentage, setUploadPercentage] = useState(0);
     const [testdata,settestdata]=useState('')
-
-    // // get request
-    // useEffect(() => {
-    //     props.getimage()
-    // }, [])
 
     //get request 
     useEffect(() => {
@@ -42,7 +38,7 @@ function Gallery(props) {
         if (data.name == null) {
             alert('Please Fill Proper Form!!!')
         } else {
-            if (!data.name.match(/\.(jpg|jpeg|png|gif)$/)) {
+            if (!data.name.match(/\.(jpg|jpeg|png|gif|JPG|JPEG|PNG|GIF)$/)) {
                 alert('Only Jpg , Jpeg , Png , Gif File Allowed!!!')
                 e.target.reset() //reset image and Clear Message
             } else {
@@ -95,7 +91,6 @@ function Gallery(props) {
 
     }
 
-
     const handleChange = (e) => {
         setdata(e.target.files[0])
     }
@@ -116,6 +111,20 @@ function Gallery(props) {
         setowner(test)
         props.getimage(test)
     }
+    
+    //pagination
+    const [activePage, setCurrentPage] = useState(1)
+    const todosPerPage = 10
+    // Logic for displaying current  page
+    const indexOfLastTodo = activePage * todosPerPage;
+    const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
+    const currentTodos = props.creategallery.getData.slice(indexOfFirstTodo, indexOfLastTodo);
+
+    const handlePageChange = (pageNumber) => {
+        // console.log(`active page is ${pageNumber}`);
+        setCurrentPage(pageNumber)
+    }
+
     return (
         <div className="position-relative" style={{marginTop:'60px'}}>
             {show && <Alert className='pb-0 position-absolute w-100' style={{ "top": "0", "left": "0px" }} variant="danger" onClose={() => setshow(false)} dismissible>
@@ -135,15 +144,11 @@ function Gallery(props) {
                                 <select onChange={Handlekey}>
                                     <option hidden>Select Name</option>
                                     {props.albumstore.getData.map(theData =>
-                                        <>
-                                            <option value={theData._id}>{theData.album}</option>
-                                            {console.log(theData._id)}
-                                        </>
+                                            <option key={theData._id} value={theData._id}>{theData.album}</option>
                                     )}
-                                    <br />
                                 </select>
                             </div>
-                        }
+                        }  
                     </Form.Group>
                     <Form.Group>
                         <Form.File name='UploadImg' onChange={handleChange} label="Enter Image"></Form.File>
@@ -161,14 +166,13 @@ function Gallery(props) {
                 </fieldset>
             </Form><br /><br />
 
-                    {console.log(props.creategallery.getData)}
             {/* Display Image */}
             <div className='container card-header'>
                 <h3 className="fa fa-table" style={{ fontSize: "20px" }}> Gallery Details</h3><br />
                 <div className="card-body">
                     <div className="table-responsive">
                         {props.creategallery.getData.length > 0 &&
-                            <Table striped hover className='container'>
+                            <Table striped responsive hover className='table table-bordered'>
                                 <thead>
                                     <tr>
                                         <th>Response</th>
@@ -177,8 +181,7 @@ function Gallery(props) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {props.creategallery.getData.map(theData =>
-
+                                    {currentTodos.map(theData =>
                                         <tr key={theData._id}>
                                             <td style={{ width: "30%" }}>{theData.fileName}</td>
                                             <td>
@@ -191,6 +194,16 @@ function Gallery(props) {
                                             </td>
                                         </tr>
                                     )}
+                                    <tr>
+                                        <td colSpan={3} className="text-center">
+                                            <Pagination
+                                                activePage={activePage}
+                                                itemsCountPerPage={todosPerPage}
+                                                totalItemsCount={props.creategallery.getData.length}
+                                                pageRangeDisplayed={3}
+                                                onChange={handlePageChange} />
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </Table>
                         }

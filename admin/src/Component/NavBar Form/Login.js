@@ -5,7 +5,7 @@ import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import { CreateLogin } from '../../actions/Login.action';
 import { connect } from 'react-redux'
- 
+
 export function Login(props) {
   let history = useHistory()
   const [login, setlogin] = useState({
@@ -83,7 +83,7 @@ export function Login(props) {
       (val) => val.length > 0 && (valid = false)
     )
     return valid;
-  } 
+  }
 
   const HandleSubmit = (e) => {
     e.preventDefault()
@@ -93,23 +93,29 @@ export function Login(props) {
       MessageTime()
       setdata(initialdata)
     } else {
-      alert("Please Fill Proper Form")       
+      alert("Please Fill Proper Form")
     }
   }
 
   // Alert Message timing 
-   const MessageTime=()=>{
-           setTimeout(() => {
-               setShow(false)
-             }, 5000)
-   }
+  const MessageTime = () => {
+    setTimeout(() => {
+      setShow(false)
+    }, 5000)
+  }
+
+  //  Hide and Show Password
+  const [isPasswordShown, setisPasswordShown] = useState(false)
+  const togglePasswordVisiblity = () => {
+    setisPasswordShown(!isPasswordShown);
+  }
   return (
     <>
-       {show && <Alert className='pb-0 position-absolute w-100'  variant="danger" style={{ "top": "0", "left": "0" }} onClose={() => setShow(false)} dismissible>
-                    <p>{props.createLogin.error}</p>
-             </Alert>  }
-          {console.log(show)}
-    
+      {show && <Alert className='pb-0 position-absolute w-100' variant="danger" style={{ "top": "0", "left": "0" }} onClose={() => setShow(false)} dismissible>
+        <p>{props.createLogin.error}</p>
+      </Alert>}
+      {console.log(show)}
+
       <div className="auth-wrapper" >
         <div className="auth-inner" >
           <Form onSubmit={HandleSubmit}>
@@ -121,7 +127,13 @@ export function Login(props) {
             </div>
             <div className="form-group">
               <label>Password</label>
-              <input type="password" onChange={handleChange} className="form-control" name='password' placeholder="Enter password" />
+              <div className='wrap-input100'>
+                <input type={isPasswordShown ? "text" : "password"} onChange={handleChange} className="form-control" name='password' placeholder="Enter password" />
+                <i
+                  className="fa fa-eye password-icon"
+                  onClick={togglePasswordVisiblity}
+                />
+              </div>
               <div style={{ color: '#f50000' }}>{login.errors.password}</div>
             </div>
 
@@ -132,6 +144,9 @@ export function Login(props) {
             </p>
             <p className="forgot-password text-right">
               New User? <Link to='/Signup'>Create an Account</Link>
+            </p>
+            <p className="forgot-password text-right">
+              Back To <Link to='/'>Home ?</Link>
             </p>
           </Form>
         </div>

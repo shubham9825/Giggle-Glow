@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { Form, Button, Table, ButtonGroup, Alert } from 'react-bootstrap'
 import { connect } from 'react-redux';
 import { createContact, DeleteContact, GetContact, UpdateContact } from '../../actions/Contact.action'
+import Pagination from "react-js-pagination"
 
 function Contact(props) {
     //get request 
@@ -140,9 +141,22 @@ function Contact(props) {
             setShow(false)
         }, 4000)
     }
+    
+    //pagination
+    const [activePage, setCurrentPage] = useState(1)
+    const todosPerPage = 10
+    // Logic for displaying current  page
+    const indexOfLastTodo = activePage * todosPerPage;
+    const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
+    const currentTodos = props.createContact.getData.slice(indexOfFirstTodo, indexOfLastTodo);
+
+    const handlePageChange = (pageNumber) => {
+        // console.log(`active page is ${pageNumber}`);
+        setCurrentPage(pageNumber)
+    }
     return (
-        <div className="position-relative">
-            {show && <Alert className='pb-0 position-absolute w-100' style={{ "top": "0", "left": "5px" }} variant="danger" onClose={() => setShow(false)} dismissible>
+        <div className="position-relative" style={{marginTop:'60px'}}>
+            {show && <Alert className='pb-0 position-absolute w-100' style={{ "top": "0", "left": "0" }} variant="danger" onClose={() => setShow(false)} dismissible>
                 <p>{props.createContact.msg}{props.createContact.error}</p>
             </Alert>
             }<br />
@@ -153,7 +167,7 @@ function Contact(props) {
                     <br />
                     <Form.Group>
                         <Form.Label>Address</Form.Label>
-                        <Form.Control value={data.address} as="textarea" name="address" placeholder="Enter your daycare Address." rows={2} onChange={HandleChange} />
+                        <Form.Control value={data.address} autoFocus={true} as="textarea" name="address" placeholder="Enter your daycare Address." rows={2} onChange={HandleChange} />
                         <div style={{ color: '#f50000' }} >{Submit.errors.address}</div>
                     </Form.Group>
                     <Form.Group>
@@ -176,7 +190,7 @@ function Contact(props) {
                 <div className="card-body">
                     <div className="table-responsive">
                         {props.createContact.getData.length > 0 &&
-                            <Table striped hover className='container'>
+                            <Table striped hover responsive className='table table-bordered'>
                                 <thead>
                                     <tr>
                                         <th>Address</th>
@@ -186,7 +200,7 @@ function Contact(props) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {props.createContact.getData.map(theData =>
+                                    {currentTodos.map(theData =>
                                         <tr key={theData._id}>
                                             <td>{theData.address}</td>
                                             <td>{theData.phone}</td>
@@ -199,6 +213,16 @@ function Contact(props) {
                                             </td>
                                         </tr>
                                     )}
+                                    <tr>
+                                        <td colSpan={4} className="text-center">
+                                            <Pagination
+                                                activePage={activePage}
+                                                itemsCountPerPage={todosPerPage}
+                                                totalItemsCount={props.createContact.getData.length}
+                                                pageRangeDisplayed={3}
+                                                onChange={handlePageChange} />
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </Table>
                         }

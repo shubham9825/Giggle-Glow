@@ -7,7 +7,7 @@ const initialstate={
     getData:[],   //get
     theAlbum:null, //delete 
     AlbumData:null, //update
-    // msg:'' //message
+    msg:'' //message
 }
 
 export const AlbumReducer=(state=initialstate,action)=>{

@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Table } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { GetLunch } from '../../actions/Lunch.action'
+import Pagination from "react-js-pagination"
 
 function LunchRecord(props) {
 
@@ -10,10 +11,22 @@ function LunchRecord(props) {
         props.getLunch()
     }, [])
 
-    return (    
+    //pagination
+    const [activePage, setCurrentPage] = useState(1)
+    const todosPerPage = 10
+    // Logic for displaying current  page
+    const indexOfLastTodo = activePage * todosPerPage;
+    const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
+    const currentTodos = props.CreateLunch.getData.slice(indexOfFirstTodo, indexOfLastTodo);
+
+    const handlePageChange = (pageNumber) => {
+        // console.log(`active page is ${pageNumber}`);
+        setCurrentPage(pageNumber)
+    }
+    return (
         <>
             {/* Get Table Data */}<br /><br />
-            <div className='container card-header' style={{marginTop:'60px'}}>
+            <div className='container card-header' style={{ marginTop: '60px' }}>
                 <h3 className="fa fa-table" style={{ fontSize: "20px" }}> Lunch Details</h3><br />
                 <div className="card-body">
                     <div className="table-responsive">
@@ -25,11 +38,21 @@ function LunchRecord(props) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {props.CreateLunch.getData.map(theData =>
+                                    {currentTodos.map(theData =>
                                         <tr key={theData._id}>
                                             <td>{theData.food}</td>
                                         </tr>
                                     )}
+                                    <tr>
+                                        <td className="text-center">
+                                            <Pagination
+                                                activePage={activePage}
+                                                itemsCountPerPage={todosPerPage}
+                                                totalItemsCount={props.CreateLunch.getData.length}
+                                                pageRangeDisplayed={3}
+                                                onChange={handlePageChange} />
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </Table>
                         }

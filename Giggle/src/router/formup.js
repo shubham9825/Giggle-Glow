@@ -5,20 +5,14 @@ const Inquire = require('../model/inqurie')
 const router = new express.Router
 
 router.get('/formups/:owner',async (req,res)=>{
-
-    //res.send("Read User")
     const ownerId=req.params.owner
-    console.log(ownerId)
     try{
         const formups = await FormUp.find({owner:ownerId})
-        console.log(formups)
          // Get Owner Details from task 
          const theFormup=await FormUp.findOne({ owner : ownerId })
          await theFormup.populate({
                      path:"owner"
-                 }).execPopulate()
-         console.log(theFormup)
- 
+                 }).execPopulate() 
         res.status(200).send({formups,owner:theFormup.owner})
     }catch(error){
         res.status(400).send(error)
@@ -51,7 +45,6 @@ router.put('/formups/:id', async (req,res)=>{
     }
 
     try {
-        console.log(req.body)
         const id=req.params.id
         const formups = await FormUp.findById(id)
         update.forEach((update)=> formups[update] = req.body[update])

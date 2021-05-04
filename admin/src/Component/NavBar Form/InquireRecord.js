@@ -3,22 +3,10 @@ import React, { useState, useEffect } from 'react'
 import { Button, Table, ButtonGroup, Alert } from 'react-bootstrap'
 import { connect } from 'react-redux';
 import { GetInquiry, DeleteInquiry } from '../../actions/Inquiry.action'
+import Pagination from "react-js-pagination"
 
 function Inqurie(props) {
-    const [inquirys, setinquirys] = useState({
-        fname: null,
-        lname: null,
-        email: null,
-        phone: null,
-        message: null,
-        errors: {
-            fname: '*Required',
-            lname: '*Required',
-            email: '*Required',
-            phone: '*Required',
-            message: '*Required'
-        }
-    })
+    
     //get request
     useEffect(() => {
         props.GetInquiryData()
@@ -40,6 +28,20 @@ function Inqurie(props) {
         setTimeout(() => {
             setShow(false)
         }, 4000)
+    }
+
+    
+    //pagination
+    const [activePage, setCurrentPage] = useState(1)
+    const todosPerPage = 10
+     // Logic for displaying current  page
+     const indexOfLastTodo = activePage * todosPerPage
+     const indexOfFirstTodo = indexOfLastTodo - todosPerPage
+     const currentTodos = props.createInquiry.getData.slice(indexOfFirstTodo, indexOfLastTodo)
+     
+    const handlePageChange = (pageNumber) => {
+        // console.log(`active page is ${pageNumber}`);
+        setCurrentPage(pageNumber)
     }
     return (
         <div className="position-relative" style={{marginTop:'60px'}}>
@@ -66,7 +68,7 @@ function Inqurie(props) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {props.createInquiry.getData.map(theData =>
+                                    {currentTodos.map(theData =>
                                         <tr key={theData._id}>
                                             <td>{theData.fname}</td>
                                             <td>{theData.lname}</td>
@@ -80,6 +82,16 @@ function Inqurie(props) {
                                             </td>
                                         </tr>
                                     )}
+                                    <tr>
+                                        <td colSpan={6} className="text-center">
+                                            <Pagination
+                                                activePage={activePage}
+                                                itemsCountPerPage={todosPerPage}
+                                                totalItemsCount={props.createInquiry.getData.length}
+                                                pageRangeDisplayed={3}
+                                                onChange={handlePageChange} />
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </Table>
                         }

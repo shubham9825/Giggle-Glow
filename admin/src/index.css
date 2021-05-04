@@ -92,3 +92,20 @@ thead, tbody,  th ,td{
   border: 2px solid #dee2e6;
 }
   
+.pagination{
+  justify-content: center;
+  font-weight: bold;
+} 
+
+/*password  */
+.password-icon {
+  position: absolute;
+  top: 11px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.wrap-input100 {
+  width: 100%;
+  position: relative;
+}

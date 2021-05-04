@@ -26,6 +26,7 @@ export const CreateService = (Data) => {
         try {
             if (Data !== null) {
                 dispatch(createDataSuccess(Data))
+                dispatch(GetService())
             } else {
                 dispatch(createDataFail('Sorry We Failed to Submit Data!!! Try Again...'))
             }
@@ -131,17 +132,11 @@ export const UpdateService =(Data)=>{
     }
     return async(dispatch)=>{
         dispatch(updateDataRequest())
+        console.log(Data)
         try{
-            let _id=Data._id
-            delete Data._id
-            delete Data.updatedAt //old data's field can't enter because we set only response field so it edit only that field not other so it will deleted to puting and this field is automatically changed when data update it will be same for above and belove delete operation's.
-            delete Data.createdAt
-            console.log(Data)
-            console.log(_id)
-            const response = await axios.put(`${process.env.REACT_APP_SERVER_URL}services/${_id}`,Data)
-            console.log(response.data)
-            if(response.status===200){
-                dispatch(updateDataSuccess(response.data))
+         
+            if(Data!== null){
+                dispatch(updateDataSuccess(Data))
                 dispatch(GetService())
             }else{
                 dispatch(updateDataFail('Sorry We Failed to Update Data!!! Try Again...'))

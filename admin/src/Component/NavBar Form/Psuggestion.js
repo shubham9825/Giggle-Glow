@@ -5,6 +5,9 @@ import { connect } from 'react-redux'
 import { CreateSuggestion } from '../../actions/Suggestion.action'
 
 function Suggestion(props) {
+    
+    const auth = JSON.parse(sessionStorage.login)
+    
     //validation purpose
     const [suggestion, setsuggestion] = useState({
         suggest: null,
@@ -15,6 +18,7 @@ function Suggestion(props) {
 
     //api calling state
     const initialdata = {
+        suggest_name:auth.fname,
         suggest: ''
     }
 
@@ -95,13 +99,14 @@ function Suggestion(props) {
                     <hr className='m-0' style={{ background: 'rgb(148, 141, 141)' }}></hr>
                     <br />
                     <Form.Group>
-                        <Form.Label>Suggestion </Form.Label>
-                        <Form.Control autoFocus={true} as='textarea' value={data.suggest} rows={5} name="suggest" onChange={HandleChange} placeholder="Enter Your Suggestion" />
-                        <div style={{ color: '#f50000' }}>{suggestion.errors.suggest}</div>
+                        <Form.Label>Suggestion </Form.Label>                                                
+                        <Form.Control autoFocus={true} as='textarea' value={data.suggest} rows={5} name="suggest" onChange={HandleChange} placeholder="Enter Your Suggestion" />                        
+                        <div style={{ color: '#f50000' }}>{suggestion.errors.suggest}</div>                    
                     </Form.Group>
                     <Button variant="primary" type="submit">Submit</Button>
                 </fieldset>
             </Form>
+            {console.log(data)}
         </div>
     )
 }
