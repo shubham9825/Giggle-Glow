@@ -20,7 +20,7 @@ export const createAbout=(Data)=>{
             error
         }
     }
-    return async(dispatch)=>{
+    return async(dispatch)=>{ 
         dispatch(createDataRequest())
         try{
             const response=await axios.post(`${process.env.REACT_APP_SERVER_URL}abouts`,Data)

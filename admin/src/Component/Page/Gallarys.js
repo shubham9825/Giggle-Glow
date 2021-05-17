@@ -10,7 +10,6 @@ function useQuery() {
 }
 
 function Gallarys(props) {
-
     let query = useQuery()
     console.log(query)
 
@@ -19,8 +18,6 @@ function Gallarys(props) {
         console.log(query.get("id"))
     }, [])
 
-    // return(<h1>Gallery</h1>)
-
     return (
         <div id="wrapper">
             <Header />
@@ -28,14 +25,14 @@ function Gallarys(props) {
             <div className="no-bottom no-top" id="content">
                 <div id="top" />
                 {/* section begin */}
-                <section id="subheader" data-bgimage="url(images/background/5.png) bottom">
+                <section id="subheader" data-bgimage="url(images/background/gallary_bg.png) bottom">
                     <div className="center-y relative text-center" data-scroll-speed={4}>
                         <div className="container">
                             <div className="row">
                                 <div className="col-md-8 offset-md-2">
-                                    <form action="blank.php" className="row" id="form_subscribe" method="post" name="myForm">
+                                    <form  >
                                         <div className="col-md-12 text-center">
-                                            <h1>Gallery</h1>
+                                            <h1>Our Photo Gallery​</h1>
                                             <p>Awsome Page Teaser Here</p>
                                         </div>
                                         <div className="clearfix" />
@@ -53,11 +50,7 @@ function Gallarys(props) {
                                 {props.creategallery.getData.map(theData =>
                                     <div className="col-md-4 mb30" key={theData._id}>
                                         <div className="de-image-hover rounded">
-                                            <a href="images/gallery/1.jpg" className="image-popup">
-                                                <span className="dih-title-wrap">
-                                                    <span className="dih-title">Gallery Title</span>
-                                                </span>
-                                                <span className="dih-overlay" />
+                                            <a href={`http://localhost:3001/${theData.fileName}`} target="_blank" className="image-popup">
                                                 <img style={{ cursor: 'pointer' }} onClick={() => window.open(`http://localhost:3001/${theData.fileName}`, "_blank")} className="img-fluid" src={`http://localhost:3001/${theData.fileName}`} alt="Image Not Found" />
                                             </a>
                                         </div>
@@ -65,7 +58,7 @@ function Gallarys(props) {
                             </div>}
                     </div>
                 </section>
-                <section className="pt60 pb60 bg-color-2 text-light">
+                {/* <section className="pt60 pb60 bg-color-2 text-light">
                     <div className="container">
                         <div className="row align-items-center">
                             <div className="col-md-8 mb-sm-30 text-lg-left text-sm-center">
@@ -76,7 +69,7 @@ function Gallarys(props) {
                             </div>
                         </div>
                     </div>
-                </section>
+                </section> */}
             </div>
             <Footer />
         </div>

@@ -4,10 +4,11 @@ import { Form, Button, Table, Alert, ButtonGroup } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { createFormup, GetFormup, DelFormup, UpdateFormup } from '../../actions/Formup.action'
 import { GetInquiry } from '../../actions/Inquiry.action'
+import Pagination from "react-js-pagination"
 
 function FormUp(props) {
 
-    const [test,settest]=useState('')
+    const [test, settest] = useState('')
     // use in validation
     const [formup, setformup] = useState({
         response: '*Required',
@@ -94,7 +95,7 @@ function FormUp(props) {
                 let tempUser = {}
                 tempUser.response = data.response
                 tempUser._id = data._id
-                tempUser.owner=data.owner
+                tempUser.owner = data.owner
                 props.updateFormup(tempUser) //update 
                 //alert
                 setShow(true)
@@ -136,11 +137,24 @@ function FormUp(props) {
         props.GetAllFormup(owner)
     }
 
-    {console.log(props.createFormup.getData.formups)}
+    //pagination
+    const [activePage, setCurrentPage] = useState(1)
+    const todosPerPage = 10
+    // Logic for displaying current  page
+    const indexOfLastTodo = activePage * todosPerPage;
+    const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
+    var currentTodos=[]
+    if(props.createFormup.getData.formups){
+        currentTodos = props.createFormup.getData.formups.slice(indexOfFirstTodo, indexOfLastTodo);
+    }
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber)
+    }
 
     return (
         <>
-            <div className="position-relative" style={{marginTop:'60px'}}>
+            <div className="position-relative" style={{ marginTop: '60px' }}>
                 {show && <Alert className='pb-0 position-absolute  w-100' style={{ "top": "0", "left": "0" }} variant="danger" onClose={() => setShow(false)} dismissible>
                     <p>{props.createFormup.msg}{props.createFormup.error}</p>
                 </Alert>
@@ -158,7 +172,7 @@ function FormUp(props) {
                                     <select onChange={Handlekey}>
                                         <option hidden>Select Name</option>
                                         {props.createInquiry.getData.map(theData =>
-                                                <option value={theData._id} key={theData._id}>{theData.fname}</option>
+                                            <option value={theData._id} key={theData._id}>{theData.fname}</option>
                                         )}
                                     </select>
                                 </div>
@@ -189,7 +203,7 @@ function FormUp(props) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {props.createFormup.getData.formups.map(theData =>
+                                        {currentTodos && currentTodos.map(theData =>
                                             <tr key={theData._id}>
                                                 <td style={{ width: '80%' }}>{theData.response}</td>
                                                 <td style={{ width: '20%' }}>
@@ -200,6 +214,16 @@ function FormUp(props) {
                                                 </td>
                                             </tr>
                                         )}
+                                        <tr>
+                                            <td colSpan={4} className="text-center">
+                                                <Pagination
+                                                    activePage={activePage}
+                                                    itemsCountPerPage={todosPerPage}
+                                                    totalItemsCount={props.createFormup.getData.formups.length}
+                                                    pageRangeDisplayed={3}
+                                                    onChange={handlePageChange} />
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </Table>
                             }

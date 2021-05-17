@@ -160,8 +160,7 @@ function About(props) {
     const currentTodos = props.createAbout.getData.slice(indexOfFirstTodo, indexOfLastTodo);
 
     const handlePageChange = (pageNumber) => {
-        // console.log(`active page is ${pageNumber}`);
-        setCurrentPage(pageNumber)
+         setCurrentPage(pageNumber)
     }
     return (
         <>

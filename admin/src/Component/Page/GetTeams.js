@@ -4,9 +4,7 @@ import { GetTeam } from '../../actions/Ourteam.action'
 import Footer from './Footer'
 import Header from './Header'
 
-
 function GetTeams(props) {
-
     //getdata
     useEffect(() => {
         props.getTeamdata()
@@ -29,6 +27,7 @@ function GetTeams(props) {
                                             <div className="col-md-12 text-center">
                                                 <h1>Our Team</h1>
                                                 <p>Awsome Page Teaser Here</p>
+                                                <br /><br />
                                             </div>
                                             <div className="clearfix" />
                                         </form>
@@ -63,7 +62,7 @@ function GetTeams(props) {
                                     <h3 className="no-bottom">Awesomeness begin here. Are you ready?</h3>
                                 </div>
                                 <div className="col-md-4 text-lg-right text-sm-center">
-                                    <a href="#" className="btn-custom capsule med">Let's do it!</a>
+                                    <a href="/contactus" className="btn-custom capsule med">Let's do it!</a>
                                 </div>
                             </div>
                         </div>

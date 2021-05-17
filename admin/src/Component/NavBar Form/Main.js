@@ -57,20 +57,6 @@ function Home() {
                             <br />
                         </Card>
                     </Col>
-                    {/* <Col>
-                        <Card border="primary" bg="secondary" text="light">
-                            <Card.Header align="center"><h3>PARENT'S</h3></Card.Header>
-
-                            <div className="end-user logo" align="center">
-                                <img src={parent} width="100" height="100"></img>
-                            </div>
-        &nbsp;
-        <div className="col-12" align="center">
-                                <Button variant="danger" onClick={handleChange3}>PARENT'S</Button>
-                            </div>
-        &nbsp;
-          </Card>
-                    </Col> */}
                 </Row>
             </Container>
         </>

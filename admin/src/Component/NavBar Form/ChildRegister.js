@@ -44,20 +44,20 @@ function ChildRegister(props) {
         drphonenum: null,
         allergies: null,
         errors: {
-            fname: '*Requierd',
-            lname: '*Requierd',
-            address: '*Requierd',
-            city: '*Requierd',
-            states: '*Requierd',
-            zipcode: '*Requierd',
-            gender: '*Requierd',
-            parentnm: '*Requierd',
-            phonenum: '*Requierd',
-            plcwork: '*Requierd',
-            email: '*Requierd',
-            doctornm: '*Requierd',
-            drphonenum: '*Requierd',
-            allergies: '*Requierd'
+            fname: ' ',
+            lname: ' ',
+            address: ' ',
+            city: ' ',
+            states: ' ',
+            zipcode: ' ',
+            gender: ' ',
+            parentnm: ' ',
+            phonenum: ' ',
+            plcwork: ' ',
+            email: ' ',
+            doctornm: ' ',
+            drphonenum: ' ',
+            allergies: ' '
         }
     })
 

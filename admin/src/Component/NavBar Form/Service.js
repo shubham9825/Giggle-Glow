@@ -61,10 +61,6 @@ function Service(props) {
                     errors.service_name = '*Required'
                     break
                 }
-                if (!(/^[a-z A-Z]*$/g).test(value)) {
-                    errors.service_name = 'Enter Alphabets only! '
-                    break
-                }
                 errors.service_name = ''
                 break
             case 'short_discription':

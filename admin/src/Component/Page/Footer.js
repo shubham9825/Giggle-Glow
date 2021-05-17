@@ -23,6 +23,7 @@ function Footer() {
                         <div className="col-lg-4">
                             <div className="widget">
                                 <h5><a href="https://g.page/giggleandgrow?share" target="_blank">Find Us On Goggle Map</a></h5>
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1859.6534699062559!2d72.8548351580205!3d21.21967379647381!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be04f1c202d98bf%3A0xb20a758d1f165e67!2sKshama%20Society%2C%20Satadhar%20Krupa%20Society%2C%20Sitaram%20Nagar%2C%20Surat%2C%20Gujarat%20395006!5e0!3m2!1sen!2sin!4v1620923365151!5m2!1sen!2sin" width={300} height={250} style={{ border: 0 }} allowFullScreen loading="lazy" />
                             </div>
                         </div>
                     </div>

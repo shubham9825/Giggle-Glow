@@ -23,7 +23,7 @@ function Albums(props) {
             <div className="no-bottom no-top" id="content">
                 <div id="top" />
                 {/* section begin */}
-                <section id="subheader" data-bgimage="url(images/background/5.png) bottom">
+                <section id="subheader" data-bgimage="url(images/background/gallary_bg.png) bottom">
                     <div className="center-y relative text-center" data-scroll-speed={4}>
                         <div className="container">
                             <div className="row">
@@ -52,26 +52,26 @@ function Albums(props) {
                                                 <span className="dih-title-wrap">
                                                     <span className="dih-title"  >{theData.album}</span>
                                                 </span>
-                                                <span className="dih-overlay" />
-                                                <img src="images/gallery/1.jpg" className="img-fluid" alt />
+                                                 <span className="dih-overlay" />
+                                                <img className="img-fluid" src={`http://localhost:3001/Album/${theData.image}`} alt="Image Not Found" />
                                             </a>
                                         </div>
                                     </div>)}
                             </div>}
                     </div>
                 </section>
-                <section className="pt60 pb60 bg-color-2 text-light">
+                {/* <section className="pt60 pb60 bg-color-2 text-light">
                     <div className="container">
                         <div className="row align-items-center">
                             <div className="col-md-8 mb-sm-30 text-lg-left text-sm-center">
                                 <h3 className="no-bottom">Awesomeness begin here. Are you ready?</h3>
                             </div>
                             <div className="col-md-4 text-lg-right text-sm-center">
-                                <a href="#" className="btn-custom capsule med">Let's do it!</a>
+                                <a href="/" className="btn-custom capsule med">Let's do it!</a>
                             </div>
                         </div>
                     </div>
-                </section>
+                </section> */}
             </div>
             {/* content close */}
             <Footer />

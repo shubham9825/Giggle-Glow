@@ -4,6 +4,7 @@ import { Form, Button, Alert, Row, Col, Table, ButtonGroup } from 'react-bootstr
 import { connect } from 'react-redux'
 import { getChild } from '../../actions/child.action'
 import { createPayment, getReportData } from '../../actions/Payment.action'
+import Pagination from "react-js-pagination"
 
 function Payment(props) {
     const [payments, setpayments] = useState({
@@ -134,9 +135,23 @@ function Payment(props) {
         })
     }
     console.log(report)
-
     const SubmitReport = () => {
         props.getAllReport(report)
+    }
+
+    //pagination
+    const [activePage, setCurrentPage] = useState(1)
+    const todosPerPage = 10
+    // Logic for displaying current  page
+    const indexOfLastTodo = activePage * todosPerPage;
+    const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
+    var currentTodos=[]
+    if (props.CratePayment.getReport) {
+        currentTodos = props.CratePayment.getReport.slice(indexOfFirstTodo, indexOfLastTodo);
+    }
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber)
     }
     return (
         <div style={{ marginTop: '60px' }} className="position-relative">
@@ -195,7 +210,7 @@ function Payment(props) {
 
                             {props.createChild.getData.length > 0 &&
                                 <Row>
-                                     <Col md={3}>
+                                    <Col md={3}>
                                         <Form.Label>Select Month</Form.Label><br />
                                         <select name='Month' onChange={HandleReport} >
                                             <option hidden>Select Month</option>
@@ -231,7 +246,7 @@ function Payment(props) {
                             }<br />
 
                             <div className="table-responsive">
-                                {props.CratePayment.getReport   &&
+                                {props.CratePayment.getReport &&
                                     <Table striped responsive hover className='table table-bordered'>
                                         <thead>
                                             <tr>
@@ -241,13 +256,23 @@ function Payment(props) {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {props.CratePayment.getReport.map(theData => 
-                                                <tr key={theData._id}>  
+                                            {currentTodos && currentTodos.map(theData =>
+                                                <tr key={theData._id}>
                                                     <td>{theData.owner.fname}&nbsp;{theData.owner.parentnm}</td>
                                                     <td>{theData.owner.phonenum}</td>
                                                     <td>{theData.totalHour}</td>
                                                 </tr>
                                             )}
+                                            <tr>
+                                                <td colSpan={4} className="text-center">
+                                                    <Pagination
+                                                        activePage={activePage}
+                                                        itemsCountPerPage={todosPerPage}
+                                                        totalItemsCount={props.CratePayment.getReport.length}
+                                                        pageRangeDisplayed={3}
+                                                        onChange={handlePageChange} />
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </Table>
                                 }

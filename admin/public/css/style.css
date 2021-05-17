@@ -9047,6 +9047,7 @@ animation: blink 0.7s infinite;
 	position:absolute;	
 	width:100%;
 	height:100%;
+	margin: 0;
 	background:#eee;
 	opacity:0;
 }
@@ -9066,8 +9067,12 @@ animation: blink 0.7s infinite;
 	vertical-align:middle;
 	color:#fff;
 }
+
+/* Image ma blue shade hover time par  */
+
 .de-image-hover:hover .dih-overlay{
-	opacity:.8;
+	opacity:.7;
+	margin: 0;
 }
 .de-image-hover:hover .dih-title{
 	opacity:1;
@@ -9080,7 +9085,7 @@ animation: blink 0.7s infinite;
 	-webkit-box-shadow: 5px 25px 15px 0px rgba(0, 0, 0, 0.1);
 	-moz-box-shadow: 5px 25px 15px 0px rgba(0, 0, 0, 0.1);
 	box-shadow: 5px 25px 15px 0px rgba(0, 0, 0, 0.1);
-}
+} 
 
 .img-fullwidth{
 	width:100%;
@@ -10489,16 +10494,107 @@ a, img {
 	}
 }
 
-
 /* parallax in Design page */
 .designParallax{
     width:100%;
-    height:500px;
-	min-height: 500px; 
+    height:800px;
 	background-position: center;
-    background-image: url('../images/parallex/6.jpg');
+    background-image: url('../images/parallex/2.jpg');
     background-attachment: fixed;
     background-color: rgba(0,0,0,0.7);
 	background-repeat: no-repeat;
 	background-size: cover;
 }   
+
+/* before and after in Main kids activity */
+.activity ul {
+	position: relative;
+}
+.activity li{
+	list-style-type: none;
+	margin-bottom: 20px;
+    padding-top: 4px;
+}
+.activity li span {
+	background: #fa9db7;
+	padding: 5px;
+	font-weight: bold;
+	font-size: 20px;
+}
+.activity li::before{
+	content: '';
+	position: absolute;
+	left:1px;
+    width: 1.25em;
+    height: 1.25em;
+    background: url('../images/misc/pencil.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+ 
+/* about pledge */
+.aboutstrive ul{
+	position: relative;
+}
+
+.aboutstrive li{
+	list-style-type: none;
+	margin-bottom: 20px;
+    padding-top: 4px;
+	margin-left: 30px;
+	text-align: justify;
+}
+.aboutstrive li span {
+	padding: 5px;
+	margin-left: 0;
+	font-weight: bold;
+	font-size: 20px;
+}
+.aboutstrive li::before{
+	content: '';
+	position: absolute;
+	left:10px;
+	width: 2em;
+    height: 2em;
+    background: url('../images/misc/pencil.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.aboutright ul{
+	position: relative;
+}
+
+.aboutright li{
+	list-style-type: none;
+	margin-bottom: 20px;
+	margin-left: 30px;
+    padding-top: 4px;
+	text-align: justify;
+}
+.aboutright li span {
+	padding: 5px;
+	margin-left: 0;
+	font-weight: bold;
+	font-size: 20px;
+}
+.aboutright li::before{
+	content: '';
+	position: absolute;
+	left:10px;
+    width: 2em;
+    height: 2em;
+    background: url('../images/misc/pencil.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.welcome{
+	margin: 0px;
+	background-color: #12265A;
+	color: white;
+	font-weight: bold;
+	border-radius: 5px;
+	font-size: 17px;
+	padding: 5px 10px;
+}

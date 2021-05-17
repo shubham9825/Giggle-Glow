@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react'
-import Footer from './Footer' 
+import Footer from './Footer'
 import Header from './Header'
 import { connect } from 'react-redux'
 import { GetAbout } from '../../actions/About.action'
-
 
 function AboutUs(props) {
     //get request
@@ -18,7 +17,7 @@ function AboutUs(props) {
             <div className="no-bottom no-top" id="content">
                 <div id="top" />
                 {/* section begin */}
-                <section id="subheader" data-bgimage="url(images/background/5.png) bottom">
+                <section id="subheader" data-bgimage="url(images/background/about.png) bottom">
                     <div className="center-y relative text-center" data-scroll-speed={4}>
                         <div className="container">
                             <div className="row">
@@ -42,19 +41,19 @@ function AboutUs(props) {
                         {props.createAbout.getData.length > 0 &&
                             <div className="row align-items-center">
                                 <div className="col-md-5 ">
-                                    <img src="images/misc/1.png" className="img-fluid" alt />
+                                    <img src="images/misc/about1.png" className="img-fluid" alt />
                                 </div>
                                 {props.createAbout.getData.map(theData =>
                                     <div className="col-md-6 offset-md-1" key={theData._id}>
                                         <h3 style={{ marginTop: '10%' }} >{theData.about}</h3>
-                                        <p>{theData.about}</p>   
+                                        <p> Our goal is to provide a warm, open environment where children feel safe enough to ask questions, explore and seek answers. We challenge every child to surpass his or her own personal best and help them over the hills and thru the valleys of these lovely growing years.</p>
                                     </div>
                                 )}
                             </div>}
                         {props.createAbout.getData.length > 0 &&
-                            <div className="row align-items-center mt-5 p-5" style={{ backgroundColor: 'skyblue',overflow:'hidden' }}>
+                            <div className="row align-items-center mt-5 p-5" style={{ backgroundColor: 'skyblue', overflow: 'hidden' }}>
                                 {props.createAbout.getData.map(theData =>
-                                    <>
+                                    <div className='row'>
                                         <div className="col-lg-6 " key={theData._id}>
                                             <h1><b>MISSION</b></h1>
                                             <p style={{ paddingTop: '30px', textAlign: 'justify' }}>{theData.vision}</p>
@@ -63,123 +62,28 @@ function AboutUs(props) {
                                             <h1><b >VISION</b></h1>
                                             <p style={{ paddingTop: '30px', textAlign: 'justify' }}>{theData.mission}</p>
                                         </div>
-                                    </>
+                                    </div>
                                 )}
                             </div>}
+
                         <div className="spacer-double" />
-                        <div className="row">
-                            <div className="col-md-12 text-center">
-                                <h3>Team Of Awesome</h3>
-                            </div>
-                            <div className="col-lg-3 col-md-6 col-sm-6 mb-md-30">
-                                <div className="f-profile text-center">
-                                    <div className="fp-wrap gray">
-                                        <div className="fpw-overlay">
-                                            <div className="fpwo-wrap">
-                                                <div className="fpwow-icons">
-                                                    <a href="#"><i className="fa fa-facebook fa-lg" /></a>
-                                                    <a href="#"><i className="fa fa-twitter fa-lg" /></a>
-                                                    <a href="#"><i className="fa fa-linkedin fa-lg" /></a>
-                                                    <a href="#"><i className="fa fa-google-plus fa-lg" /></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="fpw-overlay-btm" />
-                                        <img src="images/team/1.jpg" className="fp-image img-fluid" alt />
-                                    </div>
-                                    <h4>Fynley Wilkinson</h4>
-                                            Chief Creative Officer
-                                        </div>
-                            </div>
-                            <div className="col-lg-3 col-md-6 col-sm-6 mb-md-30">
-                                <div className="f-profile text-center">
-                                    <div className="fp-wrap gray">
-                                        <div className="fpw-overlay">
-                                            <div className="fpwo-wrap">
-                                                <div className="fpwow-icons">
-                                                    <a href="#"><i className="fa fa-facebook fa-lg" /></a>
-                                                    <a href="#"><i className="fa fa-twitter fa-lg" /></a>
-                                                    <a href="#"><i className="fa fa-linkedin fa-lg" /></a>
-                                                    <a href="#"><i className="fa fa-google-plus fa-lg" /></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="fpw-overlay-btm" />
-                                        <img src="images/team/2.jpg" className="fp-image img-fluid" alt />
-                                    </div>
-                                    <h4>Myra Welsh</h4>
-                                            Chief Technology Officer
-                                        </div>
-                            </div>
-                            <div className="col-lg-3 col-md-6 col-sm-6 mb-md-30">
-                                <div className="f-profile text-center">
-                                    <div className="fp-wrap gray">
-                                        <div className="fpw-overlay">
-                                            <div className="fpwo-wrap">
-                                                <div className="fpwow-icons">
-                                                    <a href="#"><i className="fa fa-facebook fa-lg" /></a>
-                                                    <a href="#"><i className="fa fa-twitter fa-lg" /></a>
-                                                    <a href="#"><i className="fa fa-linkedin fa-lg" /></a>
-                                                    <a href="#"><i className="fa fa-google-plus fa-lg" /></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="fpw-overlay-btm" />
-                                        <img src="images/team/3.jpg" className="fp-image img-fluid" alt />
-                                    </div>
-                                    <h4>Aysha Shepard</h4>
-                                            Chief Executive Officer
-                                        </div>
-                            </div>
-                            <div className="col-lg-3 col-md-6 col-sm-6 mb-md-30">
-                                <div className="f-profile text-center">
-                                    <div className="fp-wrap gray">
-                                        <div className="fpw-overlay">
-                                            <div className="fpwo-wrap">
-                                                <div className="fpwow-icons">
-                                                    <a href="#"><i className="fa fa-facebook fa-lg" /></a>
-                                                    <a href="#"><i className="fa fa-twitter fa-lg" /></a>
-                                                    <a href="#"><i className="fa fa-linkedin fa-lg" /></a>
-                                                    <a href="#"><i className="fa fa-google-plus fa-lg" /></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="fpw-overlay-btm" />
-                                        <img src="images/team/4.jpg" className="fp-image img-fluid" alt />
-                                    </div>
-                                    <h4>Robyn Peel</h4>
-                                            Director of Finance
-                                        </div>
-                            </div>
-                        </div>
-                        <div className="spacer-double" />
-                        <div className="row align-items-center">
-                            <div className="col-md-6">
-                                <h3>What makes us different?</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-                                <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.</p>
-                            </div>
-                            <div className="col-md-5  offset-md-1">
-                                <img src="images/misc/5.png" className="img-fluid" alt />
-                            </div>
-                        </div>
-                        <div className="spacer-double" />
-                        <div className="padding40 round" data-bgcolor="#f5f5f5">
-                            <div className="row align-items-center">
-                                <div className="col-md-2">
-                                    <h4 className="no-bottom">Our Clients</h4>
+                        <div>
+                            <h1><b>We pledge each day to strive</b></h1>
+                            <div className='row'>
+                                <div className="col-lg-6">
+                                    <ul className='aboutstrive'>
+                                        <li><span>To be role models, creating an atmosphere where respect for one another and ourselves manifests itself in everything we do.</span></li>
+                                        <li><span>To provide qualified, caring and enthusiastic educators who will nurture each child’s learning, thinking and development.</span></li>
+                                        <li><span>To offer a safe, secure environment where each child’s individual needs are recognized and respected.</span></li>
+                                        <li><span>To enable creativity that will foster mental growth by providing opportunities for testing new ideas, new ways of thinking and problem solving that acknowledges and celebrates their uniqueness and diversity.</span></li>
+                                    </ul>
                                 </div>
-                                <div className="col-md-10">
-                                    <div id="owl-logo" className="logo-carousel owl-carousel owl-theme">
-                                        <img src="images/logo-clients/1.png" className="img-fluid" alt />
-                                        <img src="images/logo-clients/2.png" className="img-fluid" alt />
-                                        <img src="images/logo-clients/3.png" className="img-fluid" alt />
-                                        <img src="images/logo-clients/4.png" className="img-fluid" alt />
-                                        <img src="images/logo-clients/5.png" className="img-fluid" alt />
-                                        <img src="images/logo-clients/6.png" className="img-fluid" alt />
-                                        <img src="images/logo-clients/7.png" className="img-fluid" alt />
-                                        <img src="images/logo-clients/8.png" className="img-fluid" alt />
-                                    </div>
+                                <div className="col-lg-6 text-center">
+                                    <ul className='aboutright'>
+                                        <li><span>To develop a curriculum based on observations, strengths, and interests of the children to nurture their development and offer experiences that help children learn about themselves and the world around them.</span></li>
+                                        <li><span>To make transparent to parents, families and children the learning environment we are creating and sharing those milestones and achievements through a variety of assessments and documentation.</span></li>
+                                        <li><span>To communicate effectively with parents to form a cooperative team, the key to fostering a child’s success. Communication provides opportunity for the child to reach their maximum potential both inside and outside the classroom.</span></li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -192,7 +96,7 @@ function AboutUs(props) {
                                 <h3 className="no-bottom">Awesomeness begin here. Are you ready?</h3>
                             </div>
                             <div className="col-md-4 text-lg-right text-sm-center">
-                                <a href="#" className="btn-custom capsule med">Let's do it!</a>
+                                <a href="/contactus" className="btn-custom capsule med">Let's do it!</a>
                             </div>
                         </div>
                     </div>

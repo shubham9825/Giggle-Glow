@@ -36,14 +36,15 @@ function Header() {
                                                 <a href="/services">Services</a>
                                             </li>
                                             <li>
+                                                <a href="/albums">Album</a>
+                                            </li>
+                                            <li>
                                                 <a href="/getteams">Our Team</a>
                                             </li>
                                             <li>
                                                 <a href="/contactus">Contact Us</a>
                                             </li>
-                                            <li>
-                                                <a href="/albums">Album</a>
-                                            </li>
+                                           
                                         </ul>
                                     </div>
                                     <div className="align-self-center ml-auto header-col-right">
