@@ -20,7 +20,6 @@ function SignUp(props) {
             cpassword: ' '
         }
     })
-    //  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 
 
     //use in api calling 
     const initialdata = {
